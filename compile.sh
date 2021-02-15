@@ -1,0 +1,1 @@
+g++ main.cpp src/imageprocessing.cpp -o main
