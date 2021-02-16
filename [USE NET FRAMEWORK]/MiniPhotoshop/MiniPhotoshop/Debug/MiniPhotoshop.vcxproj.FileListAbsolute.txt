@@ -1,0 +1,3 @@
+D:\Dokumen Ridwan\3_Matkul Tingkat Akhir\1_IF4073 - Pengolahan Citra\[TUGAS BESAR]\[USE NET FRAMEWORK]\MiniPhotoshop\MiniPhotoshop\Debug\MiniPhotoshop.vcxprojAssemblyReference.cache
+D:\Dokumen Ridwan\3_Matkul Tingkat Akhir\1_IF4073 - Pengolahan Citra\[TUGAS BESAR]\[USE NET FRAMEWORK]\MiniPhotoshop\MiniPhotoshop\Debug\MiniPhotoshop.MyForm.resources
+D:\Dokumen Ridwan\3_Matkul Tingkat Akhir\1_IF4073 - Pengolahan Citra\[TUGAS BESAR]\[USE NET FRAMEWORK]\MiniPhotoshop\MiniPhotoshop\Debug\MiniPhotoshop.vcxproj.GenerateResource.cache
