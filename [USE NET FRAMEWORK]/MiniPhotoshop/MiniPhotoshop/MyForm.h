@@ -2,7 +2,6 @@
 #include <string.h>
 #include <iostream>
 #include <msclr\marshal_cppstd.h>
-#include "image.h"
 
 namespace MiniPhotoshop {
 
@@ -46,13 +45,10 @@ namespace MiniPhotoshop {
 
 	private: System::Windows::Forms::Label^ lbl_original_img;
 	private: System::Windows::Forms::Label^ lbl_edited_image;
+	private: System::Windows::Forms::PictureBox^ pic_box_main_img;
+	private: System::Windows::Forms::PictureBox^ pic_box_second_img;
 
-
-	private: System::Windows::Forms::PictureBox^ pic_box_original_img;
-	private: System::Windows::Forms::PictureBox^ pic_box_edited_img;
 	private: System::Windows::Forms::OpenFileDialog^ ofd;
-
-
 
 	private: System::Windows::Forms::MenuStrip^ menu_strip;
 	private: System::Windows::Forms::ToolStripMenuItem^ editImageToolStripMenuItem;
@@ -63,38 +59,27 @@ namespace MiniPhotoshop {
 	private: System::Windows::Forms::ToolStripMenuItem^ editImageToolStripMenuItem1;
 	private: System::Windows::Forms::ToolStripMenuItem^ gray_scale;
 
-
 	private: System::Windows::Forms::ToolStripMenuItem^ imageBrighteningToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ image_brightening_scalar_addition;
 	private: System::Windows::Forms::ToolStripMenuItem^ image_brightening_scalar_multiplication;
-
 
 	private: System::Windows::Forms::ToolStripMenuItem^ aritmethicToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ aritmethic_addition;
 	private: System::Windows::Forms::ToolStripMenuItem^ aritmethic_subtraction;
 	private: System::Windows::Forms::ToolStripMenuItem^ aritmethic_multiplication;
 	private: System::Windows::Forms::ToolStripMenuItem^ aritmethic_division;
-	private: System::Windows::Forms::ToolStripMenuItem^ boolean_and;
+	private: System::Windows::Forms::ToolStripMenuItem^ boolean_menu;
+	private: System::Windows::Forms::ToolStripMenuItem^ boolean_and_;
 
-
-
-
-
-	private: System::Windows::Forms::ToolStripMenuItem^ aNDToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ boolean_not;
 	private: System::Windows::Forms::ToolStripMenuItem^ boolean_or;
 	private: System::Windows::Forms::ToolStripMenuItem^ boolean_xor;
-	private: System::Windows::Forms::ToolStripMenuItem^ geometry_translation;
+	private: System::Windows::Forms::ToolStripMenuItem^ geometry_menu;
+	private: System::Windows::Forms::ToolStripMenuItem^ geometry_translation_;
 
-
-
-
-	private: System::Windows::Forms::ToolStripMenuItem^ translationToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ geometry_rotation;
 	private: System::Windows::Forms::ToolStripMenuItem^ geometry_flipping;
 	private: System::Windows::Forms::ToolStripMenuItem^ geometry_zooming;
-
-
 
 	private: System::Windows::Forms::ToolStripMenuItem^ imageEnhancementToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ image_enhancement_image_brightening;
@@ -107,14 +92,6 @@ namespace MiniPhotoshop {
 	private: System::Windows::Forms::ToolStripMenuItem^ image_enhancement_histogram_equalization;
 	private: System::Windows::Forms::ToolStripMenuItem^ image_enhancement_histogram_specification;
 
-
-
-
-
-
-
-
-
 	private: System::Windows::Forms::ToolStripMenuItem^ historgramToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ show_histogram;
 
@@ -122,24 +99,8 @@ namespace MiniPhotoshop {
 	private: System::Windows::Forms::ToolStripMenuItem^ reset_image;
 	private: System::Windows::Forms::ToolStripMenuItem^ save_image;
 	private: System::Windows::Forms::ToolStripMenuItem^ change_second_image;
-private: System::Windows::Forms::ToolStripMenuItem^ negative_transformation;
-
-
-
-
-
+	private: System::Windows::Forms::ToolStripMenuItem^ negative_transformation;
 	private: System::Windows::Forms::ToolStripMenuItem^ show_image_info;
-
-
-
-
-
-
-
-
-
-
-
 
 	private:
 		/// <summary>
@@ -156,8 +117,8 @@ private: System::Windows::Forms::ToolStripMenuItem^ negative_transformation;
 		{
 			this->lbl_original_img = (gcnew System::Windows::Forms::Label());
 			this->lbl_edited_image = (gcnew System::Windows::Forms::Label());
-			this->pic_box_original_img = (gcnew System::Windows::Forms::PictureBox());
-			this->pic_box_edited_img = (gcnew System::Windows::Forms::PictureBox());
+			this->pic_box_main_img = (gcnew System::Windows::Forms::PictureBox());
+			this->pic_box_second_img = (gcnew System::Windows::Forms::PictureBox());
 			this->ofd = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->menu_strip = (gcnew System::Windows::Forms::MenuStrip());
 			this->editImageToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -171,18 +132,18 @@ private: System::Windows::Forms::ToolStripMenuItem^ negative_transformation;
 			this->imageBrighteningToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->image_brightening_scalar_addition = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->image_brightening_scalar_multiplication = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->boolean_menu = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->boolean_and_ = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->boolean_not = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->boolean_or = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->boolean_xor = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->aritmethicToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->aritmethic_addition = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->aritmethic_subtraction = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->aritmethic_multiplication = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->aritmethic_division = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->boolean_and = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->aNDToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->boolean_not = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->boolean_or = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->boolean_xor = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->geometry_translation = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->translationToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->geometry_menu = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->geometry_translation_ = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->geometry_rotation = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->geometry_flipping = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->geometry_zooming = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -203,8 +164,8 @@ private: System::Windows::Forms::ToolStripMenuItem^ negative_transformation;
 			this->resetToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->saveImageToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->openSecondImageToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pic_box_original_img))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pic_box_edited_img))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pic_box_main_img))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pic_box_second_img))->BeginInit();
 			this->menu_strip->SuspendLayout();
 			this->SuspendLayout();
 			// 
@@ -231,25 +192,25 @@ private: System::Windows::Forms::ToolStripMenuItem^ negative_transformation;
 			this->lbl_edited_image->TabIndex = 3;
 			this->lbl_edited_image->Text = L"Second Image";
 			// 
-			// pic_box_original_img
+			// pic_box_main_img
 			// 
-			this->pic_box_original_img->BackColor = System::Drawing::Color::White;
-			this->pic_box_original_img->Location = System::Drawing::Point(26, 69);
-			this->pic_box_original_img->Name = L"pic_box_original_img";
-			this->pic_box_original_img->Size = System::Drawing::Size(235, 235);
-			this->pic_box_original_img->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
-			this->pic_box_original_img->TabIndex = 6;
-			this->pic_box_original_img->TabStop = false;
+			this->pic_box_main_img->BackColor = System::Drawing::Color::White;
+			this->pic_box_main_img->Location = System::Drawing::Point(26, 69);
+			this->pic_box_main_img->Name = L"pic_box_main_img";
+			this->pic_box_main_img->Size = System::Drawing::Size(235, 235);
+			this->pic_box_main_img->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
+			this->pic_box_main_img->TabIndex = 6;
+			this->pic_box_main_img->TabStop = false;
 			// 
-			// pic_box_edited_img
+			// pic_box_second_img
 			// 
-			this->pic_box_edited_img->BackColor = System::Drawing::Color::White;
-			this->pic_box_edited_img->Location = System::Drawing::Point(303, 69);
-			this->pic_box_edited_img->Name = L"pic_box_edited_img";
-			this->pic_box_edited_img->Size = System::Drawing::Size(235, 235);
-			this->pic_box_edited_img->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
-			this->pic_box_edited_img->TabIndex = 7;
-			this->pic_box_edited_img->TabStop = false;
+			this->pic_box_second_img->BackColor = System::Drawing::Color::White;
+			this->pic_box_second_img->Location = System::Drawing::Point(303, 69);
+			this->pic_box_second_img->Name = L"pic_box_second_img";
+			this->pic_box_second_img->Size = System::Drawing::Size(235, 235);
+			this->pic_box_second_img->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
+			this->pic_box_second_img->TabIndex = 7;
+			this->pic_box_second_img->TabStop = false;
 			// 
 			// ofd
 			// 
@@ -317,7 +278,7 @@ private: System::Windows::Forms::ToolStripMenuItem^ negative_transformation;
 			// 
 			this->editImageToolStripMenuItem1->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(7) {
 				this->gray_scale,
-					this->imageBrighteningToolStripMenuItem, this->aritmethicToolStripMenuItem, this->boolean_and, this->geometry_translation, this->imageEnhancementToolStripMenuItem,
+					this->imageBrighteningToolStripMenuItem, this->boolean_menu, this->aritmethicToolStripMenuItem, this->geometry_menu, this->imageEnhancementToolStripMenuItem,
 					this->negative_transformation
 			});
 			this->editImageToolStripMenuItem1->Name = L"editImageToolStripMenuItem1";
@@ -355,6 +316,44 @@ private: System::Windows::Forms::ToolStripMenuItem^ negative_transformation;
 			this->image_brightening_scalar_multiplication->Text = L"Scalar Multiplication";
 			this->image_brightening_scalar_multiplication->Click += gcnew System::EventHandler(this, &MyForm::image_brightening_scalar_multiplication_Click);
 			// 
+			// boolean_menu
+			// 
+			this->boolean_menu->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(4) {
+				this->boolean_and_,
+					this->boolean_not, this->boolean_or, this->boolean_xor
+			});
+			this->boolean_menu->Name = L"boolean_menu";
+			this->boolean_menu->Size = System::Drawing::Size(183, 22);
+			this->boolean_menu->Text = L"Boolean";
+			// 
+			// boolean_and_
+			// 
+			this->boolean_and_->Name = L"boolean_and_";
+			this->boolean_and_->Size = System::Drawing::Size(99, 22);
+			this->boolean_and_->Text = L"AND";
+			this->boolean_and_->Click += gcnew System::EventHandler(this, &MyForm::boolean_and__Click);
+			// 
+			// boolean_not
+			// 
+			this->boolean_not->Name = L"boolean_not";
+			this->boolean_not->Size = System::Drawing::Size(99, 22);
+			this->boolean_not->Text = L"NOT";
+			this->boolean_not->Click += gcnew System::EventHandler(this, &MyForm::boolean_not_Click);
+			// 
+			// boolean_or
+			// 
+			this->boolean_or->Name = L"boolean_or";
+			this->boolean_or->Size = System::Drawing::Size(99, 22);
+			this->boolean_or->Text = L"OR";
+			this->boolean_or->Click += gcnew System::EventHandler(this, &MyForm::boolean_or_Click);
+			// 
+			// boolean_xor
+			// 
+			this->boolean_xor->Name = L"boolean_xor";
+			this->boolean_xor->Size = System::Drawing::Size(99, 22);
+			this->boolean_xor->Text = L"XOR";
+			this->boolean_xor->Click += gcnew System::EventHandler(this, &MyForm::boolean_xor_Click);
+			// 
 			// aritmethicToolStripMenuItem
 			// 
 			this->aritmethicToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(4) {
@@ -368,94 +367,68 @@ private: System::Windows::Forms::ToolStripMenuItem^ negative_transformation;
 			// aritmethic_addition
 			// 
 			this->aritmethic_addition->Name = L"aritmethic_addition";
-			this->aritmethic_addition->Size = System::Drawing::Size(180, 22);
+			this->aritmethic_addition->Size = System::Drawing::Size(148, 22);
 			this->aritmethic_addition->Text = L"Addition";
+			this->aritmethic_addition->Click += gcnew System::EventHandler(this, &MyForm::aritmethic_addition_Click);
 			// 
 			// aritmethic_subtraction
 			// 
 			this->aritmethic_subtraction->Name = L"aritmethic_subtraction";
-			this->aritmethic_subtraction->Size = System::Drawing::Size(180, 22);
+			this->aritmethic_subtraction->Size = System::Drawing::Size(148, 22);
 			this->aritmethic_subtraction->Text = L"Subtraction";
+			this->aritmethic_subtraction->Click += gcnew System::EventHandler(this, &MyForm::aritmethic_subtraction_Click);
 			// 
 			// aritmethic_multiplication
 			// 
 			this->aritmethic_multiplication->Name = L"aritmethic_multiplication";
-			this->aritmethic_multiplication->Size = System::Drawing::Size(180, 22);
+			this->aritmethic_multiplication->Size = System::Drawing::Size(148, 22);
 			this->aritmethic_multiplication->Text = L"Multiplication";
+			this->aritmethic_multiplication->Click += gcnew System::EventHandler(this, &MyForm::aritmethic_multiplication_Click);
 			// 
 			// aritmethic_division
 			// 
 			this->aritmethic_division->Name = L"aritmethic_division";
-			this->aritmethic_division->Size = System::Drawing::Size(180, 22);
+			this->aritmethic_division->Size = System::Drawing::Size(148, 22);
 			this->aritmethic_division->Text = L"Division";
+			this->aritmethic_division->Click += gcnew System::EventHandler(this, &MyForm::aritmethic_division_Click);
 			// 
-			// boolean_and
+			// geometry_menu
 			// 
-			this->boolean_and->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(4) {
-				this->aNDToolStripMenuItem,
-					this->boolean_not, this->boolean_or, this->boolean_xor
-			});
-			this->boolean_and->Name = L"boolean_and";
-			this->boolean_and->Size = System::Drawing::Size(183, 22);
-			this->boolean_and->Text = L"Boolean";
-			// 
-			// aNDToolStripMenuItem
-			// 
-			this->aNDToolStripMenuItem->Name = L"aNDToolStripMenuItem";
-			this->aNDToolStripMenuItem->Size = System::Drawing::Size(99, 22);
-			this->aNDToolStripMenuItem->Text = L"AND";
-			// 
-			// boolean_not
-			// 
-			this->boolean_not->Name = L"boolean_not";
-			this->boolean_not->Size = System::Drawing::Size(99, 22);
-			this->boolean_not->Text = L"NOT";
-			// 
-			// boolean_or
-			// 
-			this->boolean_or->Name = L"boolean_or";
-			this->boolean_or->Size = System::Drawing::Size(99, 22);
-			this->boolean_or->Text = L"OR";
-			// 
-			// boolean_xor
-			// 
-			this->boolean_xor->Name = L"boolean_xor";
-			this->boolean_xor->Size = System::Drawing::Size(99, 22);
-			this->boolean_xor->Text = L"XOR";
-			// 
-			// geometry_translation
-			// 
-			this->geometry_translation->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(4) {
-				this->translationToolStripMenuItem,
+			this->geometry_menu->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(4) {
+				this->geometry_translation_,
 					this->geometry_rotation, this->geometry_flipping, this->geometry_zooming
 			});
-			this->geometry_translation->Name = L"geometry_translation";
-			this->geometry_translation->Size = System::Drawing::Size(183, 22);
-			this->geometry_translation->Text = L"Geometry";
+			this->geometry_menu->Name = L"geometry_menu";
+			this->geometry_menu->Size = System::Drawing::Size(183, 22);
+			this->geometry_menu->Text = L"Geometry";
 			// 
-			// translationToolStripMenuItem
+			// geometry_translation_
 			// 
-			this->translationToolStripMenuItem->Name = L"translationToolStripMenuItem";
-			this->translationToolStripMenuItem->Size = System::Drawing::Size(131, 22);
-			this->translationToolStripMenuItem->Text = L"Translation";
+			this->geometry_translation_->Name = L"geometry_translation_";
+			this->geometry_translation_->Size = System::Drawing::Size(131, 22);
+			this->geometry_translation_->Text = L"Translation";
+			this->geometry_translation_->Click += gcnew System::EventHandler(this, &MyForm::geometry_translation__Click);
 			// 
 			// geometry_rotation
 			// 
 			this->geometry_rotation->Name = L"geometry_rotation";
 			this->geometry_rotation->Size = System::Drawing::Size(131, 22);
 			this->geometry_rotation->Text = L"Rotation";
+			this->geometry_rotation->Click += gcnew System::EventHandler(this, &MyForm::geometry_rotation_Click);
 			// 
 			// geometry_flipping
 			// 
 			this->geometry_flipping->Name = L"geometry_flipping";
 			this->geometry_flipping->Size = System::Drawing::Size(131, 22);
 			this->geometry_flipping->Text = L"Flipping";
+			this->geometry_flipping->Click += gcnew System::EventHandler(this, &MyForm::geometry_flipping_Click);
 			// 
 			// geometry_zooming
 			// 
 			this->geometry_zooming->Name = L"geometry_zooming";
 			this->geometry_zooming->Size = System::Drawing::Size(131, 22);
 			this->geometry_zooming->Text = L"Zooming";
+			this->geometry_zooming->Click += gcnew System::EventHandler(this, &MyForm::geometry_zooming_Click);
 			// 
 			// imageEnhancementToolStripMenuItem
 			// 
@@ -474,60 +447,70 @@ private: System::Windows::Forms::ToolStripMenuItem^ negative_transformation;
 			this->image_enhancement_image_brightening->Name = L"image_enhancement_image_brightening";
 			this->image_enhancement_image_brightening->Size = System::Drawing::Size(217, 22);
 			this->image_enhancement_image_brightening->Text = L"Image Brightening";
+			this->image_enhancement_image_brightening->Click += gcnew System::EventHandler(this, &MyForm::image_enhancement_image_brightening_Click);
 			// 
 			// image_enhancement_constrast_stretching
 			// 
 			this->image_enhancement_constrast_stretching->Name = L"image_enhancement_constrast_stretching";
 			this->image_enhancement_constrast_stretching->Size = System::Drawing::Size(217, 22);
 			this->image_enhancement_constrast_stretching->Text = L"Contrast Stretching";
+			this->image_enhancement_constrast_stretching->Click += gcnew System::EventHandler(this, &MyForm::image_enhancement_constrast_stretching_Click);
 			// 
 			// image_enhancement_log_transformation
 			// 
 			this->image_enhancement_log_transformation->Name = L"image_enhancement_log_transformation";
 			this->image_enhancement_log_transformation->Size = System::Drawing::Size(217, 22);
 			this->image_enhancement_log_transformation->Text = L"Log Transformation";
+			this->image_enhancement_log_transformation->Click += gcnew System::EventHandler(this, &MyForm::image_enhancement_log_transformation_Click);
 			// 
 			// image_enhancement_inverse_log_transformation
 			// 
 			this->image_enhancement_inverse_log_transformation->Name = L"image_enhancement_inverse_log_transformation";
 			this->image_enhancement_inverse_log_transformation->Size = System::Drawing::Size(217, 22);
 			this->image_enhancement_inverse_log_transformation->Text = L"Inverse Log Transformation";
+			this->image_enhancement_inverse_log_transformation->Click += gcnew System::EventHandler(this, &MyForm::image_enhancement_inverse_log_transformation_Click);
 			// 
 			// image_enhancement_power_transformation
 			// 
 			this->image_enhancement_power_transformation->Name = L"image_enhancement_power_transformation";
 			this->image_enhancement_power_transformation->Size = System::Drawing::Size(217, 22);
 			this->image_enhancement_power_transformation->Text = L"Power Transformation";
+			this->image_enhancement_power_transformation->Click += gcnew System::EventHandler(this, &MyForm::image_enhancement_power_transformation_Click);
 			// 
 			// image_enhancement_gray_level_slicing
 			// 
 			this->image_enhancement_gray_level_slicing->Name = L"image_enhancement_gray_level_slicing";
 			this->image_enhancement_gray_level_slicing->Size = System::Drawing::Size(217, 22);
 			this->image_enhancement_gray_level_slicing->Text = L"Gray-Level Slicing";
+			this->image_enhancement_gray_level_slicing->Click += gcnew System::EventHandler(this, &MyForm::image_enhancement_gray_level_slicing_Click);
 			// 
 			// image_enhancement_bit_plane_slicing
 			// 
 			this->image_enhancement_bit_plane_slicing->Name = L"image_enhancement_bit_plane_slicing";
 			this->image_enhancement_bit_plane_slicing->Size = System::Drawing::Size(217, 22);
 			this->image_enhancement_bit_plane_slicing->Text = L"Bit-Plane Slicing";
+			this->image_enhancement_bit_plane_slicing->Click += gcnew System::EventHandler(this, &MyForm::image_enhancement_bit_plane_slicing_Click);
 			// 
 			// image_enhancement_histogram_equalization
 			// 
 			this->image_enhancement_histogram_equalization->Name = L"image_enhancement_histogram_equalization";
 			this->image_enhancement_histogram_equalization->Size = System::Drawing::Size(217, 22);
 			this->image_enhancement_histogram_equalization->Text = L"Histogram Equalization";
+			this->image_enhancement_histogram_equalization->Click += gcnew System::EventHandler(this, &MyForm::image_enhancement_histogram_equalization_Click);
 			// 
 			// image_enhancement_histogram_specification
 			// 
 			this->image_enhancement_histogram_specification->Name = L"image_enhancement_histogram_specification";
 			this->image_enhancement_histogram_specification->Size = System::Drawing::Size(217, 22);
 			this->image_enhancement_histogram_specification->Text = L"Histogram Specification";
+			this->image_enhancement_histogram_specification->Click += gcnew System::EventHandler(this, &MyForm::image_enhancement_histogram_specification_Click);
 			// 
 			// negative_transformation
 			// 
 			this->negative_transformation->Name = L"negative_transformation";
 			this->negative_transformation->Size = System::Drawing::Size(183, 22);
 			this->negative_transformation->Text = L"Negative";
+			this->negative_transformation->Click += gcnew System::EventHandler(this, &MyForm::negative_transformation_Click);
 			// 
 			// historgramToolStripMenuItem
 			// 
@@ -573,16 +556,16 @@ private: System::Windows::Forms::ToolStripMenuItem^ negative_transformation;
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::Silver;
 			this->ClientSize = System::Drawing::Size(597, 310);
-			this->Controls->Add(this->pic_box_edited_img);
-			this->Controls->Add(this->pic_box_original_img);
+			this->Controls->Add(this->pic_box_second_img);
+			this->Controls->Add(this->pic_box_main_img);
 			this->Controls->Add(this->lbl_edited_image);
 			this->Controls->Add(this->lbl_original_img);
 			this->Controls->Add(this->menu_strip);
 			this->MainMenuStrip = this->menu_strip;
 			this->Name = L"MyForm";
 			this->Text = L"MiniPhotoshop";
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pic_box_original_img))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pic_box_edited_img))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pic_box_main_img))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pic_box_second_img))->EndInit();
 			this->menu_strip->ResumeLayout(false);
 			this->menu_strip->PerformLayout();
 			this->ResumeLayout(false);
@@ -591,242 +574,1264 @@ private: System::Windows::Forms::ToolStripMenuItem^ negative_transformation;
 		}
 #pragma endregion
 
-	Image^ img_original;
-	int** arrayRedOriginal;
-	int** arrayGreenOriginal;
-	int** arrayBlueOriginal;
+	//[INTERFACE]
+	private: System::Void open_image_Click(System::Object^ sender, System::EventArgs^ e) {
+		OpenImage();
+	}
 
-	Image^ img_edited;
-	int** arrayRedEdited;
-	int** arrayGreenEdited;
-	int** arrayBlueEdited;
+	private: System::Void show_histogram_Click(System::Object^ sender, System::EventArgs^ e) {
+		ShowHistogram();
+	}
 
-	void Image2Array_Original() {
-		double fileWidth = img_original->Width;
-		double fileHeight = img_original->Height;
-		arrayRedOriginal = new int* [fileWidth];
-		arrayGreenOriginal = new int* [fileWidth];
-		arrayBlueOriginal = new int* [fileWidth];
+	private: System::Void reset_image_Click(System::Object^ sender, System::EventArgs^ e) {
+		ResetImage();
+	}
+
+	private: System::Void save_image_Click(System::Object^ sender, System::EventArgs^ e) {
+		SaveImage();
+	}
+
+	private: System::Void change_second_image_Click(System::Object^ sender, System::EventArgs^ e) {
+		ChangeSecondImage();
+	}
+
+	private: System::Void show_image_info_Click(System::Object^ sender, System::EventArgs^ e) {
+		ShowImageInfo();
+	}
+
+		   // Edit Image
+	private: System::Void gray_scale_Click(System::Object^ sender, System::EventArgs^ e) {
+		GrayScale();
+	}
+
+	private: System::Void image_brightening_scalar_addition_Click(System::Object^ sender, System::EventArgs^ e) {
+		ImageBrightening_ScalarAddition();
+	}
+
+	private: System::Void image_brightening_scalar_multiplication_Click(System::Object^ sender, System::EventArgs^ e) {
+		ImageBrightening_ScalarMultiplication();
+	}
+
+	private: System::Void aritmethic_addition_Click(System::Object^ sender, System::EventArgs^ e) {
+		Arithmethic_Addition();
+	}
+
+	private: System::Void aritmethic_subtraction_Click(System::Object^ sender, System::EventArgs^ e) {
+		Arithmethic_Subtraction();
+	}
+
+	private: System::Void aritmethic_multiplication_Click(System::Object^ sender, System::EventArgs^ e) {
+		Arithmethic_Multiplication();
+	}
+
+	private: System::Void aritmethic_division_Click(System::Object^ sender, System::EventArgs^ e) {
+		Arithmethic_Division();
+	}
+
+	private: System::Void boolean_and__Click(System::Object^ sender, System::EventArgs^ e) {
+		Boolean_AND();
+	}
+
+	private: System::Void boolean_not_Click(System::Object^ sender, System::EventArgs^ e) {
+		Boolean_NOT();
+	}
+	private: System::Void boolean_or_Click(System::Object^ sender, System::EventArgs^ e) {
+		Boolean_OR();
+	}
+	private: System::Void boolean_xor_Click(System::Object^ sender, System::EventArgs^ e) {
+		Boolean_XOR();
+	}
+
+	private: System::Void geometry_translation__Click(System::Object^ sender, System::EventArgs^ e) {
+		Geometry_Translation();
+	}
+
+	private: System::Void geometry_rotation_Click(System::Object^ sender, System::EventArgs^ e) {
+		Geometry_Rotation();
+	}
+
+	private: System::Void geometry_flipping_Click(System::Object^ sender, System::EventArgs^ e) {
+		Geometry_Flipping();
+	}
+
+	private: System::Void geometry_zooming_Click(System::Object^ sender, System::EventArgs^ e) {
+		Geometry_Zooming();
+	}
+
+	private: System::Void image_enhancement_image_brightening_Click(System::Object^ sender, System::EventArgs^ e) {
+		ImageEnhancement_ImageBrightening();
+	}
+
+	private: System::Void image_enhancement_constrast_stretching_Click(System::Object^ sender, System::EventArgs^ e) {
+		ImageEnhancement_ConstrastStretching();
+	}
+
+	private: System::Void image_enhancement_log_transformation_Click(System::Object^ sender, System::EventArgs^ e) {
+		ImageEnhancement_LogTransformation();
+	}
+
+	private: System::Void image_enhancement_inverse_log_transformation_Click(System::Object^ sender, System::EventArgs^ e) {
+		ImageEnhancement_InverseLogTransformation();
+	}
+
+	private: System::Void image_enhancement_power_transformation_Click(System::Object^ sender, System::EventArgs^ e) {
+		ImageEnhancement_PowerTransformation();
+	}
+
+	private: System::Void image_enhancement_gray_level_slicing_Click(System::Object^ sender, System::EventArgs^ e) {
+		ImageEnhancement_GrayLevelSlicing();
+	}
+
+	private: System::Void image_enhancement_bit_plane_slicing_Click(System::Object^ sender, System::EventArgs^ e) {
+		ImageEnhancement_BitPlaneSlicing();
+	}
+
+	private: System::Void image_enhancement_histogram_equalization_Click(System::Object^ sender, System::EventArgs^ e) {
+		ImageEnhancement_HistogramEqualization();
+	}
+
+	private: System::Void image_enhancement_histogram_specification_Click(System::Object^ sender, System::EventArgs^ e) {
+		ImageEnhancement_HistogramSpecification();
+	}
+
+	private: System::Void negative_transformation_Click(System::Object^ sender, System::EventArgs^ e) {
+		NegativeTransformation();
+	}
+
+	//[MAIN]
+	Bitmap^ bitmapMainImage;
+	Bitmap^ bitmapMainOriginalImage;
+	Bitmap^ bitmapSecondImage;
+
+	//[IMAGE PROCESSING]
+	Bitmap^ Image_GrayScale(Bitmap^ bmp_input) {
+		// SetUp
+		double fileWidth = bmp_input->Width;
+		double fileHeight = bmp_input->Height;
+		int** arrayRed = new int* [fileWidth];
+		int** arrayGreen = new int* [fileWidth];
+		int** arrayBlue = new int* [fileWidth]; 
 		for (int i = 0; i < fileWidth; i++) {
-			arrayRedOriginal[i] = new int[fileHeight];
-			arrayGreenOriginal[i] = new int[fileHeight];
-			arrayBlueOriginal[i] = new int[fileHeight];
+			arrayRed[i] = new int[fileHeight];
+			arrayGreen[i] = new int[fileHeight];
+			arrayBlue[i] = new int[fileHeight];
 		}
-
-		Bitmap^ bmp = gcnew Bitmap(img_original);
 		for (int x = 0; x < fileWidth; x++) {
 			for (int y = 0; y < fileHeight; y++) {
-				Color pxl = bmp->GetPixel(x, y);
-
-				int pxl_Red = pxl.R;
-				int pxl_Green = pxl.G;
-				int pxl_Blue = pxl.B;
-
-				arrayRedOriginal[x][y] = pxl_Red;
-				arrayGreenOriginal[x][y] = pxl_Green;
-				arrayBlueOriginal[x][y] = pxl_Blue;
+				Color pxl = bmp_input->GetPixel(x, y);
+				arrayRed[x][y] = pxl.R;
+				arrayGreen[x][y] = pxl.G;
+				arrayBlue[x][y] = pxl.B;
 			}
+		}
+
+		
+		//Update
+		Bitmap^ bitmap = gcnew Bitmap(fileWidth, fileHeight);
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				int pxl_Red = arrayRed[x][y];
+				int pxl_Green = arrayGreen[x][y];
+				int pxl_Blue = arrayBlue[x][y];
+				int pxl_Grey = (pxl_Red + pxl_Green + pxl_Blue) / 3;
+
+				Color pxl = Color::FromArgb(pxl_Grey, pxl_Grey, pxl_Grey);
+				bitmap->SetPixel(x, y, pxl);
+			}
+		}
+
+		return bitmap;
+	}
+
+	Bitmap^ Image_NegativeTransformation(Bitmap^ bmp_input) {
+		// SetUp
+		double fileWidth = bmp_input->Width;
+		double fileHeight = bmp_input->Height;
+		int** arrayRed = new int* [fileWidth];
+		int** arrayGreen = new int* [fileWidth];
+		int** arrayBlue = new int* [fileWidth];
+		for (int i = 0; i < fileWidth; i++) {
+			arrayRed[i] = new int[fileHeight];
+			arrayGreen[i] = new int[fileHeight];
+			arrayBlue[i] = new int[fileHeight];
+		}
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				Color pxl = bmp_input->GetPixel(x, y);
+				arrayRed[x][y] = pxl.R;
+				arrayGreen[x][y] = pxl.G;
+				arrayBlue[x][y] = pxl.B;
+			}
+		}
+
+		//Update
+		Bitmap^ bitmap = gcnew Bitmap(fileWidth, fileHeight);
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				int pxl_Red = 255 - arrayRed[x][y];
+				int pxl_Green = 255 - arrayGreen[x][y];
+				int pxl_Blue = 255 - arrayBlue[x][y];
+
+				Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
+				bitmap->SetPixel(x, y, pxl);
+			}
+		}
+
+		return bitmap;
+	}
+
+	Bitmap^ Image_ImageBrightening_ScalarAddition(Bitmap^ bmp_input, int value) {
+		// SetUp
+		double fileWidth = bmp_input->Width;
+		double fileHeight = bmp_input->Height;
+		int** arrayRed = new int* [fileWidth];
+		int** arrayGreen = new int* [fileWidth];
+		int** arrayBlue = new int* [fileWidth];
+		for (int i = 0; i < fileWidth; i++) {
+			arrayRed[i] = new int[fileHeight];
+			arrayGreen[i] = new int[fileHeight];
+			arrayBlue[i] = new int[fileHeight];
+		}
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				Color pxl = bmp_input->GetPixel(x, y);
+				arrayRed[x][y] = pxl.R;
+				arrayGreen[x][y] = pxl.G;
+				arrayBlue[x][y] = pxl.B;
+			}
+		}
+
+		//Update
+		Bitmap^ bitmap = gcnew Bitmap(fileWidth, fileHeight);
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				int pxl_Red = arrayRed[x][y] + value;
+				int pxl_Green = arrayGreen[x][y] + value;
+				int pxl_Blue = arrayBlue[x][y] + value;
+
+				if (pxl_Red > 255) { pxl_Red = 255; }
+				if (pxl_Green > 255) { pxl_Green = 255; }
+				if (pxl_Blue > 255) { pxl_Blue = 255; }
+
+				if (pxl_Red < 0) { pxl_Red = 0; }
+				if (pxl_Green < 0) { pxl_Green = 0; }
+				if (pxl_Blue < 0) { pxl_Blue = 0; }
+
+				Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
+				bitmap->SetPixel(x, y, pxl);
+			}
+		}
+
+		return bitmap;
+	}
+
+	Bitmap^ Image_ImageBrightening_ScalarMultiplication(Bitmap^ bmp_input, int value) {
+		// SetUp
+		double fileWidth = bmp_input->Width;
+		double fileHeight = bmp_input->Height;
+		int** arrayRed = new int* [fileWidth];
+		int** arrayGreen = new int* [fileWidth];
+		int** arrayBlue = new int* [fileWidth];
+		for (int i = 0; i < fileWidth; i++) {
+			arrayRed[i] = new int[fileHeight];
+			arrayGreen[i] = new int[fileHeight];
+			arrayBlue[i] = new int[fileHeight];
+		}
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				Color pxl = bmp_input->GetPixel(x, y);
+				arrayRed[x][y] = pxl.R;
+				arrayGreen[x][y] = pxl.G;
+				arrayBlue[x][y] = pxl.B;
+			}
+		}
+
+		//Update
+		Bitmap^ bitmap = gcnew Bitmap(fileWidth, fileHeight);
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				int pxl_Red = arrayRed[x][y] * value;
+				int pxl_Green = arrayGreen[x][y] * value;
+				int pxl_Blue = arrayBlue[x][y] * value;
+
+				if (pxl_Red > 255) { pxl_Red = 255; }
+				if (pxl_Green > 255) { pxl_Green = 255; }
+				if (pxl_Blue > 255) { pxl_Blue = 255; }
+
+				if (pxl_Red < 0) { pxl_Red = 0; }
+				if (pxl_Green < 0) { pxl_Green = 0; }
+				if (pxl_Blue < 0) { pxl_Blue = 0; }
+
+				Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
+				bitmap->SetPixel(x, y, pxl);
+			}
+		}
+
+		return bitmap;
+	}
+
+	Bitmap^ Image_Arithmethic_Addition(Bitmap^ bmp_input, Bitmap^ bmp_second_input) {
+		// SetUp Arr Input
+		double fileWidth = bmp_input->Width;
+		double fileHeight = bmp_input->Height;
+		int** arrayRed = new int* [fileWidth];
+		int** arrayGreen = new int* [fileWidth];
+		int** arrayBlue = new int* [fileWidth];
+		for (int i = 0; i < fileWidth; i++) {
+			arrayRed[i] = new int[fileHeight];
+			arrayGreen[i] = new int[fileHeight];
+			arrayBlue[i] = new int[fileHeight];
+		}
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				Color pxl = bmp_input->GetPixel(x, y);
+				arrayRed[x][y] = pxl.R;
+				arrayGreen[x][y] = pxl.G;
+				arrayBlue[x][y] = pxl.B;
+			}
+		}
+
+		// SetUp Arr Second Input
+		int** arrayRedSecond = new int* [fileWidth];
+		int** arrayGreenSecond = new int* [fileWidth];
+		int** arrayBlueSecond = new int* [fileWidth];
+		for (int i = 0; i < fileWidth; i++) {
+			arrayRedSecond[i] = new int[fileHeight];
+			arrayGreenSecond[i] = new int[fileHeight];
+			arrayBlueSecond[i] = new int[fileHeight];
+		}
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				Color pxl = bmp_second_input->GetPixel(x, y);
+				arrayRedSecond[x][y] = pxl.R;
+				arrayGreenSecond[x][y] = pxl.G;
+				arrayBlueSecond[x][y] = pxl.B;
+			}
+		}
+
+		//Update
+		Bitmap^ bitmap = gcnew Bitmap(fileWidth, fileHeight);
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				int pxl_Red = arrayRed[x][y] + arrayRedSecond[x][y];
+				int pxl_Green = arrayGreen[x][y] + arrayGreenSecond[x][y];
+				int pxl_Blue = arrayBlue[x][y] + arrayBlueSecond[x][y];
+
+				if (pxl_Red > 255) { pxl_Red = 255; }
+				if (pxl_Green > 255) { pxl_Green = 255; }
+				if (pxl_Blue > 255) { pxl_Blue = 255; }
+
+				if (pxl_Red < 0) { pxl_Red = 0; }
+				if (pxl_Green < 0) { pxl_Green = 0; }
+				if (pxl_Blue < 0) { pxl_Blue = 0; }
+
+				Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
+				bitmap->SetPixel(x, y, pxl);
+			}
+		}
+
+		return bitmap;
+	}
+
+	Bitmap^ Image_Arithmethic_Subtraction(Bitmap^ bmp_input, Bitmap^ bmp_second_input) {
+		// SetUp Arr Input
+		double fileWidth = bmp_input->Width;
+		double fileHeight = bmp_input->Height;
+		int** arrayRed = new int* [fileWidth];
+		int** arrayGreen = new int* [fileWidth];
+		int** arrayBlue = new int* [fileWidth];
+		for (int i = 0; i < fileWidth; i++) {
+			arrayRed[i] = new int[fileHeight];
+			arrayGreen[i] = new int[fileHeight];
+			arrayBlue[i] = new int[fileHeight];
+		}
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				Color pxl = bmp_input->GetPixel(x, y);
+				arrayRed[x][y] = pxl.R;
+				arrayGreen[x][y] = pxl.G;
+				arrayBlue[x][y] = pxl.B;
+			}
+		}
+
+		// SetUp Arr Second Input
+		int** arrayRedSecond = new int* [fileWidth];
+		int** arrayGreenSecond = new int* [fileWidth];
+		int** arrayBlueSecond = new int* [fileWidth];
+		for (int i = 0; i < fileWidth; i++) {
+			arrayRedSecond[i] = new int[fileHeight];
+			arrayGreenSecond[i] = new int[fileHeight];
+			arrayBlueSecond[i] = new int[fileHeight];
+		}
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				Color pxl = bmp_second_input->GetPixel(x, y);
+				arrayRedSecond[x][y] = pxl.R;
+				arrayGreenSecond[x][y] = pxl.G;
+				arrayBlueSecond[x][y] = pxl.B;
+			}
+		}
+
+		//Update
+		Bitmap^ bitmap = gcnew Bitmap(fileWidth, fileHeight);
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				int pxl_Red = arrayRed[x][y] - arrayRedSecond[x][y];
+				int pxl_Green = arrayGreen[x][y] - arrayGreenSecond[x][y];
+				int pxl_Blue = arrayBlue[x][y] - arrayBlueSecond[x][y];
+
+				if (pxl_Red > 255) { pxl_Red = 255; }
+				if (pxl_Green > 255) { pxl_Green = 255; }
+				if (pxl_Blue > 255) { pxl_Blue = 255; }
+
+				if (pxl_Red < 0) { pxl_Red = 0; }
+				if (pxl_Green < 0) { pxl_Green = 0; }
+				if (pxl_Blue < 0) { pxl_Blue = 0; }
+
+				Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
+				bitmap->SetPixel(x, y, pxl);
+			}
+		}
+
+		return bitmap;
+	}
+
+	Bitmap^ Image_Arithmethic_Multiplication(Bitmap^ bmp_input, Bitmap^ bmp_second_input) {
+		// SetUp Arr Input
+		double fileWidth = bmp_input->Width;
+		double fileHeight = bmp_input->Height;
+		int** arrayRed = new int* [fileWidth];
+		int** arrayGreen = new int* [fileWidth];
+		int** arrayBlue = new int* [fileWidth];
+		for (int i = 0; i < fileWidth; i++) {
+			arrayRed[i] = new int[fileHeight];
+			arrayGreen[i] = new int[fileHeight];
+			arrayBlue[i] = new int[fileHeight];
+		}
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				Color pxl = bmp_input->GetPixel(x, y);
+				arrayRed[x][y] = pxl.R;
+				arrayGreen[x][y] = pxl.G;
+				arrayBlue[x][y] = pxl.B;
+			}
+		}
+
+		// SetUp Arr Second Input
+		int** arrayRedSecond = new int* [fileWidth];
+		int** arrayGreenSecond = new int* [fileWidth];
+		int** arrayBlueSecond = new int* [fileWidth];
+		for (int i = 0; i < fileWidth; i++) {
+			arrayRedSecond[i] = new int[fileHeight];
+			arrayGreenSecond[i] = new int[fileHeight];
+			arrayBlueSecond[i] = new int[fileHeight];
+		}
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				Color pxl = bmp_second_input->GetPixel(x, y);
+				arrayRedSecond[x][y] = pxl.R;
+				arrayGreenSecond[x][y] = pxl.G;
+				arrayBlueSecond[x][y] = pxl.B;
+			}
+		}
+
+		//Update
+		Bitmap^ bitmap = gcnew Bitmap(fileWidth, fileHeight);
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				int pxl_Red = arrayRed[x][y] * arrayRedSecond[x][y];
+				int pxl_Green = arrayGreen[x][y] * arrayGreenSecond[x][y];
+				int pxl_Blue = arrayBlue[x][y] * arrayBlueSecond[x][y];
+
+				if (pxl_Red > 255) { pxl_Red = 255; }
+				if (pxl_Green > 255) { pxl_Green = 255; }
+				if (pxl_Blue > 255) { pxl_Blue = 255; }
+
+				if (pxl_Red < 0) { pxl_Red = 0; }
+				if (pxl_Green < 0) { pxl_Green = 0; }
+				if (pxl_Blue < 0) { pxl_Blue = 0; }
+
+				Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
+				bitmap->SetPixel(x, y, pxl);
+			}
+		}
+
+		return bitmap;
+	}
+
+	Bitmap^ Image_Arithmethic_Division(Bitmap^ bmp_input, Bitmap^ bmp_second_input) {
+		// SetUp Arr Input
+		double fileWidth = bmp_input->Width;
+		double fileHeight = bmp_input->Height;
+		int** arrayRed = new int* [fileWidth];
+		int** arrayGreen = new int* [fileWidth];
+		int** arrayBlue = new int* [fileWidth];
+		for (int i = 0; i < fileWidth; i++) {
+			arrayRed[i] = new int[fileHeight];
+			arrayGreen[i] = new int[fileHeight];
+			arrayBlue[i] = new int[fileHeight];
+		}
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				Color pxl = bmp_input->GetPixel(x, y);
+				arrayRed[x][y] = pxl.R;
+				arrayGreen[x][y] = pxl.G;
+				arrayBlue[x][y] = pxl.B;
+			}
+		}
+
+		// SetUp Arr Second Input
+		int** arrayRedSecond = new int* [fileWidth];
+		int** arrayGreenSecond = new int* [fileWidth];
+		int** arrayBlueSecond = new int* [fileWidth];
+		for (int i = 0; i < fileWidth; i++) {
+			arrayRedSecond[i] = new int[fileHeight];
+			arrayGreenSecond[i] = new int[fileHeight];
+			arrayBlueSecond[i] = new int[fileHeight];
+		}
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				Color pxl = bmp_second_input->GetPixel(x, y);
+				arrayRedSecond[x][y] = pxl.R;
+				arrayGreenSecond[x][y] = pxl.G;
+				arrayBlueSecond[x][y] = pxl.B;
+			}
+		}
+
+		//Update
+		Bitmap^ bitmap = gcnew Bitmap(fileWidth, fileHeight);
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				int pxl_Red;
+				int pxl_Green;
+				int pxl_Blue;
+				if (arrayRedSecond[x][y] == 0) {
+					pxl_Red = 255;
+				}
+				else {
+					pxl_Red = arrayRed[x][y] / arrayRedSecond[x][y];
+				}
+
+				if (arrayGreenSecond[x][y] == 0) {
+					pxl_Green = 255;
+				}
+				else {
+					pxl_Green = arrayGreen[x][y] / arrayGreenSecond[x][y];
+				}
+
+				if (arrayBlueSecond[x][y] == 0) {
+					pxl_Blue = 255;
+				}
+				else {
+					pxl_Blue = arrayBlue[x][y] / arrayBlueSecond[x][y];
+				}
+
+				if (pxl_Red > 255) { pxl_Red = 255; }
+				if (pxl_Green > 255) { pxl_Green = 255; }
+				if (pxl_Blue > 255) { pxl_Blue = 255; }
+
+				if (pxl_Red < 0) { pxl_Red = 0; }
+				if (pxl_Green < 0) { pxl_Green = 0; }
+				if (pxl_Blue < 0) { pxl_Blue = 0; }
+
+				Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
+				bitmap->SetPixel(x, y, pxl);
+			}
+		}
+
+		return bitmap;
+	}
+
+	Bitmap^ Image_Boolean_AND(Bitmap^ bmp_input, Bitmap^ bmp_second_input) {
+		// SetUp Arr Input
+		double fileWidth = bmp_input->Width;
+		double fileHeight = bmp_input->Height;
+		int** arrayRed = new int* [fileWidth];
+		int** arrayGreen = new int* [fileWidth];
+		int** arrayBlue = new int* [fileWidth];
+		for (int i = 0; i < fileWidth; i++) {
+			arrayRed[i] = new int[fileHeight];
+			arrayGreen[i] = new int[fileHeight];
+			arrayBlue[i] = new int[fileHeight];
+		}
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				Color pxl = bmp_input->GetPixel(x, y);
+				arrayRed[x][y] = pxl.R;
+				arrayGreen[x][y] = pxl.G;
+				arrayBlue[x][y] = pxl.B;
+			}
+		}
+
+		// SetUp Arr Second Input
+		int** arrayRedSecond = new int* [fileWidth];
+		int** arrayGreenSecond = new int* [fileWidth];
+		int** arrayBlueSecond = new int* [fileWidth];
+		for (int i = 0; i < fileWidth; i++) {
+			arrayRedSecond[i] = new int[fileHeight];
+			arrayGreenSecond[i] = new int[fileHeight];
+			arrayBlueSecond[i] = new int[fileHeight];
+		}
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				Color pxl = bmp_second_input->GetPixel(x, y);
+				arrayRedSecond[x][y] = pxl.R;
+				arrayGreenSecond[x][y] = pxl.G;
+				arrayBlueSecond[x][y] = pxl.B;
+			}
+		}
+
+		//Update
+		Bitmap^ bitmap = gcnew Bitmap(fileWidth, fileHeight);
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				int pxl_Red = arrayRed[x][y] & arrayRedSecond[x][y];
+				int pxl_Green = arrayGreen[x][y] & arrayGreenSecond[x][y];
+				int pxl_Blue = arrayBlue[x][y] & arrayBlueSecond[x][y];
+
+				if (pxl_Red > 255) { pxl_Red = 255; }
+				if (pxl_Green > 255) { pxl_Green = 255; }
+				if (pxl_Blue > 255) { pxl_Blue = 255; }
+
+				if (pxl_Red < 0) { pxl_Red = 0; }
+				if (pxl_Green < 0) { pxl_Green = 0; }
+				if (pxl_Blue < 0) { pxl_Blue = 0; }
+
+				Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
+				bitmap->SetPixel(x, y, pxl);
+			}
+		}
+
+		return bitmap;
+	}
+
+	Bitmap^ Image_Boolean_NOT(Bitmap^ bmp_input) {
+		// SetUp
+		double fileWidth = bmp_input->Width;
+		double fileHeight = bmp_input->Height;
+		int** arrayRed = new int* [fileWidth];
+		int** arrayGreen = new int* [fileWidth];
+		int** arrayBlue = new int* [fileWidth];
+		for (int i = 0; i < fileWidth; i++) {
+			arrayRed[i] = new int[fileHeight];
+			arrayGreen[i] = new int[fileHeight];
+			arrayBlue[i] = new int[fileHeight];
+		}
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				Color pxl = bmp_input->GetPixel(x, y);
+				arrayRed[x][y] = pxl.R;
+				arrayGreen[x][y] = pxl.G;
+				arrayBlue[x][y] = pxl.B;
+			}
+		}
+
+
+		//Update
+		Bitmap^ bitmap = gcnew Bitmap(fileWidth, fileHeight);
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				int pxl_Red = ~arrayRed[x][y];
+				int pxl_Green = ~arrayGreen[x][y];
+				int pxl_Blue = ~arrayBlue[x][y];
+
+				if (pxl_Red > 255) { pxl_Red = 255; }
+				if (pxl_Green > 255) { pxl_Green = 255; }
+				if (pxl_Blue > 255) { pxl_Blue = 255; }
+
+				if (pxl_Red < 0) { pxl_Red = 0; }
+				if (pxl_Green < 0) { pxl_Green = 0; }
+				if (pxl_Blue < 0) { pxl_Blue = 0; }
+
+				Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
+				bitmap->SetPixel(x, y, pxl);
+			}
+		}
+
+		return bitmap;
+	}
+
+	Bitmap^ Image_Boolean_OR(Bitmap^ bmp_input, Bitmap^ bmp_second_input) {
+		// SetUp Arr Input
+		double fileWidth = bmp_input->Width;
+		double fileHeight = bmp_input->Height;
+		int** arrayRed = new int* [fileWidth];
+		int** arrayGreen = new int* [fileWidth];
+		int** arrayBlue = new int* [fileWidth];
+		for (int i = 0; i < fileWidth; i++) {
+			arrayRed[i] = new int[fileHeight];
+			arrayGreen[i] = new int[fileHeight];
+			arrayBlue[i] = new int[fileHeight];
+		}
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				Color pxl = bmp_input->GetPixel(x, y);
+				arrayRed[x][y] = pxl.R;
+				arrayGreen[x][y] = pxl.G;
+				arrayBlue[x][y] = pxl.B;
+			}
+		}
+
+		// SetUp Arr Second Input
+		int** arrayRedSecond = new int* [fileWidth];
+		int** arrayGreenSecond = new int* [fileWidth];
+		int** arrayBlueSecond = new int* [fileWidth];
+		for (int i = 0; i < fileWidth; i++) {
+			arrayRedSecond[i] = new int[fileHeight];
+			arrayGreenSecond[i] = new int[fileHeight];
+			arrayBlueSecond[i] = new int[fileHeight];
+		}
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				Color pxl = bmp_second_input->GetPixel(x, y);
+				arrayRedSecond[x][y] = pxl.R;
+				arrayGreenSecond[x][y] = pxl.G;
+				arrayBlueSecond[x][y] = pxl.B;
+			}
+		}
+
+		//Update
+		Bitmap^ bitmap = gcnew Bitmap(fileWidth, fileHeight);
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				int pxl_Red = arrayRed[x][y] | arrayRedSecond[x][y];
+				int pxl_Green = arrayGreen[x][y] | arrayGreenSecond[x][y];
+				int pxl_Blue = arrayBlue[x][y] | arrayBlueSecond[x][y];
+
+				if (pxl_Red > 255) { pxl_Red = 255; }
+				if (pxl_Green > 255) { pxl_Green = 255; }
+				if (pxl_Blue > 255) { pxl_Blue = 255; }
+
+				if (pxl_Red < 0) { pxl_Red = 0; }
+				if (pxl_Green < 0) { pxl_Green = 0; }
+				if (pxl_Blue < 0) { pxl_Blue = 0; }
+
+				Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
+				bitmap->SetPixel(x, y, pxl);
+			}
+		}
+
+		return bitmap;
+	}
+
+	Bitmap^ Image_Boolean_XOR(Bitmap^ bmp_input, Bitmap^ bmp_second_input) {
+		// SetUp Arr Input
+		double fileWidth = bmp_input->Width;
+		double fileHeight = bmp_input->Height;
+		int** arrayRed = new int* [fileWidth];
+		int** arrayGreen = new int* [fileWidth];
+		int** arrayBlue = new int* [fileWidth];
+		for (int i = 0; i < fileWidth; i++) {
+			arrayRed[i] = new int[fileHeight];
+			arrayGreen[i] = new int[fileHeight];
+			arrayBlue[i] = new int[fileHeight];
+		}
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				Color pxl = bmp_input->GetPixel(x, y);
+				arrayRed[x][y] = pxl.R;
+				arrayGreen[x][y] = pxl.G;
+				arrayBlue[x][y] = pxl.B;
+			}
+		}
+
+		// SetUp Arr Second Input
+		int** arrayRedSecond = new int* [fileWidth];
+		int** arrayGreenSecond = new int* [fileWidth];
+		int** arrayBlueSecond = new int* [fileWidth];
+		for (int i = 0; i < fileWidth; i++) {
+			arrayRedSecond[i] = new int[fileHeight];
+			arrayGreenSecond[i] = new int[fileHeight];
+			arrayBlueSecond[i] = new int[fileHeight];
+		}
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				Color pxl = bmp_second_input->GetPixel(x, y);
+				arrayRedSecond[x][y] = pxl.R;
+				arrayGreenSecond[x][y] = pxl.G;
+				arrayBlueSecond[x][y] = pxl.B;
+			}
+		}
+
+		//Update
+		Bitmap^ bitmap = gcnew Bitmap(fileWidth, fileHeight);
+		for (int x = 0; x < fileWidth; x++) {
+			for (int y = 0; y < fileHeight; y++) {
+				int pxl_Red = arrayRed[x][y] ^ arrayRedSecond[x][y];
+				int pxl_Green = arrayGreen[x][y] ^ arrayGreenSecond[x][y];
+				int pxl_Blue = arrayBlue[x][y] ^ arrayBlueSecond[x][y];
+
+				if (pxl_Red > 255) { pxl_Red = 255; }
+				if (pxl_Green > 255) { pxl_Green = 255; }
+				if (pxl_Blue > 255) { pxl_Blue = 255; }
+
+				if (pxl_Red < 0) { pxl_Red = 0; }
+				if (pxl_Green < 0) { pxl_Green = 0; }
+				if (pxl_Blue < 0) { pxl_Blue = 0; }
+
+				Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
+				bitmap->SetPixel(x, y, pxl);
+			}
+		}
+
+		return bitmap;
+	}
+
+	//[PRIMITIVE FUNCTION]
+	bool isNumeric(const std::string& s)
+	{
+		std::string::const_iterator it = s.begin();
+		while (it != s.end() && std::isdigit(*it)) ++it;
+		return !s.empty() && it == s.end();
+	}
+
+	//// String to std::string
+	std::string convertTostring(String^ input) {
+		std::string output = marshal_as<std::string>(input);
+		return output;
+	}
+
+	//// std::string to int
+	int convertToInteger(std::string input) {
+		int value = std::stoi(input);
+		return value;
+	}
+
+	//// String to int
+	int convertToInteger(String^ input) {
+		std::string standardString = convertTostring(input);
+		int value = std::stoi(standardString);
+		return value;
+	}
+
+	boolean CheckSizeBitmap(Bitmap^ bmp_1, Bitmap^ bmp_2) {
+		double bmp1_width = bmp_1->Width;
+		double bmp1_height = bmp_1->Height;
+
+		double bmp2_width = bmp_2->Width;
+		double bmp2_height = bmp_2->Height;
+
+		if (bmp1_width == bmp2_width && bmp1_height == bmp2_height) {
+			return true;
+		}
+		else {
+			return false;
 		}
 	}
 
-	void Image2Array_Edited() {
-		double fileWidth = img_edited->Width;
-		double fileHeight = img_edited->Height;
-		arrayRedEdited = new int* [fileWidth];
-		arrayGreenEdited = new int* [fileWidth];
-		arrayBlueEdited = new int* [fileWidth];
-		for (int i = 0; i < fileWidth; i++) {
-			arrayRedEdited[i] = new int[fileHeight];
-			arrayGreenEdited[i] = new int[fileHeight];
-			arrayBlueEdited[i] = new int[fileHeight];
-		}
-
-		Bitmap^ bmp = gcnew Bitmap(img_edited);
-		for (int x = 0; x < fileWidth; x++) {
-			for (int y = 0; y < fileHeight; y++) {
-				Color pxl = bmp->GetPixel(x, y);
-
-				int pxl_Red = pxl.R;
-				int pxl_Green = pxl.G;
-				int pxl_Blue = pxl.B;
-
-				arrayRedEdited[x][y] = pxl_Red;
-				arrayGreenEdited[x][y] = pxl_Green;
-				arrayBlueEdited[x][y] = pxl_Blue;
-			}
-		}
-	}
-
-	//Function Menu
+	//[Function Menu]
 	//// Image
 	void OpenImage() {
 		//ofd->Filter = "|*.jpg; *.jpeg; *.jpe; *.jfif; *.png";
-		ofd->Filter = "|*.bmp; *.pgm; *.pbm; *.ppm";
+		ofd->Filter = "|*.bmp; *.pgm; *.pbm; *.ppm; *.jpg";
 		if (ofd->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
-
-
-			//img_original = Image::FromFile(ofd->FileName);
-			//img_edited = Image::FromFile(ofd->FileName);
-			//Image2Array_Original();
-			//Image2Array_Edited();
-			//String^ extension_file = System::IO::Path::GetExtension(ofd->FileName);
-
-			//pic_box_original_img->Image = img_original;
-			//pic_box_edited_img->Image = img_edited;
-
-
-			ShowPlainMessageBox(ofd->FileName);
+			String^ extension_file = System::IO::Path::GetExtension(ofd->FileName);
+			std::string standardString = convertTostring(extension_file);
+			const char* ext_file = standardString.c_str();
+		
+			if (strcmp(ext_file, ".bmp") == 0) {
+				// bmp
+				Image^ imageMainImage = Image::FromFile(ofd->FileName);
+				pic_box_main_img->Image = imageMainImage;
+				bitmapMainImage = gcnew Bitmap(imageMainImage);
+				bitmapMainOriginalImage = gcnew Bitmap(imageMainImage);
+				
+				bitmapSecondImage = nullptr;
+				pic_box_second_img->Image = nullptr;
+			}
+			else if (strcmp(ext_file, ".pgm") == 0) {
+				// pgm
+			}
+			else if (strcmp(ext_file, ".pbm") == 0) {
+				// pbm
+			}
+			else if (strcmp(ext_file, ".ppm") == 0) {
+				// ppm
+			}
+			else {
+				// Raw Image
+			}
+		
 		}
 	}
 
 	void SaveImage() {
-		Bitmap^ bmp_edited = gcnew Bitmap(img_edited);
-		bmp_edited->Save("C:\\Users\\User\\Downloads\\Save_Edited.jpg");
+		if (bitmapMainImage != nullptr) {
+			String^ input = Interaction::InputBox("Image Name", "Insert Name", "Untitled", -1, -1);
+			std::string standardString = convertTostring(input);
+			bitmapMainImage->Save("C:\\Users\\User\\Downloads\\" + input + ".bmp");
+		}
+		else {
+			ShowPlainMessageBox("Please Open Image First");
+		}
 	}
 
 	void ResetImage() {
-		img_edited = img_original;
-		pic_box_edited_img->Image = img_original;
-		Image2Array_Edited();
+		if (bitmapMainImage != nullptr) {
+			bitmapMainImage = gcnew Bitmap(bitmapMainOriginalImage);
+			pic_box_main_img->Image = bitmapMainImage;
+		}
+		else {
+			ShowPlainMessageBox("Please Open Image First");
+		}
 	}
 
 	void ChangeSecondImage() {
+		if (bitmapMainImage != nullptr) {
+			ofd->Filter = "|*.bmp; *.pgm; *.pbm; *.ppm; *.jpg";
+			if (ofd->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+				String^ extension_file = System::IO::Path::GetExtension(ofd->FileName);
+				std::string standardString = convertTostring(extension_file);
+				const char* ext_file = standardString.c_str();
 
+				if (strcmp(ext_file, ".bmp") == 0) {
+					// bmp
+					Image^ image = Image::FromFile(ofd->FileName);
+					bitmapSecondImage = gcnew Bitmap(image);
+					if (CheckSizeBitmap(bitmapMainImage, bitmapSecondImage)) {
+						pic_box_second_img->Image = image;
+					}
+					else {
+						ShowPlainMessageBox("Image's Size must be same");
+						bitmapSecondImage = nullptr;
+					}
+				}
+				else if (strcmp(ext_file, ".pgm") == 0) {
+					// pgm
+				}
+				else if (strcmp(ext_file, ".pbm") == 0) {
+					// pbm
+				}
+				else if (strcmp(ext_file, ".ppm") == 0) {
+					// ppm
+				}
+				else {
+					// Raw Image
+				}
+
+			}
+		}
+		else {
+			ShowPlainMessageBox("Insert Main Image First");
+		}
+		
 	}
 
 	void ShowImageInfo() {
-		if (img_original != nullptr) {
-			double fileWidth = img_original->Width;
-			double fileHeight = img_original->Height;
-			ShowPlainMessageBox("Width: " + fileWidth + "\n" + "Height: " + fileHeight);
-		}
+	
 	}
 
-	//// Edit Image
+	//// [Edit Image Menu]
 	void GrayScale() {
-		double fileWidth = img_edited->Width;
-		double fileHeight = img_edited->Height;
-		Bitmap^ bmp_edited = gcnew Bitmap(fileWidth, fileHeight);
-
-		for (int x = 0; x < fileWidth; x++) {
-			for (int y = 0; y < fileHeight; y++) {
-				int pxl_Red = arrayRedEdited[x][y];
-				int pxl_Green = arrayGreenEdited[x][y];
-				int pxl_Blue = arrayBlueEdited[x][y];
-				int pxl_Grey = (pxl_Red + pxl_Green + pxl_Blue) / 3;
-
-				Color pxl = Color::FromArgb(pxl_Grey, pxl_Grey, pxl_Grey);
-				bmp_edited->SetPixel(x, y, pxl);
-			}
+		if (bitmapMainImage != nullptr) {
+			bitmapMainImage = Image_GrayScale(bitmapMainImage);
+			pic_box_main_img->Image = bitmapMainImage;
 		}
-
-		pic_box_edited_img->Image = bmp_edited;
-		img_edited = bmp_edited;
-		Image2Array_Edited();
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
 	}
 
 	void NegativeTransformation() {
-
+		if (bitmapMainImage != nullptr) {
+			bitmapMainImage = Image_NegativeTransformation(bitmapMainImage);
+			pic_box_main_img->Image = bitmapMainImage;
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
 	}
 
 	void ImageBrightening_ScalarAddition() {
-
+		if (bitmapMainImage != nullptr) {
+			String^ input = Interaction::InputBox("Scalar Value", "Insert Scalar Value", "0", -1, -1);
+			std::string standardString = convertTostring(input);
+			try {
+				int value = convertToInteger(standardString);
+				bitmapMainImage = Image_ImageBrightening_ScalarAddition(bitmapMainImage,value);
+				pic_box_main_img->Image = bitmapMainImage;
+			}
+			catch (std::invalid_argument const& e)
+			{
+				ShowPlainMessageBox("Input must be numbers");
+			}
+			catch (std::out_of_range const& e)
+			{
+				ShowPlainMessageBox("Input must be numbers");
+			}
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
+		
 	}
 
 	void ImageBrightening_ScalarMultiplication() {
-
+		if (bitmapMainImage != nullptr) {
+			String^ input = Interaction::InputBox("Scalar Value", "Insert Scalar Value", "0", -1, -1);
+			std::string standardString = convertTostring(input);
+			try {
+				int value = convertToInteger(standardString);
+				bitmapMainImage = Image_ImageBrightening_ScalarMultiplication(bitmapMainImage, value);
+				pic_box_main_img->Image = bitmapMainImage;
+			}
+			catch (std::invalid_argument const& e)
+			{
+				ShowPlainMessageBox("Input must be numbers");
+			}
+			catch (std::out_of_range const& e)
+			{
+				ShowPlainMessageBox("Input must be numbers");
+			}
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
 	}
 
 	void Arithmethic_Addition() {
-
+		if (bitmapMainImage != nullptr) {
+			if (bitmapSecondImage != nullptr) {
+				bitmapMainImage = Image_Arithmethic_Addition(bitmapMainImage, bitmapSecondImage);
+				pic_box_main_img->Image = bitmapMainImage;
+			}
+			else {
+				ShowPlainMessageBox("Insert The Second Image");
+			}
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
 	}
 
 	void Arithmethic_Subtraction() {
-
+		if (bitmapMainImage != nullptr) {
+			if (bitmapSecondImage != nullptr) {
+				bitmapMainImage = Image_Arithmethic_Subtraction(bitmapMainImage, bitmapSecondImage);
+				pic_box_main_img->Image = bitmapMainImage;
+			}
+			else {
+				ShowPlainMessageBox("Insert The Second Image");
+			}
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
 	}
 
 	void Arithmethic_Multiplication() {
-
+		if (bitmapMainImage != nullptr) {
+			if (bitmapSecondImage != nullptr) {
+				bitmapMainImage = Image_Arithmethic_Multiplication(bitmapMainImage, bitmapSecondImage);
+				pic_box_main_img->Image = bitmapMainImage;
+			}
+			else {
+				ShowPlainMessageBox("Insert The Second Image");
+			}
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
 	}
 
 	void Arithmethic_Division() {
-
+		if (bitmapMainImage != nullptr) {
+			if (bitmapSecondImage != nullptr) {
+				bitmapMainImage = Image_Arithmethic_Division(bitmapMainImage, bitmapSecondImage);
+				pic_box_main_img->Image = bitmapMainImage;
+			}
+			else {
+				ShowPlainMessageBox("Insert The Second Image");
+			}
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
 	}
 
 	void Boolean_AND() {
-
+		if (bitmapMainImage != nullptr) {
+			if (bitmapSecondImage != nullptr) {
+				bitmapMainImage = Image_Boolean_AND(bitmapMainImage, bitmapSecondImage);
+				pic_box_main_img->Image = bitmapMainImage;
+			}
+			else {
+				ShowPlainMessageBox("Insert The Second Image");
+			}
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
 	}
 
 	void Boolean_NOT() {
-
+		if (bitmapMainImage != nullptr) {
+			bitmapMainImage = Image_Boolean_NOT(bitmapMainImage);
+			pic_box_main_img->Image = bitmapMainImage;
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
 	}
 
 	void Boolean_OR() {
-
+		if (bitmapMainImage != nullptr) {
+			if (bitmapSecondImage != nullptr) {
+				bitmapMainImage = Image_Boolean_OR(bitmapMainImage, bitmapSecondImage);
+				pic_box_main_img->Image = bitmapMainImage;
+			}
+			else {
+				ShowPlainMessageBox("Insert The Second Image");
+			}
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
 	}
 
 	void Boolean_XOR() {
-
+		if (bitmapMainImage != nullptr) {
+			if (bitmapSecondImage != nullptr) {
+				bitmapMainImage = Image_Boolean_XOR(bitmapMainImage, bitmapSecondImage);
+				pic_box_main_img->Image = bitmapMainImage;
+			}
+			else {
+				ShowPlainMessageBox("Insert The Second Image");
+			}
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
 	}
 
 	void Geometry_Translation() {
+		if (bitmapMainImage != nullptr) {
 
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
 	}
 
 	void Geometry_Rotation() {
+		if (bitmapMainImage != nullptr) {
 
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
 	}
 
 	void Geometry_Flipping() {
+		if (bitmapMainImage != nullptr) {
 
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
 	}
 
 	void Geometry_Zooming() {
+		if (bitmapMainImage != nullptr) {
 
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
 	}
 
 	void ImageEnhancement_ImageBrightening() {
+		if (bitmapMainImage != nullptr) {
 
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
 	}
 
 	void ImageEnhancement_ConstrastStretching() {
+		if (bitmapMainImage != nullptr) {
 
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
 	}
 
 	void ImageEnhancement_LogTransformation() {
+		if (bitmapMainImage != nullptr) {
 
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
 	}
 
 	void ImageEnhancement_InverseLogTransformation() {
+		if (bitmapMainImage != nullptr) {
 
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
 	}
 
 	void ImageEnhancement_PowerTransformation() {
+		if (bitmapMainImage != nullptr) {
 
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
 	}
 
 	void ImageEnhancement_GrayLevelSlicing() {
+		if (bitmapMainImage != nullptr) {
 
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
 	}
 
 	void ImageEnhancement_BitPlaneSlicing() {
+		if (bitmapMainImage != nullptr) {
 
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
 	}
 
 	void ImageEnhancement_HistogramEqualization() {
+		if (bitmapMainImage != nullptr) {
 
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
 	}
 
 	void ImageEnhancement_HistogramSpecification() {
+		if (bitmapMainImage != nullptr) {
 
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
 	}
 
 	//// Histogram
 	void ShowHistogram() {
-		
+		if (bitmapMainImage != nullptr) {
+
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
 	}
 
-	//Example Message Box
+	//[MESSAGE BOX]
 	void ShowInputMessageBox() {
 		String^ input = Interaction::InputBox("Brightness", "Title", "0", -1, -1);
 		std::string standardString = convertTostring(input);
@@ -854,86 +1859,7 @@ private: System::Windows::Forms::ToolStripMenuItem^ negative_transformation;
 		MessageBox::Show(str);
 	}
 
-	//Primitive Function
-	bool isNumeric(const std::string& s)
-	{
-		std::string::const_iterator it = s.begin();
-		while (it != s.end() && std::isdigit(*it)) ++it;
-		return !s.empty() && it == s.end();
-	}
-
-	//// String to std::string
-	std::string convertTostring(String^ input) {
-		std::string output = marshal_as<std::string>(input);
-		return output;
-	}
-
-	//// std::string to int
-	int convertToInteger(std::string input) {
-		int value = std::stoi(input);
-		return value;
-	}
-
-	//// String to int
-	int convertToInteger(String^ input) {
-		std::string standardString = convertTostring(input);
-		int value = std::stoi(standardString);
-		return value;
-	}
-
-	//// Recent
-	void TestStringIf() {
-		//String^ strInput = txt_name_input->Text;
-		//std::string standardString = marshal_as<std::string>(strInput);
-		//const char* converted = standardString.c_str();
-
-		//if (strcmp(converted, "gray_scale") == 0) {
-		//	Edit_GrayScale();
-		//}
-		//else {
-		//	ShowPlainMessageBox("Wrong Argument");
-		//}
-	}
-
-	//[INTERFACE]
-	private: System::Void open_image_Click(System::Object^ sender, System::EventArgs^ e) {
-		OpenImage();
-	}
-
-	private: System::Void show_histogram_Click(System::Object^ sender, System::EventArgs^ e) {
-		ShowHistogram();
-	}
-
-	private: System::Void reset_image_Click(System::Object^ sender, System::EventArgs^ e) {
-		ResetImage();
-	}
-
-	private: System::Void save_image_Click(System::Object^ sender, System::EventArgs^ e) {
-		SaveImage();
-	}
-
-	private: System::Void change_second_image_Click(System::Object^ sender, System::EventArgs^ e) {
-		ChangeSecondImage();
-	}
-
-	private: System::Void show_image_info_Click(System::Object^ sender, System::EventArgs^ e) {
-		ShowImageInfo();
-	}
-
-	private: System::Void gray_scale_Click(System::Object^ sender, System::EventArgs^ e) {
-		GrayScale();
-	}
-
-
-	private: System::Void image_brightening_scalar_addition_Click(System::Object^ sender, System::EventArgs^ e) {
-		ImageBrightening_ScalarAddition();
-	}
-
-	private: System::Void image_brightening_scalar_multiplication_Click(System::Object^ sender, System::EventArgs^ e) {
-		ImageBrightening_ScalarMultiplication();
-	}
-
-
+	
 };
 
 }
