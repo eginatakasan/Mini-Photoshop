@@ -5,7 +5,7 @@ using namespace System::Windows::Forms;
 
 [STAThread]
 
-void main(array<String^>^ args) {
+void main() {
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);
 	MiniPhotoshop::MyForm form;
