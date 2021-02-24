@@ -15,8 +15,11 @@ PBM -> Magic number 1 or 4, black and white only, 1 bit value every pixel (1 val
 class Image
 {
 protected:
+    /* Constructor */
+    Image(char *const path);
+    Image(Image *image);
+
     /* Variables */
-    Color **content;
     int magicNumber; //buat nentuin format gambar
     int maxVal;      //maximum color value for a pixel
     char *path;
@@ -30,18 +33,10 @@ protected:
 
     /* Functions */
     bool isMagicNumberValid(int magicNumber);
-    void readP6Content(istream &fp);
-    void readP3Content(istream &fp);
-    void readPBMContent(istream &fp);
-    void readPGMContent(istream &fp);
     void readHeader(istream &fp);
     void readContent(istream &fp);
 
 public:
-    /* Constructor */
-    Image();
-    Image(char *const path);
-
     /* Functions */
     void Write(char *const path);
     void ShowDetails(bool show_content);
@@ -52,7 +47,7 @@ public:
     int GetHeight();
     int GetBitPerPixel();
     long GetFileSize();
-    Color GetPixel(int x, int y);
+    int GetMagicNumber();
     /* Setter Functions */
     void SetPixel(int x, int y, Color pixel);
 };

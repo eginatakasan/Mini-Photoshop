@@ -26,21 +26,28 @@ Image::Image(char *const path)
         cerr << "File not found" << endl;
         return;
     }
-    else
-    {
-        cout << "Reading file..." << endl;
+    cout << "Reading file..." << endl;
+    readHeader(fp);
 
-        readHeader(fp);
+    //get file size
+    fp.seekg(0, std::ios::end);
+    fsize = fp.tellg() - fsize;
+    this->fileSize = fsize;
 
-        readContent(fp);
+    fp.close();
+}
 
-        //get file size
-        fp.seekg(0, std::ios::end);
-        fsize = fp.tellg() - fsize;
-        this->fileSize = fsize;
-
-        cout << "File read successfully!" << endl;
-    }
+Image::Image(Image *image)
+{
+    this->width = image->width;
+    this->height = image->height;
+    this->magicNumber = image->magicNumber;
+    this->maxVal = image->maxVal;
+    this->path = image->path;
+    this->numberOfBands = image->numberOfBands;
+    this->totalPixels = image->totalPixels;
+    this->bitPerPixel = image->bitPerPixel;
+    this->fileSize = image->fileSize;
 }
 
 void Image::readHeader(istream &fp)
@@ -92,92 +99,19 @@ void Image::readHeader(istream &fp)
     }
 }
 
-void Image::readContent(istream &fp)
-{
-    this->content = new Color *[height];
-    for (int i = 0; i < this->height; i++)
-    {
-        content[i] = new Color[width];
-    }
-
-    switch (this->magicNumber)
-    {
-    case 1: /* falls through */
-    case 4:
-        this->readPBMContent(fp);
-        break;
-    case 2: /* falls through */
-    case 5:
-        this->readPGMContent(fp);
-        break;
-    case 3:
-        this->readP3Content(fp);
-        break;
-    case 6:
-        this->readP6Content(fp);
-        break;
-    default:
-        break;
-    }
-}
-
-void Image::readP3Content(istream &fp)
-{
-    int r, g, b;
-    stringstream stream;
-    stream << fp.rdbuf();
-    for (int i = 0; i < this->height; i++)
-    {
-        for (int j = 0; j < this->width; j++)
-        {
-
-            stream >> r;
-            stream >> g;
-            stream >> b;
-            this->content[i][j] = Color(r, g, b);
-        };
-    };
-}
-
-void Image::readP6Content(istream &fp)
-{
-    int r, g, b;
-    char aux;
-    for (int i = 0; i < height; i++)
-    {
-        for (int j = 0; j < width; j++)
-        {
-            fp.read(&aux, 1);
-            r = (unsigned int)aux;
-            fp.read(&aux, 1);
-            g = (unsigned int)aux;
-            fp.read(&aux, 1);
-            b = (unsigned int)aux;
-            this->content[i][j] = Color(r, g, b);
-        }
-    }
-}
-
-void Image::readPBMContent(istream &fp)
-{
-}
-void Image::readPGMContent(istream &fp)
-{
-}
-
-void Image::Write(char *const path)
-{
-    FILE *fp;
-    fp = fopen(path, "wb");
-    if (fp == NULL)
-    {
-        cerr << "Error file cannot be saved at (" << path << ") \n";
-        exit;
-    }
-    fprintf(fp, "%s\n%d %d\n%d\n", this->magicNumber, this->width, this->height, this->maxVal);
-    fwrite(this->content, 1, this->totalPixels, fp);
-    cout << "File saved successfully at " << path << "...\n";
-}
+// void Image::Write(char *const path)
+// {
+//     FILE *fp;
+//     fp = fopen(path, "wb");
+//     if (fp == NULL)
+//     {
+//         cerr << "Error file cannot be saved at (" << path << ") \n";
+//         exit;
+//     }
+//     fprintf(fp, "%s\n%d %d\n%d\n", this->magicNumber, this->width, this->height, this->maxVal);
+//     fwrite(this->content, 1, this->totalPixels, fp);
+//     cout << "File saved successfully at " << path << "...\n";
+// }
 
 void Image::ShowDetails(bool show_content)
 {
@@ -188,25 +122,13 @@ void Image::ShowDetails(bool show_content)
     cout << "bit per pixel"
          << "\n";
     cout << "fileSize: " << this->fileSize << " B \n";
-    if (show_content)
-    {
-        for (int i = 0; i < this->height; i++)
-        {
-            for (int j = 0; j < this->width; j++)
-            {
-                Color pixel = this->content[i][j];
-                cout << pixel.R << " " << pixel.G << " " << pixel.B << "  ";
-            }
-            cout << endl;
-        }
-    }
 }
 
 int Image::GetHeight() { return this->height; }
 int Image::GetWidth() { return this->width; }
 int Image::GetBitPerPixel() { return this->bitPerPixel; }
 long Image::GetFileSize() { return this->fileSize; }
-
+int Image::GetMagicNumber() { return this->magicNumber; }
 bool Image::isMagicNumberValid(int magicNumber)
 {
     return (magicNumber >= 1) && (magicNumber <= 6);

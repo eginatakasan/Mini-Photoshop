@@ -1,1 +1,1 @@
-g++ main.cpp src/imageprocessing.cpp -o main
+g++ src/image.cpp main.cpp src/color.cpp src/ppm.cpp src/pgm.cpp src/pbm.cpp -o test
