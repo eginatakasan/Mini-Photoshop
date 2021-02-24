@@ -9,98 +9,205 @@
 
 using namespace std;
 
-Image::Image(char* const path) {
+/*
+Image class for PPM, PGM, PBM only.
+PPM -> Magic Number 3 or 6, has R G B on one pixel (3 values per pixel)
+PGM -> Magic Number 2 or 5, greyscale values only (1 value per pixel)
+PBM -> Magic number 1 or 4, black and white only, 1 bit value every pixel (1 value per pixel)
+*/
+Image::Image(char *const path)
+{
     ifstream fp(path);
-	bool isRead = false;
+    bool isRead = false;
     streampos fsize = 0;
 
-	if(!(fp && fp.is_open())){
-		cerr<<"File not found"; exit;
-	} else {
-        string line;
-		cout << "Reading file..." << endl;
-        
-        //Get magic number
-        if (getline(fp, line)) {
-            char c_line[line.length() + 1];
-            strcpy(c_line, line.c_str());
-            if (!isFormatValid(c_line)) {
-                cerr<<"Image format is not suitable, only insert PGM, PPM, PBM, BMP or raw image"; return;
-            }
-            this->magicNumber = c_line;
-        } else {
-            cerr<<"File is not readable"; return;
-        }
-        //Get width and height
-        if (getline(fp, line)) {
-            stringstream ss(line);
-            ss >> this->width;
-            ss >> this->height;
-        } else {
-            cerr<<"File is not readable"; return;
-        }
-        //Get max color value
-        if (getline(fp, line)) {
-            stringstream ss(line);
-            ss >> this->maxVal;
-        } else {
-            cerr<<"File is not readable"; return;
-        }
-        //Get image array
-        stringstream stream;
-        stream << fp.rdbuf();
-        this->content = new int*[height];
-        for(int i=0; i<this->height; i++) {
-            content[i] = new int[width];
-        }
-        for(int i=0; i<this->height; i++) {
-            for(int j=0; j<this->width; j++) {
-                stream >> this->content[i][j];
-            };
-        };
+    if (!(fp && fp.is_open()))
+    {
+        cerr << "File not found" << endl;
+        return;
+    }
+    else
+    {
+        cout << "Reading file..." << endl;
 
-        fp.seekg( 0, std::ios::end );
+        readHeader(fp);
+
+        readContent(fp);
+
+        //get file size
+        fp.seekg(0, std::ios::end);
         fsize = fp.tellg() - fsize;
-        this->filesize = fsize;
+        this->fileSize = fsize;
 
-        cout << "File read successfully!" << "\n";
-	}
+        cout << "File read successfully!" << endl;
+    }
 }
 
-void Image::write(char* const path) {
-    FILE * fp;
-	fp = fopen(path, "wb");
-	if(fp == NULL){
-		cerr<<"Error file cannot be saved at ("<< path <<") \n";
-		exit;
-	}
-	fprintf(fp, "%s\n%d %d\n%d\n",this->magicNumber,this->width, this->height, this->maxVal);
-	fwrite(this->content,1,this->pixels,fp);
-	cout<<"File saved successfully at "<<path<<"...\n";
+void Image::readHeader(istream &fp)
+{
+    string line;
+    //Get magic number
+    char c;
+    fp.read(&c, 1);
+    if (c != 'P')
+    {
+        cerr << "File is not readable" << endl;
+        return;
+    }
+    fp.read(&c, 1);
+    if (!isMagicNumberValid(c - '0'))
+    {
+        cerr << "File is not readable" << endl;
+        return;
+    }
+    this->magicNumber = c - '0';
+    getline(fp, line);
+
+    //Get width and height
+    if (getline(fp, line))
+    {
+        stringstream ss(line);
+        ss >> this->width;
+        ss >> this->height;
+    }
+    else
+    {
+        cerr << "File is not readable" << endl;
+        return;
+    }
+    //Get max color value except for PBM
+    if (this->magicNumber == 1 || this->magicNumber == 4)
+    {
+        return;
+    }
+    if (getline(fp, line))
+    {
+        stringstream ss(line);
+        ss >> this->maxVal;
+    }
+    else
+    {
+        cerr << "File is not readable" << endl;
+        return;
+    }
 }
 
-void Image::showDetails() {
+void Image::readContent(istream &fp)
+{
+    this->content = new Color *[height];
+    for (int i = 0; i < this->height; i++)
+    {
+        content[i] = new Color[width];
+    }
+
+    switch (this->magicNumber)
+    {
+    case 1: /* falls through */
+    case 4:
+        this->readPBMContent(fp);
+        break;
+    case 2: /* falls through */
+    case 5:
+        this->readPGMContent(fp);
+        break;
+    case 3:
+        this->readP3Content(fp);
+        break;
+    case 6:
+        this->readP6Content(fp);
+        break;
+    default:
+        break;
+    }
+}
+
+void Image::readP3Content(istream &fp)
+{
+    int r, g, b;
+    stringstream stream;
+    stream << fp.rdbuf();
+    for (int i = 0; i < this->height; i++)
+    {
+        for (int j = 0; j < this->width; j++)
+        {
+
+            stream >> r;
+            stream >> g;
+            stream >> b;
+            this->content[i][j] = Color(r, g, b);
+        };
+    };
+}
+
+void Image::readP6Content(istream &fp)
+{
+    int r, g, b;
+    char aux;
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            fp.read(&aux, 1);
+            r = (unsigned int)aux;
+            fp.read(&aux, 1);
+            g = (unsigned int)aux;
+            fp.read(&aux, 1);
+            b = (unsigned int)aux;
+            this->content[i][j] = Color(r, g, b);
+        }
+    }
+}
+
+void Image::readPBMContent(istream &fp)
+{
+}
+void Image::readPGMContent(istream &fp)
+{
+}
+
+void Image::Write(char *const path)
+{
+    FILE *fp;
+    fp = fopen(path, "wb");
+    if (fp == NULL)
+    {
+        cerr << "Error file cannot be saved at (" << path << ") \n";
+        exit;
+    }
+    fprintf(fp, "%s\n%d %d\n%d\n", this->magicNumber, this->width, this->height, this->maxVal);
+    fwrite(this->content, 1, this->totalPixels, fp);
+    cout << "File saved successfully at " << path << "...\n";
+}
+
+void Image::ShowDetails(bool show_content)
+{
     cout << "magic number: " << this->magicNumber << "\n";
     cout << "width: " << this->width << "px \n";
     cout << "height: " << this->height << "px \n";
     cout << "max color value: " << this->maxVal << "\n";
-    cout << "bit per pixel" << "\n";
-    cout << "filesize: " << this->filesize << "B \n";
-    for(int i=0; i<this->height; i++) {
-        for(int j=0; j<this->width; j++) {
-            cout << this->content[i][j] << " ";
+    cout << "bit per pixel"
+         << "\n";
+    cout << "fileSize: " << this->fileSize << " B \n";
+    if (show_content)
+    {
+        for (int i = 0; i < this->height; i++)
+        {
+            for (int j = 0; j < this->width; j++)
+            {
+                Color pixel = this->content[i][j];
+                cout << pixel.R << " " << pixel.G << " " << pixel.B << "  ";
+            }
+            cout << endl;
         }
-        cout << endl;
     }
 }
 
-int Image::getHeight() { return this->height; }
-int Image::getWidth() { return this->width; }
-int Image::getBitPerPixel() { return this->bitperpixel; }
-long Image::getFileSize() { return this->filesize; }
+int Image::GetHeight() { return this->height; }
+int Image::GetWidth() { return this->width; }
+int Image::GetBitPerPixel() { return this->bitPerPixel; }
+long Image::GetFileSize() { return this->fileSize; }
 
-bool Image::isFormatValid(char* magicNumber) {
-    return strcmp(magicNumber, "P1") || strcmp(magicNumber, "P4") // PBM file
-        || strcmp(magicNumber, "P2") || strcmp(magicNumber, "P5") // PGM file
-        || strcmp(magicNumber, "P3") || strcmp(magicNumber, "P6"); // PPM file
+bool Image::isMagicNumberValid(int magicNumber)
+{
+    return (magicNumber >= 1) && (magicNumber <= 6);
 }
