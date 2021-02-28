@@ -71,6 +71,11 @@ void PGM::readP5Content(istream &fp)
     }
 }
 
+int PGM::getPixel(int x, int y)
+{
+    return this->content[x][y];
+}
+
 void PGM::ShowDetails(bool show_content)
 {
     cout << "magic number: " << this->magicNumber << "\n";

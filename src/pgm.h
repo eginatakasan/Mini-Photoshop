@@ -21,6 +21,7 @@ public:
     /* Constructor */
     PGM(char *const path);
     void ShowDetails(bool show_content);
+    int getPixel(int x, int y);
 };
 
 #endif

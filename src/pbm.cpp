@@ -6,6 +6,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <bitset>
 
 using namespace std;
 
@@ -58,35 +59,34 @@ void PBM::readP1Content(istream &fp)
 
 void PBM::readP4Content(istream &fp)
 {
-    unsigned char *aux;
-    unsigned char *b;
-    int i = 0;
-    int x = 0;
-    while (!fp.eof())
+    string s;
+    int i = 0, j = 0;
+    int stringIdx = 0;
+    getline(fp, s);
+    int lineLength = s.length();
+
+    while (stringIdx < lineLength)
     {
-        fp.read(reinterpret_cast<char *>(b), sizeof(unsigned char));
-        cout
-            << *b << endl;
-        for (int a = 0; a < 8; a++)
+        string binary = bitset<8>(s[stringIdx]).to_string();
+        for (int k = 0; k < 8; k++)
         {
-            this->content[i][x] = (*b >> (7 - a)) & 0x1;
-            cout << (*b >> (7 - a)) << endl;
-            x++;
-            if (x == this->width)
+            if (j > this->width)
             {
-                x = 0;
-                a = 8;
-                if (i == this->height - 1)
-                {
-                    break;
-                }
-                else
-                {
-                    i++;
-                }
+                j = 0;
+                k = 0;
+                i++;
             }
+            const char *c = binary.c_str();
+            this->content[i][j] = c[k];
+            j++;
         }
+        stringIdx++;
     };
+}
+
+unsigned char PBM::getPixel(int x, int y)
+{
+    return this->content[x][y];
 }
 
 void PBM::ShowDetails(bool show_content)
@@ -94,7 +94,7 @@ void PBM::ShowDetails(bool show_content)
     cout << "magic number: " << this->magicNumber << "\n";
     cout << "width: " << this->width << "px \n";
     cout << "height: " << this->height << "px \n";
-    cout << "max color value: " << this->maxVal << "\n";
+    cout << "max color value: " << 1 << "\n";
     cout << "bit per pixel"
          << "\n";
     cout << "fileSize: " << this->fileSize << " B \n";
@@ -104,8 +104,7 @@ void PBM::ShowDetails(bool show_content)
         {
             for (int j = 0; j < this->width; j++)
             {
-                int pixel = this->content[i][j];
-                cout << pixel << " ";
+                cout << this->content[i][j] << " ";
             }
             cout << endl;
         }

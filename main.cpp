@@ -14,7 +14,7 @@ int main(int argc, char **argv)
 		return 0;
 	}
 	char *path = argv[1];
-	PPM ppm = PPM(path);
+	PBM ppm = PBM(path);
 
 	ppm.ShowDetails(true);
 

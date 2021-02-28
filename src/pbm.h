@@ -21,6 +21,7 @@ public:
     /* Constructor */
     PBM(char *const path);
     void ShowDetails(bool show_content);
+    unsigned char getPixel(int x, int y);
 };
 
 #endif
