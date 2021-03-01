@@ -1,0 +1,9 @@
+﻿  MyForm.cpp
+D:\Dokumen Ridwan\3_Matkul Tingkat Akhir\1_IF4073 - Pengolahan Citra\[TUGAS BESAR]\[USE NET FRAMEWORK]\MiniPhotoshop\MiniPhotoshop\MyForm.h(949,40): warning C4101: 'e': unreferenced local variable
+D:\Dokumen Ridwan\3_Matkul Tingkat Akhir\1_IF4073 - Pengolahan Citra\[TUGAS BESAR]\[USE NET FRAMEWORK]\MiniPhotoshop\MiniPhotoshop\MyForm.h(953,36): warning C4101: 'e': unreferenced local variable
+D:\Dokumen Ridwan\3_Matkul Tingkat Akhir\1_IF4073 - Pengolahan Citra\[TUGAS BESAR]\[USE NET FRAMEWORK]\MiniPhotoshop\MiniPhotoshop\MyForm.h(973,40): warning C4101: 'e': unreferenced local variable
+D:\Dokumen Ridwan\3_Matkul Tingkat Akhir\1_IF4073 - Pengolahan Citra\[TUGAS BESAR]\[USE NET FRAMEWORK]\MiniPhotoshop\MiniPhotoshop\MyForm.h(977,36): warning C4101: 'e': unreferenced local variable
+D:\Dokumen Ridwan\3_Matkul Tingkat Akhir\1_IF4073 - Pengolahan Citra\[TUGAS BESAR]\[USE NET FRAMEWORK]\MiniPhotoshop\MiniPhotoshop\MyForm.h(1271,40): warning C4101: 'e': unreferenced local variable
+D:\Dokumen Ridwan\3_Matkul Tingkat Akhir\1_IF4073 - Pengolahan Citra\[TUGAS BESAR]\[USE NET FRAMEWORK]\MiniPhotoshop\MiniPhotoshop\MyForm.h(1275,36): warning C4101: 'e': unreferenced local variable
+  ExternalFile.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
+  MiniPhotoshop.vcxproj -> D:\Dokumen Ridwan\3_Matkul Tingkat Akhir\1_IF4073 - Pengolahan Citra\[TUGAS BESAR]\[USE NET FRAMEWORK]\MiniPhotoshop\Debug\MiniPhotoshop.exe
