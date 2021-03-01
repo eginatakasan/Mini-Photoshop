@@ -3,6 +3,8 @@
 #include <iostream>
 #include <msclr\marshal_cppstd.h>
 #include "ImageProcessing.h"
+#include "PrimitiveFunction.h"
+#include "ExternalFile.h"
 
 namespace MiniPhotoshop {
 
@@ -102,6 +104,7 @@ namespace MiniPhotoshop {
 	private: System::Windows::Forms::ToolStripMenuItem^ change_second_image;
 	private: System::Windows::Forms::ToolStripMenuItem^ negative_transformation;
 	private: System::Windows::Forms::ToolStripMenuItem^ show_image_info;
+	private: System::Windows::Forms::DataVisualization::Charting::Chart^ bar_chart;
 
 	private:
 		/// <summary>
@@ -116,6 +119,14 @@ namespace MiniPhotoshop {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::Windows::Forms::DataVisualization::Charting::ChartArea^ chartArea1 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
+			System::Windows::Forms::DataVisualization::Charting::Legend^ legend1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series3 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series4 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Title^ title1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Title());
+			System::Windows::Forms::DataVisualization::Charting::Title^ title2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Title());
 			this->lbl_original_img = (gcnew System::Windows::Forms::Label());
 			this->lbl_edited_image = (gcnew System::Windows::Forms::Label());
 			this->pic_box_main_img = (gcnew System::Windows::Forms::PictureBox());
@@ -165,9 +176,11 @@ namespace MiniPhotoshop {
 			this->resetToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->saveImageToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->openSecondImageToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->bar_chart = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pic_box_main_img))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pic_box_second_img))->BeginInit();
 			this->menu_strip->SuspendLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->bar_chart))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// lbl_original_img
@@ -226,7 +239,7 @@ namespace MiniPhotoshop {
 			});
 			this->menu_strip->Location = System::Drawing::Point(0, 0);
 			this->menu_strip->Name = L"menu_strip";
-			this->menu_strip->Size = System::Drawing::Size(597, 24);
+			this->menu_strip->Size = System::Drawing::Size(572, 24);
 			this->menu_strip->TabIndex = 11;
 			this->menu_strip->Text = L"menuStrip1";
 			// 
@@ -551,12 +564,49 @@ namespace MiniPhotoshop {
 			this->openSecondImageToolStripMenuItem->Size = System::Drawing::Size(181, 22);
 			this->openSecondImageToolStripMenuItem->Text = L"Open Second Image";
 			// 
+			// bar_chart
+			// 
+			chartArea1->Name = L"ChartArea1";
+			this->bar_chart->ChartAreas->Add(chartArea1);
+			legend1->Name = L"Legend1";
+			this->bar_chart->Legends->Add(legend1);
+			this->bar_chart->Location = System::Drawing::Point(26, 310);
+			this->bar_chart->Name = L"bar_chart";
+			series1->ChartArea = L"ChartArea1";
+			series1->Color = System::Drawing::Color::Red;
+			series1->Legend = L"Legend1";
+			series1->Name = L"Red";
+			series2->ChartArea = L"ChartArea1";
+			series2->Color = System::Drawing::Color::Lime;
+			series2->Legend = L"Legend1";
+			series2->Name = L"Green";
+			series3->ChartArea = L"ChartArea1";
+			series3->Color = System::Drawing::Color::Blue;
+			series3->Legend = L"Legend1";
+			series3->Name = L"Blue";
+			series4->ChartArea = L"ChartArea1";
+			series4->Color = System::Drawing::Color::Black;
+			series4->Legend = L"Legend1";
+			series4->Name = L"Value";
+			this->bar_chart->Series->Add(series1);
+			this->bar_chart->Series->Add(series2);
+			this->bar_chart->Series->Add(series3);
+			this->bar_chart->Series->Add(series4);
+			this->bar_chart->Size = System::Drawing::Size(512, 231);
+			this->bar_chart->TabIndex = 12;
+			this->bar_chart->Text = L"chart1";
+			title1->Name = L"Red";
+			title2->Name = L"Green";
+			this->bar_chart->Titles->Add(title1);
+			this->bar_chart->Titles->Add(title2);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::Silver;
-			this->ClientSize = System::Drawing::Size(597, 310);
+			this->ClientSize = System::Drawing::Size(572, 548);
+			this->Controls->Add(this->bar_chart);
 			this->Controls->Add(this->pic_box_second_img);
 			this->Controls->Add(this->pic_box_main_img);
 			this->Controls->Add(this->lbl_edited_image);
@@ -569,6 +619,7 @@ namespace MiniPhotoshop {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pic_box_second_img))->EndInit();
 			this->menu_strip->ResumeLayout(false);
 			this->menu_strip->PerformLayout();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->bar_chart))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -600,7 +651,7 @@ namespace MiniPhotoshop {
 		ShowImageInfo();
 	}
 
-		   // Edit Image
+	// Edit Image
 	private: System::Void gray_scale_Click(System::Object^ sender, System::EventArgs^ e) {
 		GrayScale();
 	}
@@ -704,50 +755,6 @@ namespace MiniPhotoshop {
 	Bitmap^ bitmapMainOriginalImage;
 	Bitmap^ bitmapSecondImage;
 
-	//[IMAGE PROCESSING]
-
-	//[PRIMITIVE FUNCTION]
-	bool isNumeric(const std::string& s)
-	{
-		std::string::const_iterator it = s.begin();
-		while (it != s.end() && std::isdigit(*it)) ++it;
-		return !s.empty() && it == s.end();
-	}
-
-	//// String to std::string
-	std::string convertTostring(String^ input) {
-		std::string output = marshal_as<std::string>(input);
-		return output;
-	}
-
-	//// std::string to int
-	int convertToInteger(std::string input) {
-		int value = std::stoi(input);
-		return value;
-	}
-
-	//// String to int
-	int convertToInteger(String^ input) {
-		std::string standardString = convertTostring(input);
-		int value = std::stoi(standardString);
-		return value;
-	}
-
-	boolean CheckSizeBitmap(Bitmap^ bmp_1, Bitmap^ bmp_2) {
-		double bmp1_width = bmp_1->Width;
-		double bmp1_height = bmp_1->Height;
-
-		double bmp2_width = bmp_2->Width;
-		double bmp2_height = bmp_2->Height;
-
-		if (bmp1_width == bmp2_width && bmp1_height == bmp2_height) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
 	//[Function Menu]
 	//// Image
 	void OpenImage() {
@@ -760,28 +767,128 @@ namespace MiniPhotoshop {
 		
 			if (strcmp(ext_file, ".bmp") == 0) {
 				// bmp
-				Image^ imageMainImage = Image::FromFile(ofd->FileName);
+				Bitmap^ imageMainImage = Image_BitmapFile(ofd->FileName);
 				pic_box_main_img->Image = imageMainImage;
 				bitmapMainImage = gcnew Bitmap(imageMainImage);
 				bitmapMainOriginalImage = gcnew Bitmap(imageMainImage);
-				
 				bitmapSecondImage = nullptr;
 				pic_box_second_img->Image = nullptr;
 			}
 			else if (strcmp(ext_file, ".pgm") == 0) {
 				// pgm
+				Bitmap^ imageMainImage = Image_PGMFile(ofd->FileName);
+				pic_box_main_img->Image = imageMainImage;
+				bitmapMainImage = gcnew Bitmap(imageMainImage);
+				bitmapMainOriginalImage = gcnew Bitmap(imageMainImage);
+				bitmapSecondImage = nullptr;
+				pic_box_second_img->Image = nullptr;
 			}
 			else if (strcmp(ext_file, ".pbm") == 0) {
 				// pbm
+				Bitmap^ imageMainImage = Image_PBMFile(ofd->FileName);
+				pic_box_main_img->Image = imageMainImage;
+				bitmapMainImage = gcnew Bitmap(imageMainImage);
+				bitmapMainOriginalImage = gcnew Bitmap(imageMainImage);
+				bitmapSecondImage = nullptr;
+				pic_box_second_img->Image = nullptr;
 			}
 			else if (strcmp(ext_file, ".ppm") == 0) {
 				// ppm
+				Bitmap^ imageMainImage = Image_PPMFile(ofd->FileName);
+				pic_box_main_img->Image = imageMainImage;
+				bitmapMainImage = gcnew Bitmap(imageMainImage);
+				bitmapMainOriginalImage = gcnew Bitmap(imageMainImage);
+				bitmapSecondImage = nullptr;
+				pic_box_second_img->Image = nullptr;
 			}
 			else {
 				// Raw Image
+				Bitmap^ imageMainImage = Image_RawImageFile(ofd->FileName);
+				pic_box_main_img->Image = imageMainImage;
+				bitmapMainImage = gcnew Bitmap(imageMainImage);
+				bitmapMainOriginalImage = gcnew Bitmap(imageMainImage);
+				bitmapSecondImage = nullptr;
+				pic_box_second_img->Image = nullptr;
 			}
 		
 		}
+	}
+
+	void ChangeSecondImage() {
+		if (bitmapMainImage != nullptr) {
+			ofd->Filter = "|*.bmp; *.pgm; *.pbm; *.ppm; *.jpg";
+			if (ofd->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+				String^ extension_file = System::IO::Path::GetExtension(ofd->FileName);
+				std::string standardString = convertTostring(extension_file);
+				const char* ext_file = standardString.c_str();
+
+				if (strcmp(ext_file, ".bmp") == 0) {
+					// bmp
+					Bitmap^ image = Image_BitmapFile(ofd->FileName);
+					bitmapSecondImage = gcnew Bitmap(image);
+					if (CheckSizeBitmap(bitmapMainImage, bitmapSecondImage)) {
+						pic_box_second_img->Image = image;
+					}
+					else {
+						ShowPlainMessageBox("Image's Size must be same");
+						bitmapSecondImage = nullptr;
+					}
+				}
+				else if (strcmp(ext_file, ".pgm") == 0) {
+					// pgm
+					Bitmap^ image = Image_PGMFile(ofd->FileName);
+					bitmapSecondImage = gcnew Bitmap(image);
+					if (CheckSizeBitmap(bitmapMainImage, bitmapSecondImage)) {
+						pic_box_second_img->Image = image;
+					}
+					else {
+						ShowPlainMessageBox("Image's Size must be same");
+						bitmapSecondImage = nullptr;
+					}
+				}
+				else if (strcmp(ext_file, ".pbm") == 0) {
+					// pbm
+					Bitmap^ image = Image_PBMFile(ofd->FileName);
+					bitmapSecondImage = gcnew Bitmap(image);
+					if (CheckSizeBitmap(bitmapMainImage, bitmapSecondImage)) {
+						pic_box_second_img->Image = image;
+					}
+					else {
+						ShowPlainMessageBox("Image's Size must be same");
+						bitmapSecondImage = nullptr;
+					}
+				}
+				else if (strcmp(ext_file, ".ppm") == 0) {
+					// ppm
+					Bitmap^ image = Image_PPMFile(ofd->FileName);
+					bitmapSecondImage = gcnew Bitmap(image);
+					if (CheckSizeBitmap(bitmapMainImage, bitmapSecondImage)) {
+						pic_box_second_img->Image = image;
+					}
+					else {
+						ShowPlainMessageBox("Image's Size must be same");
+						bitmapSecondImage = nullptr;
+					}
+				}
+				else {
+					// Raw Image
+					Bitmap^ image = Image_RawImageFile(ofd->FileName);
+					bitmapSecondImage = gcnew Bitmap(image);
+					if (CheckSizeBitmap(bitmapMainImage, bitmapSecondImage)) {
+						pic_box_second_img->Image = image;
+					}
+					else {
+						ShowPlainMessageBox("Image's Size must be same");
+						bitmapSecondImage = nullptr;
+					}
+				}
+
+			}
+		}
+		else {
+			ShowPlainMessageBox("Insert Main Image First");
+		}
+
 	}
 
 	void SaveImage() {
@@ -803,47 +910,6 @@ namespace MiniPhotoshop {
 		else {
 			ShowPlainMessageBox("Please Open Image First");
 		}
-	}
-
-	void ChangeSecondImage() {
-		if (bitmapMainImage != nullptr) {
-			ofd->Filter = "|*.bmp; *.pgm; *.pbm; *.ppm; *.jpg";
-			if (ofd->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
-				String^ extension_file = System::IO::Path::GetExtension(ofd->FileName);
-				std::string standardString = convertTostring(extension_file);
-				const char* ext_file = standardString.c_str();
-
-				if (strcmp(ext_file, ".bmp") == 0) {
-					// bmp
-					Image^ image = Image::FromFile(ofd->FileName);
-					bitmapSecondImage = gcnew Bitmap(image);
-					if (CheckSizeBitmap(bitmapMainImage, bitmapSecondImage)) {
-						pic_box_second_img->Image = image;
-					}
-					else {
-						ShowPlainMessageBox("Image's Size must be same");
-						bitmapSecondImage = nullptr;
-					}
-				}
-				else if (strcmp(ext_file, ".pgm") == 0) {
-					// pgm
-				}
-				else if (strcmp(ext_file, ".pbm") == 0) {
-					// pbm
-				}
-				else if (strcmp(ext_file, ".ppm") == 0) {
-					// ppm
-				}
-				else {
-					// Raw Image
-				}
-
-			}
-		}
-		else {
-			ShowPlainMessageBox("Insert Main Image First");
-		}
-		
 	}
 
 	void ShowImageInfo() {
@@ -1153,7 +1219,40 @@ namespace MiniPhotoshop {
 	//// Histogram
 	void ShowHistogram() {
 		if (bitmapMainImage != nullptr) {
+			String^ type_image = TypeImage(bitmapMainImage);
+			std::string standardString = convertTostring(type_image);
+			const char* type_img = standardString.c_str();
 
+			bar_chart->Legends->Clear();
+			bar_chart->Series["Red"]->Points->Clear();
+			bar_chart->Series["Green"]->Points->Clear();
+			bar_chart->Series["Blue"]->Points->Clear();
+			bar_chart->Series["Value"]->Points->Clear();
+
+			if (strcmp(type_img, "Biner") == 0) {
+				// Biner
+				int* arr_biner = Array_Biner(bitmapMainImage);
+				for (int i = 0; i < 2; i += 1) {
+					bar_chart->Series["Value"]->Points->AddXY(i, arr_biner[i]);
+				}
+			}else if (strcmp(type_img, "GrayScale") == 0) {
+				// GrayScale
+				int* arr_grayscale = Array_GrayScale(bitmapMainImage);
+				for (int i = 0; i <= 30; i += 1) {
+					bar_chart->Series["Value"]->Points->AddXY(i + 1, arr_grayscale[i]);
+				}
+			}else if (strcmp(type_img, "RGB") == 0) {
+				// RGB
+				int* arr_red = Array_Red(bitmapMainImage);
+				int* arr_green = Array_Green(bitmapMainImage);
+				int* arr_blue = Array_Blue(bitmapMainImage);
+
+				for (int i = 0; i <= 30; i += 1) {
+					bar_chart->Series["Red"]->Points->AddXY(i + 1, arr_red[i]);
+					bar_chart->Series["Green"]->Points->AddXY(i + 1, arr_green[i]);
+					bar_chart->Series["Blue"]->Points->AddXY(i + 1, arr_blue[i]);
+				}
+			}
 		}
 		else {
 			ShowPlainMessageBox("Insert Image First");
