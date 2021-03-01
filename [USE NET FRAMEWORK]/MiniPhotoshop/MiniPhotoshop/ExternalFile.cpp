@@ -6,6 +6,7 @@
 using namespace std;
 using namespace System;
 using namespace System::Drawing;
+using namespace System::Drawing::Imaging;
 using namespace System::ComponentModel;
 using namespace System::Collections;
 using namespace System::Windows::Forms;
@@ -21,69 +22,58 @@ Bitmap^ Image_BitmapFile(String^ path) {
 }
 
 Bitmap^ Image_PGMFile(String^ path) {
-	//Image^ image = Image::FromFile(path);
-	//return gcnew Bitmap(image);
-
-	//[Example Crate Bitmap]
-	// Create Array RGB
-	double fileWidth = 100;
-	double fileHeight = 100;
-	int** arrayRed = new int* [fileWidth];
-	int** arrayGreen = new int* [fileWidth];
-	int** arrayBlue = new int* [fileWidth];
-	for (int i = 0; i < fileWidth; i++) {
-		arrayRed[i] = new int[fileHeight];
-		arrayGreen[i] = new int[fileHeight];
-		arrayBlue[i] = new int[fileHeight];
-	}
-	for (int x = 0; x < fileWidth; x++) {
-		for (int y = 0; y < fileHeight; y++) {
-			if (x > 50) {
-				arrayRed[x][y] = 40;
-				arrayGreen[x][y] = 20;
-				arrayBlue[x][y] = 10;
-			}
-			else if (y < 50) {
-				arrayRed[x][y] = 10;
-				arrayGreen[x][y] = 20;
-				arrayBlue[x][y] = 100;
-			}
-			else {
-				arrayRed[x][y] = 30;
-				arrayGreen[x][y] = 80;
-				arrayBlue[x][y] = 80;
-			}
-			
+	int const length = path->Length;
+	marshal_context context;
+	string s_path = context.marshal_as<std::string>(path);
+	PGM pgm = (s_path.c_str());
+	int height = pgm.GetHeight();
+	int width = pgm.GetWidth();
+	Bitmap^ bmp = gcnew Bitmap(width, height);
+	for (int i = 0; i < width; i++) {
+		for (int j = 0; j < height; j++) {
+			int _color = pgm.GetPixel(j, i);
+			Color color = Color::FromArgb(_color, _color, _color);
+			bmp->SetPixel(i, j, color);
 		}
 	}
-
-	//Create Bitmap
-	Bitmap^ bitmap = gcnew Bitmap(fileWidth, fileHeight);
-	for (int x = 0; x < fileWidth; x++) {
-		for (int y = 0; y < fileHeight; y++) {
-			int pxl_Red = arrayRed[x][y];
-			int pxl_Green = arrayGreen[x][y];
-			int pxl_Blue = arrayBlue[x][y];
-			int pxl_Grey = (pxl_Red + pxl_Green + pxl_Blue) / 3;
-
-			Color pxl = Color::FromArgb(pxl_Grey, pxl_Grey, pxl_Grey);
-			bitmap->SetPixel(x, y, pxl);
-		}
-	}
-
-	return bitmap;
+	return bmp;
 }
 
 Bitmap^ Image_PBMFile(String^ path) {
-	Image^ image = Image::FromFile(path);
-
-	return gcnew Bitmap(image);
+	int const length = path->Length;
+	marshal_context context;
+	string s_path = context.marshal_as<std::string>(path);
+	PBM pbm = (s_path.c_str());
+	int height = pbm.GetHeight();
+	int width = pbm.GetWidth();
+	Bitmap^ bmp = gcnew Bitmap(width, height);
+	for (int i = 0; i < width; i++) {
+		for (int j = 0; j < height; j++) {
+			int _color = pbm.GetPixel(j,i) == 0 ? 0 : 255;
+			Color color = Color::FromArgb(_color, _color, _color);
+			bmp->SetPixel(i,j,color);
+		}
+	}
+	return bmp;
 }
 
 Bitmap^ Image_PPMFile(String^ path) {
-	Image^ image = Image::FromFile(path);
+	int const length = path->Length;
+	marshal_context context;
+	string s_path = context.marshal_as<std::string>(path);
+	PPM ppm = (s_path.c_str());
+	int height = ppm.GetHeight();
+	int width = ppm.GetWidth();
 
-	return gcnew Bitmap(image);
+	Bitmap^ bmp = gcnew Bitmap(width, height);
+	for (int i = 0; i < width; i++) {
+		for (int j = 0; j < height; j++) {
+			_Color _color = ppm.GetPixel(j, i);
+			Color color = Color::FromArgb(_color.R, _color.G, _color.B);
+			bmp->SetPixel(i, j, color);
+		}
+	}
+	return bmp;
 }
 
 Bitmap^ Image_RawImageFile(String^ path) {

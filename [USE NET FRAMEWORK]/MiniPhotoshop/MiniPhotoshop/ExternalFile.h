@@ -3,6 +3,10 @@
 #include <string.h>
 #include <iostream>
 
+#include "PortableAnymaps/pbm.h"
+#include "PortableAnymaps/ppm.h"
+#include "PortableAnymaps/pgm.h"
+
 using namespace std;
 using namespace System;
 using namespace System::Drawing;
