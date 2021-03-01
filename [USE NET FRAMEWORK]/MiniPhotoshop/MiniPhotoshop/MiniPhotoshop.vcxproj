@@ -125,6 +125,11 @@
     <ClCompile Include="ExternalFile.cpp" />
     <ClCompile Include="MyForm.cpp" />
     <ClCompile Include="ImageProcessing.cpp" />
+    <ClCompile Include="PortableAnymaps\color.cpp" />
+    <ClCompile Include="PortableAnymaps\pbm.cpp" />
+    <ClCompile Include="PortableAnymaps\pgm.cpp" />
+    <ClCompile Include="PortableAnymaps\PortableAnymaps.cpp" />
+    <ClCompile Include="PortableAnymaps\ppm.cpp" />
     <ClCompile Include="PrimitiveFunction.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +138,11 @@
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="PortableAnymaps\color.h" />
+    <ClInclude Include="PortableAnymaps\pbm.h" />
+    <ClInclude Include="PortableAnymaps\pgm.h" />
+    <ClInclude Include="PortableAnymaps\PortableAnymaps.h" />
+    <ClInclude Include="PortableAnymaps\ppm.h" />
     <ClInclude Include="PrimitiveFunction.h" />
   </ItemGroup>
   <ItemGroup>
