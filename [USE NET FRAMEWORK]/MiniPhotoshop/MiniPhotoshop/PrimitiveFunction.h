@@ -48,7 +48,13 @@ double Get_Variance(int arr[], int size);
 // Standard Deviation
 double Get_StandardDeviation(int arr[], int size);
 
-// BinaryString
-std::string BinaryString(int number);
+void SaveArray(int arr[], int size, String^ filename);
 
-int Get_Bit(std::string strBinary, int n_th);
+void SaveArray(double arr[], int size, String^ filename);
+
+// Histogram Specification
+double* Array_Red_CDF(Bitmap^ bmp_input);
+double* Array_Green_CDF(Bitmap^ bmp_input);
+double* Array_Blue_CDF(Bitmap^ bmp_input);
+
+double* Array_Map(double arr_original[], double arr_target[],int size);

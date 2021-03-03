@@ -15,6 +15,7 @@ using namespace System::Data;
 using namespace Microsoft::VisualBasic;
 using namespace std;
 using namespace msclr::interop;
+using namespace System::IO;
 
 //[PRIMITIVE FUNCTION]
 bool isNumeric(const std::string& s)
@@ -244,7 +245,7 @@ int* Array_Biner(Bitmap^ bmp_input) {
 
 // Means
 double Get_Means(int arr[], int size) {
-	int sum = 0;
+	long sum = 0;
 	double avg;
 	int size_n = 0;
 
@@ -253,7 +254,7 @@ double Get_Means(int arr[], int size) {
 		size_n += arr[i];
 	}
 
-	avg = double(sum / size_n);
+	avg = double(double(sum) / size_n);
 	return avg;
 }
 
@@ -278,30 +279,181 @@ double Get_StandardDeviation(int arr[],int size)
 	return sqrt(Get_Variance(arr, size));
 }
 
-std::string BinaryString(int number) {
-	if (number == 0) {
-		return "0";
+//char buffer[100];sprintf_s(buffer, "Size: %d\n", size_n);OutputDebugStringA(buffer);
+void SaveArray(int arr[], int size, String^ filename) {
+	StreamWriter^ outFile = gcnew StreamWriter("D://" + filename + ".txt");
+	for (int i = 0; i < size; i++) {
+		outFile->WriteLine(arr[i] + "");
 	}
-	else if (number == 1) {
-		return "1";
-	}
-	else {
-		return BinaryString(number / 2) + BinaryString(number % 2);
-	}
+	outFile->Close();
 }
 
-int Get_Bit(std::string strBinary, int n_th) {
-	int length_str = strBinary.length();
-	n_th = (length_str - 1) - n_th;
-	if (n_th < 0) {
-		return 0;
+void SaveArray(double arr[], int size, String^ filename) {
+	StreamWriter^ outFile = gcnew StreamWriter("D://" + filename + ".txt");
+	for (int i = 0; i < size; i++) {
+		outFile->WriteLine(arr[i] + "");
 	}
-	else {
-		String^ binary_String = gcnew String(strBinary.c_str());
-		String^ binary_char_String = binary_String[n_th].ToString();
-		std::string binary_string = convertTostring(binary_char_String);
-		int bit = convertToInteger(binary_string);
-
-		return bit;
-	}
+	outFile->Close();
 }
+
+// Histogram Specification
+double* Array_Red_CDF(Bitmap^ bmp_input) {
+	double* arr = new double[256];
+	for (int i = 0; i <= 255; ++i) {
+		arr[i] = 0;
+	}
+
+	// SetUp
+	double fileWidth = bmp_input->Width;
+	double fileHeight = bmp_input->Height;
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			Color pxl = bmp_input->GetPixel(x, y);
+			int pxlR = pxl.R;
+			arr[pxlR] += 1;
+		}
+	}
+
+	// Get Total
+	long sum = 0;
+	for (int i = 0; i <= 255; ++i) {
+		sum += arr[i];
+	}
+
+	// Normalize
+	for (int i = 0; i <= 255; ++i) {
+		arr[i] = 1.0 * arr[i]/sum;
+	}
+
+	// Accumulation
+	for (int i = 1; i <= 255; ++i) {
+		arr[i] = arr[i] + arr[i-1];
+	}
+
+	// Multiple By 255
+	for (int i = 0; i <= 255; ++i) {
+		arr[i] = arr[i]*255;
+	}
+
+	return arr;
+}
+double* Array_Green_CDF(Bitmap^ bmp_input) {
+	double* arr = new double[256];
+	for (int i = 0; i <= 255; ++i) {
+		arr[i] = 0;
+	}
+
+	// SetUp
+	double fileWidth = bmp_input->Width;
+	double fileHeight = bmp_input->Height;
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			Color pxl = bmp_input->GetPixel(x, y);
+			int pxlR = pxl.G;
+			arr[pxlR] += 1;
+		}
+	}
+
+	// Get Total
+	long sum = 0;
+	for (int i = 0; i <= 255; ++i) {
+		sum += arr[i];
+	}
+
+	// Normalize
+	for (int i = 0; i <= 255; ++i) {
+		arr[i] = 1.0 * arr[i] / sum;
+	}
+
+	// Accumulation
+	for (int i = 1; i <= 255; ++i) {
+		arr[i] = arr[i] + arr[i - 1];
+	}
+
+	// Multiple By 255
+	for (int i = 0; i <= 255; ++i) {
+		arr[i] = arr[i] * 255;
+	}
+
+	return arr;
+}
+double* Array_Blue_CDF(Bitmap^ bmp_input) {
+	double* arr = new double[256];
+	for (int i = 0; i <= 255; ++i) {
+		arr[i] = 0;
+	}
+
+	// SetUp
+	double fileWidth = bmp_input->Width;
+	double fileHeight = bmp_input->Height;
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			Color pxl = bmp_input->GetPixel(x, y);
+			int pxlR = pxl.B;
+			arr[pxlR] += 1;
+		}
+	}
+
+	// Get Total
+	long sum = 0;
+	for (int i = 0; i <= 255; ++i) {
+		sum += arr[i];
+	}
+
+	// Normalize
+	for (int i = 0; i <= 255; ++i) {
+		arr[i] = 1.0 * arr[i] / sum;
+	}
+
+	// Accumulation
+	for (int i = 1; i <= 255; ++i) {
+		arr[i] = arr[i] + arr[i - 1];
+	}
+
+	// Multiple By 255
+	for (int i = 0; i <= 255; ++i) {
+		arr[i] = arr[i] * 255;
+	}
+
+	return arr;
+}
+
+double* Array_Map(double arr_original[], double arr_target[],int size) {
+	double* arr = new double[size];
+
+	for (int i = 0; i < size; ++i) {
+		arr[i] = 0;
+	}
+
+	int second_lead = 0;
+	for (int idx_original = 0; idx_original < size; idx_original += 1) {
+		double val_original = arr_original[idx_original];
+		
+		for (int idx_target = second_lead; idx_target < size; idx_target += 1) {
+			double val_target_1 = arr_target[idx_target];
+			double val_target_2 ;
+			if (idx_target == 255) {
+				arr[idx_original] = idx_target;
+				break;
+			}
+			else {
+				val_target_2 = arr_target[idx_target+1];
+			}
+			double diff_1 = fabs(val_target_1 - val_original);
+			double diff_2 = fabs(val_target_2 - val_original);
+
+			if (diff_1 < diff_2) {
+				arr[idx_original] = idx_target;
+				break;
+			}
+			else {
+				second_lead = idx_target;
+			}
+			
+		}
+		
+	}
+
+	return arr;
+}
+

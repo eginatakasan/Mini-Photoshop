@@ -17,6 +17,7 @@ namespace MiniPhotoshop {
 	using namespace Microsoft::VisualBasic;
 	using namespace std;
 	using namespace msclr::interop;
+	using namespace System::IO;
 
 	/// <summary>
 	/// Summary for MyForm
@@ -112,6 +113,8 @@ namespace MiniPhotoshop {
 	private: System::Windows::Forms::Label^ lbl_spec_histogram;
 	private: System::Windows::Forms::ToolStripMenuItem^ show_histogram_2;
 
+
+
 	private:
 		/// <summary>
 		/// Required designer variable.
@@ -178,6 +181,7 @@ namespace MiniPhotoshop {
 			this->negative_transformation = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->historgramToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->show_histogram = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->show_histogram_2 = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->openImageToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->resetToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->saveImageToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -187,7 +191,6 @@ namespace MiniPhotoshop {
 			this->lbl_variance = (gcnew System::Windows::Forms::Label());
 			this->lbl_standard_deviation = (gcnew System::Windows::Forms::Label());
 			this->lbl_spec_histogram = (gcnew System::Windows::Forms::Label());
-			this->show_histogram_2 = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pic_box_main_img))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pic_box_second_img))->BeginInit();
 			this->menu_strip->SuspendLayout();
@@ -554,6 +557,13 @@ namespace MiniPhotoshop {
 			this->show_histogram->Text = L"Show Histogram";
 			this->show_histogram->Click += gcnew System::EventHandler(this, &MyForm::show_histogram_Click);
 			// 
+			// show_histogram_2
+			// 
+			this->show_histogram_2->Name = L"show_histogram_2";
+			this->show_histogram_2->Size = System::Drawing::Size(180, 22);
+			this->show_histogram_2->Text = L"Show Histogram 2";
+			this->show_histogram_2->Click += gcnew System::EventHandler(this, &MyForm::show_histogram_2_Click);
+			// 
 			// openImageToolStripMenuItem
 			// 
 			this->openImageToolStripMenuItem->Name = L"openImageToolStripMenuItem";
@@ -652,13 +662,6 @@ namespace MiniPhotoshop {
 			this->lbl_spec_histogram->TabIndex = 16;
 			this->lbl_spec_histogram->Text = L"Histogram";
 			// 
-			// show_histogram_2
-			// 
-			this->show_histogram_2->Name = L"show_histogram_2";
-			this->show_histogram_2->Size = System::Drawing::Size(180, 22);
-			this->show_histogram_2->Text = L"Show Histogram 2";
-			this->show_histogram_2->Click += gcnew System::EventHandler(this, &MyForm::show_histogram_2_Click);
-			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -700,6 +703,14 @@ namespace MiniPhotoshop {
 
 	private: System::Void show_histogram_2_Click(System::Object^ sender, System::EventArgs^ e) {
 		ShowHistogram_2();
+	}
+
+	private: System::Void show_histogram_normalize_Click(System::Object^ sender, System::EventArgs^ e) {
+	
+	}
+
+	private: System::Void show_histogram_normalize_accumulation_Click(System::Object^ sender, System::EventArgs^ e) {
+	
 	}
 
 	private: System::Void reset_image_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -1442,9 +1453,9 @@ namespace MiniPhotoshop {
 			if (strcmp(type_img, "Biner") == 0) {
 				// Biner
 				int* arr_biner = Array_Biner(bitmapMainImage);
-				double means = Get_Means(arr_biner, 256);
-				double variance = Get_Variance(arr_biner, 256);
-				double standard_deviation = Get_StandardDeviation(arr_biner, 256);
+				double means = Get_Means(arr_biner, 2);
+				double variance = Get_Variance(arr_biner, 2);
+				double standard_deviation = Get_StandardDeviation(arr_biner, 2);
 
 				lbl_means->Text = "Means: " + means;
 				lbl_variance->Text = "Variance: " + variance;
@@ -1652,8 +1663,6 @@ namespace MiniPhotoshop {
 	void ShowPlainMessageBox(String^ str) {
 		MessageBox::Show(str);
 	}
-
-	
 
 };
 

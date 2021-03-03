@@ -850,21 +850,28 @@ Bitmap^ Image_ImageEnhancement_HistogramSpecification(Bitmap^ bmp_input, Bitmap^
 		}
 	}
 
+	// Array CDF Original
+	double* arr_red_original = Array_Red_CDF(bmp_input);
+	double* arr_green_original = Array_Green_CDF(bmp_input);
+	double* arr_blue_original = Array_Blue_CDF(bmp_input);
+
+	// Array CDF Target
+	double* arr_red_target = Array_Red_CDF(bmp_second_input);
+	double* arr_green_target = Array_Green_CDF(bmp_second_input);
+	double* arr_blue_target = Array_Blue_CDF(bmp_second_input);
+
+	// Array_Map
+	double* arr_red_map = Array_Map(arr_red_original, arr_red_target,256);
+	double* arr_green_map = Array_Map(arr_green_original, arr_green_target, 256);
+	double* arr_blue_map = Array_Map(arr_blue_original, arr_blue_target, 256);
+
 	//Update
 	Bitmap^ bitmap = gcnew Bitmap(fileWidth, fileHeight);
 	for (int x = 0; x < fileWidth; x++) {
 		for (int y = 0; y < fileHeight; y++) {
-			int pxl_Red = arrayRed[x][y] | arrayRedSecond[x][y];
-			int pxl_Green = arrayGreen[x][y] | arrayGreenSecond[x][y];
-			int pxl_Blue = arrayBlue[x][y] | arrayBlueSecond[x][y];
-
-			if (pxl_Red > 255) { pxl_Red = 255; }
-			if (pxl_Green > 255) { pxl_Green = 255; }
-			if (pxl_Blue > 255) { pxl_Blue = 255; }
-
-			if (pxl_Red < 0) { pxl_Red = 0; }
-			if (pxl_Green < 0) { pxl_Green = 0; }
-			if (pxl_Blue < 0) { pxl_Blue = 0; }
+			int pxl_Red = arr_red_map[arrayRed[x][y]] ;
+			int pxl_Green = arr_green_map[arrayGreen[x][y]];
+			int pxl_Blue = arr_blue_map[arrayBlue[x][y]] ;
 
 			Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
 			bitmap->SetPixel(x, y, pxl);
