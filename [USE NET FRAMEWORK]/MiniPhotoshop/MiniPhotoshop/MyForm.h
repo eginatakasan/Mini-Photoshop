@@ -105,6 +105,11 @@ namespace MiniPhotoshop {
 	private: System::Windows::Forms::ToolStripMenuItem^ negative_transformation;
 	private: System::Windows::Forms::ToolStripMenuItem^ show_image_info;
 	private: System::Windows::Forms::DataVisualization::Charting::Chart^ bar_chart;
+	private: System::Windows::Forms::Label^ lbl_means;
+	private: System::Windows::Forms::Label^ lbl_variance;
+	private: System::Windows::Forms::Label^ lbl_standard_deviation;
+
+	private: System::Windows::Forms::Label^ lbl_spec_histogram;
 
 	private:
 		/// <summary>
@@ -119,14 +124,14 @@ namespace MiniPhotoshop {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			System::Windows::Forms::DataVisualization::Charting::ChartArea^ chartArea1 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
-			System::Windows::Forms::DataVisualization::Charting::Legend^ legend1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
-			System::Windows::Forms::DataVisualization::Charting::Series^ series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
-			System::Windows::Forms::DataVisualization::Charting::Series^ series2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
-			System::Windows::Forms::DataVisualization::Charting::Series^ series3 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
-			System::Windows::Forms::DataVisualization::Charting::Series^ series4 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
-			System::Windows::Forms::DataVisualization::Charting::Title^ title1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Title());
-			System::Windows::Forms::DataVisualization::Charting::Title^ title2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Title());
+			System::Windows::Forms::DataVisualization::Charting::ChartArea^ chartArea2 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
+			System::Windows::Forms::DataVisualization::Charting::Legend^ legend2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series5 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series6 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series7 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series8 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Title^ title3 = (gcnew System::Windows::Forms::DataVisualization::Charting::Title());
+			System::Windows::Forms::DataVisualization::Charting::Title^ title4 = (gcnew System::Windows::Forms::DataVisualization::Charting::Title());
 			this->lbl_original_img = (gcnew System::Windows::Forms::Label());
 			this->lbl_edited_image = (gcnew System::Windows::Forms::Label());
 			this->pic_box_main_img = (gcnew System::Windows::Forms::PictureBox());
@@ -177,6 +182,10 @@ namespace MiniPhotoshop {
 			this->saveImageToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->openSecondImageToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->bar_chart = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
+			this->lbl_means = (gcnew System::Windows::Forms::Label());
+			this->lbl_variance = (gcnew System::Windows::Forms::Label());
+			this->lbl_standard_deviation = (gcnew System::Windows::Forms::Label());
+			this->lbl_spec_histogram = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pic_box_main_img))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pic_box_second_img))->BeginInit();
 			this->menu_strip->SuspendLayout();
@@ -239,7 +248,7 @@ namespace MiniPhotoshop {
 			});
 			this->menu_strip->Location = System::Drawing::Point(0, 0);
 			this->menu_strip->Name = L"menu_strip";
-			this->menu_strip->Size = System::Drawing::Size(572, 24);
+			this->menu_strip->Size = System::Drawing::Size(769, 24);
 			this->menu_strip->TabIndex = 11;
 			this->menu_strip->Text = L"menuStrip1";
 			// 
@@ -566,46 +575,88 @@ namespace MiniPhotoshop {
 			// 
 			// bar_chart
 			// 
-			chartArea1->Name = L"ChartArea1";
-			this->bar_chart->ChartAreas->Add(chartArea1);
-			legend1->Name = L"Legend1";
-			this->bar_chart->Legends->Add(legend1);
+			chartArea2->Name = L"ChartArea1";
+			this->bar_chart->ChartAreas->Add(chartArea2);
+			legend2->Name = L"Legend1";
+			this->bar_chart->Legends->Add(legend2);
 			this->bar_chart->Location = System::Drawing::Point(26, 310);
 			this->bar_chart->Name = L"bar_chart";
-			series1->ChartArea = L"ChartArea1";
-			series1->Color = System::Drawing::Color::Red;
-			series1->Legend = L"Legend1";
-			series1->Name = L"Red";
-			series2->ChartArea = L"ChartArea1";
-			series2->Color = System::Drawing::Color::Lime;
-			series2->Legend = L"Legend1";
-			series2->Name = L"Green";
-			series3->ChartArea = L"ChartArea1";
-			series3->Color = System::Drawing::Color::Blue;
-			series3->Legend = L"Legend1";
-			series3->Name = L"Blue";
-			series4->ChartArea = L"ChartArea1";
-			series4->Color = System::Drawing::Color::Black;
-			series4->Legend = L"Legend1";
-			series4->Name = L"Value";
-			this->bar_chart->Series->Add(series1);
-			this->bar_chart->Series->Add(series2);
-			this->bar_chart->Series->Add(series3);
-			this->bar_chart->Series->Add(series4);
-			this->bar_chart->Size = System::Drawing::Size(512, 231);
+			series5->ChartArea = L"ChartArea1";
+			series5->Color = System::Drawing::Color::Red;
+			series5->Legend = L"Legend1";
+			series5->Name = L"Red";
+			series6->ChartArea = L"ChartArea1";
+			series6->Color = System::Drawing::Color::Lime;
+			series6->Legend = L"Legend1";
+			series6->Name = L"Green";
+			series7->ChartArea = L"ChartArea1";
+			series7->Color = System::Drawing::Color::Blue;
+			series7->Legend = L"Legend1";
+			series7->Name = L"Blue";
+			series8->ChartArea = L"ChartArea1";
+			series8->Color = System::Drawing::Color::Black;
+			series8->Legend = L"Legend1";
+			series8->Name = L"Value";
+			this->bar_chart->Series->Add(series5);
+			this->bar_chart->Series->Add(series6);
+			this->bar_chart->Series->Add(series7);
+			this->bar_chart->Series->Add(series8);
+			this->bar_chart->Size = System::Drawing::Size(731, 231);
 			this->bar_chart->TabIndex = 12;
 			this->bar_chart->Text = L"chart1";
-			title1->Name = L"Red";
-			title2->Name = L"Green";
-			this->bar_chart->Titles->Add(title1);
-			this->bar_chart->Titles->Add(title2);
+			title3->Name = L"Red";
+			title4->Name = L"Green";
+			this->bar_chart->Titles->Add(title3);
+			this->bar_chart->Titles->Add(title4);
+			// 
+			// lbl_means
+			// 
+			this->lbl_means->AutoSize = true;
+			this->lbl_means->Location = System::Drawing::Point(559, 101);
+			this->lbl_means->Name = L"lbl_means";
+			this->lbl_means->Size = System::Drawing::Size(42, 13);
+			this->lbl_means->TabIndex = 13;
+			this->lbl_means->Text = L"Means:";
+			// 
+			// lbl_variance
+			// 
+			this->lbl_variance->AutoSize = true;
+			this->lbl_variance->Location = System::Drawing::Point(559, 125);
+			this->lbl_variance->Name = L"lbl_variance";
+			this->lbl_variance->Size = System::Drawing::Size(52, 13);
+			this->lbl_variance->TabIndex = 14;
+			this->lbl_variance->Text = L"Variance:";
+			// 
+			// lbl_standard_deviation
+			// 
+			this->lbl_standard_deviation->AutoSize = true;
+			this->lbl_standard_deviation->Location = System::Drawing::Point(559, 149);
+			this->lbl_standard_deviation->Name = L"lbl_standard_deviation";
+			this->lbl_standard_deviation->Size = System::Drawing::Size(101, 13);
+			this->lbl_standard_deviation->TabIndex = 15;
+			this->lbl_standard_deviation->Text = L"Standard Deviation:";
+			// 
+			// lbl_spec_histogram
+			// 
+			this->lbl_spec_histogram->AutoSize = true;
+			this->lbl_spec_histogram->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lbl_spec_histogram->Location = System::Drawing::Point(558, 69);
+			this->lbl_spec_histogram->Name = L"lbl_spec_histogram";
+			this->lbl_spec_histogram->Size = System::Drawing::Size(82, 20);
+			this->lbl_spec_histogram->TabIndex = 16;
+			this->lbl_spec_histogram->Text = L"Histogram";
 			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->BackColor = System::Drawing::Color::Silver;
-			this->ClientSize = System::Drawing::Size(572, 548);
+			this->ClientSize = System::Drawing::Size(769, 550);
+			this->Controls->Add(this->lbl_spec_histogram);
+			this->Controls->Add(this->lbl_standard_deviation);
+			this->Controls->Add(this->lbl_variance);
+			this->Controls->Add(this->lbl_means);
 			this->Controls->Add(this->bar_chart);
 			this->Controls->Add(this->pic_box_second_img);
 			this->Controls->Add(this->pic_box_main_img);
@@ -1232,26 +1283,82 @@ namespace MiniPhotoshop {
 			if (strcmp(type_img, "Biner") == 0) {
 				// Biner
 				int* arr_biner = Array_Biner(bitmapMainImage);
+				double means = Get_Means(arr_biner, 256);
+				double variance = Get_Variance(arr_biner, 256);
+				double standard_deviation = Get_StandardDeviation(arr_biner, 256);
+
+				lbl_means->Text = "Means: " + means;
+				lbl_variance->Text = "Variance: " + variance;
+				lbl_standard_deviation->Text = "Standard Deviation: " + standard_deviation;
+
 				for (int i = 0; i < 2; i += 1) {
 					bar_chart->Series["Value"]->Points->AddXY(i, arr_biner[i]);
 				}
 			}else if (strcmp(type_img, "GrayScale") == 0) {
 				// GrayScale
 				int* arr_grayscale = Array_GrayScale(bitmapMainImage);
-				for (int i = 0; i <= 30; i += 1) {
+				double means = Get_Means(arr_grayscale, 256);
+				double variance = Get_Variance(arr_grayscale, 256);
+				double standard_deviation = Get_StandardDeviation(arr_grayscale, 256);
+
+				lbl_means->Text = "Means: " + means;
+				lbl_variance->Text = "Variance: " + variance;
+				lbl_standard_deviation->Text = "Standard Deviation: " + standard_deviation;
+
+				for (int i = 0; i <= 255; i += 1) {
 					bar_chart->Series["Value"]->Points->AddXY(i + 1, arr_grayscale[i]);
 				}
 			}else if (strcmp(type_img, "RGB") == 0) {
 				// RGB
-				int* arr_red = Array_Red(bitmapMainImage);
-				int* arr_green = Array_Green(bitmapMainImage);
-				int* arr_blue = Array_Blue(bitmapMainImage);
+				// Check R,G,B
+				String^ input = Interaction::InputBox("Choose RGB", "R or G or B", "R", -1, -1);
+				std::string input_RGB = convertTostring(input);
+				const char* char_RGB = input_RGB.c_str();
+				if (strcmp(char_RGB, "R") == 0) {
+					int* arr_red = Array_Red(bitmapMainImage);
+					double means = Get_Means(arr_red, 256);
+					double variance = Get_Variance(arr_red, 256);
+					double standard_deviation = Get_StandardDeviation(arr_red, 256);
 
-				for (int i = 0; i <= 30; i += 1) {
-					bar_chart->Series["Red"]->Points->AddXY(i + 1, arr_red[i]);
-					bar_chart->Series["Green"]->Points->AddXY(i + 1, arr_green[i]);
-					bar_chart->Series["Blue"]->Points->AddXY(i + 1, arr_blue[i]);
+					lbl_means->Text = "Means: " + means;
+					lbl_variance->Text = "Variance: " + variance;
+					lbl_standard_deviation->Text = "Standard Deviation: " + standard_deviation;
+
+					for (int i = 0; i <= 255; i += 1) {
+						bar_chart->Series["Red"]->Points->AddXY(i + 1, arr_red[i]);
+					}
 				}
+				else if (strcmp(char_RGB, "G") == 0) {
+					int* arr_green = Array_Green(bitmapMainImage);
+					double means = Get_Means(arr_green, 256);
+					double variance = Get_Variance(arr_green, 256);
+					double standard_deviation = Get_StandardDeviation(arr_green, 256);
+
+					lbl_means->Text = "Means: " + means;
+					lbl_variance->Text = "Variance: " + variance;
+					lbl_standard_deviation->Text = "Standard Deviation: " + standard_deviation;
+
+					for (int i = 0; i <= 255; i += 1) {
+						bar_chart->Series["Green"]->Points->AddXY(i + 1, arr_green[i]);
+					}
+				}
+				else if (strcmp(char_RGB, "B") == 0) {
+					int* arr_blue = Array_Blue(bitmapMainImage);
+					double means = Get_Means(arr_blue, 256);
+					double variance = Get_Variance(arr_blue, 256);
+					double standard_deviation = Get_StandardDeviation(arr_blue, 256);
+
+					lbl_means->Text = "Means: " + means;
+					lbl_variance->Text = "Variance: " + variance;
+					lbl_standard_deviation->Text = "Standard Deviation: " + standard_deviation;
+
+					for (int i = 0; i <= 255; i += 1) {
+						bar_chart->Series["Blue"]->Points->AddXY(i + 1, arr_blue[i]);
+					}
+				}
+				else {
+					ShowPlainMessageBox("Invalid Input");
+				}			
 			}
 		}
 		else {

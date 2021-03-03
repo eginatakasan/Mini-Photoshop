@@ -35,3 +35,12 @@ int* Array_GrayScale(Bitmap^ bmp_input);
 
 // Return Array Biner
 int* Array_Biner(Bitmap^ bmp_input);
+
+// Means
+double Get_Means(int arr[], int size);
+
+// Variance
+double Get_Variance(int arr[], int size);
+
+// Standard Deviation
+double Get_StandardDeviation(int arr[], int size);

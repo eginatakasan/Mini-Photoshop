@@ -101,7 +101,7 @@ String^ TypeImage(Bitmap^ bmp_input) {
 // Return Array Red
 int* Array_Red(Bitmap^ bmp_input) {
 	static int arr[256];
-	int max_value = 10000;
+	//int max_value = 10000;
 	for (int i = 0; i <= 255; ++i) {
 		arr[i] = 0;
 	}
@@ -113,9 +113,9 @@ int* Array_Red(Bitmap^ bmp_input) {
 		for (int y = 0; y < fileHeight; y++) {
 			Color pxl = bmp_input->GetPixel(x, y);
 			int pxlR = pxl.R;
-			if (arr[pxlR] < max_value) {
+			//if (arr[pxlR] < max_value) {
 				arr[pxlR] += 1;
-			}
+			//}
 		}
 	}
 
@@ -125,7 +125,7 @@ int* Array_Red(Bitmap^ bmp_input) {
 // Return Array Green
 int* Array_Green(Bitmap^ bmp_input) {
 	static int arr[256];
-	int max_value = 10000;
+	//int max_value = 10000;
 	for (int i = 0; i <= 255; ++i) {
 		arr[i] = 0;
 	}
@@ -137,9 +137,9 @@ int* Array_Green(Bitmap^ bmp_input) {
 		for (int y = 0; y < fileHeight; y++) {
 			Color pxl = bmp_input->GetPixel(x, y);
 			int pxlG = pxl.G;
-			if (arr[pxlG] < max_value) {
+			//if (arr[pxlG] < max_value) {
 				arr[pxlG] += 1;
-			}
+			//}
 		}
 	}
 
@@ -149,7 +149,7 @@ int* Array_Green(Bitmap^ bmp_input) {
 // Return Array Blue
 int* Array_Blue(Bitmap^ bmp_input) {
 	static int arr[256];
-	int max_value = 10000;
+	//int max_value = 10000;
 	for (int i = 0; i <= 255; ++i) {
 		arr[i] = 0;
 	}
@@ -161,9 +161,9 @@ int* Array_Blue(Bitmap^ bmp_input) {
 		for (int y = 0; y < fileHeight; y++) {
 			Color pxl = bmp_input->GetPixel(x, y);
 			int pxlB = pxl.B;
-			if (arr[pxlB] < max_value) {
+			//if (arr[pxlB] < max_value) {
 				arr[pxlB] += 1;
-			}
+			//}
 		}
 	}
 
@@ -173,7 +173,7 @@ int* Array_Blue(Bitmap^ bmp_input) {
 // Return Array GrayScale
 int* Array_GrayScale(Bitmap^ bmp_input) {
 	static int arr[256];
-	int max_value = 10000;
+	//int max_value = 10000;
 	for (int i = 0; i <= 255; ++i) {
 		arr[i] = 0;
 	}
@@ -185,9 +185,9 @@ int* Array_GrayScale(Bitmap^ bmp_input) {
 		for (int y = 0; y < fileHeight; y++) {
 			Color pxl = bmp_input->GetPixel(x, y);
 			int pxlGy = pxl.R;
-			if (arr[pxlGy] < max_value) {
+			//if (arr[pxlGy] < max_value) {
 				arr[pxlGy] += 1;
-			}
+			//}
 		}
 	}
 
@@ -197,7 +197,7 @@ int* Array_GrayScale(Bitmap^ bmp_input) {
 // Return Array Biner
 int* Array_Biner(Bitmap^ bmp_input) {
 	static int arr[2];
-	int max_value = 10000;
+	//int max_value = 10000;
 	for (int i = 0; i <= 2; ++i) {
 		arr[i] = 0;
 	}
@@ -218,19 +218,55 @@ int* Array_Biner(Bitmap^ bmp_input) {
 
 			if (isBlack) {
 				//Black
-				if (arr[0] < max_value) {
+				//if (arr[0] < max_value) {
 					arr[0] += 1;
-				}
+				//}
 			}
 			else {
 				//White
-				if (arr[1] < max_value) {
+				//if (arr[1] < max_value) {
 					arr[1] += 1;
-				}
+				//}
 			}
 			
 		}
 	}
 
 	return arr;
+}
+
+// Means
+double Get_Means(int arr[], int size) {
+	int sum = 0;
+	double avg;
+	int size_n = 0;
+
+	for (int i = 0; i < size; i++) {
+		sum += i*arr[i];
+		size_n += arr[i];
+	}
+
+	avg = double(sum / size_n);
+	return avg;
+}
+
+// Variance
+double Get_Variance(int arr[], int size)
+{
+	double mean = Get_Means(arr,size);
+	double sqDiff = 0;
+	int size_n = 0;
+
+	for (int i = 0; i < size; i++) {
+		sqDiff += arr[i]*(i - mean) * (i - mean);
+		size_n += arr[i];
+	}
+
+	return double(sqDiff / size_n);
+}
+
+// Standard Deviation
+double Get_StandardDeviation(int arr[],int size)
+{
+	return sqrt(Get_Variance(arr, size));
 }
