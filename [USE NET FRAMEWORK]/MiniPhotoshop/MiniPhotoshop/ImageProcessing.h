@@ -16,3 +16,8 @@ Bitmap^ Image_Boolean_AND(Bitmap^ bmp_input, Bitmap^ bmp_second_input);
 Bitmap^ Image_Boolean_NOT(Bitmap^ bmp_input);
 Bitmap^ Image_Boolean_OR(Bitmap^ bmp_input, Bitmap^ bmp_second_input);
 Bitmap^ Image_Boolean_XOR(Bitmap^ bmp_input, Bitmap^ bmp_second_input);
+
+Bitmap^ Image_ImageEnhancement_PowerTransformation(Bitmap^ bmp_input,double c_input,double pow_input);
+Bitmap^ Image_ImageEnhancement_BitPlaneSlicing(Bitmap^ bmp_input, int level);
+Bitmap^ Image_ImageEnhancement_GrayLevelSlicing(Bitmap^ bmp_input, int input_1, int input_2);
+Bitmap^ Image_ImageEnhancement_HistogramSpecification(Bitmap^ bmp_input, Bitmap^ bmp_second_input);

@@ -3,6 +3,7 @@
 #include <msclr\marshal_cppstd.h>
 #include <string.h>
 #include <iostream>
+#include <stdlib.h>
 
 using namespace std;
 using namespace System;
@@ -32,6 +33,12 @@ std::string convertTostring(String^ input) {
 //// std::string to int
 int convertToInteger(std::string input) {
 	int value = std::stoi(input);
+	return value;
+}
+
+//// std::string to double
+double convertToDouble(std::string input) {
+	double value = atof(input.c_str());
 	return value;
 }
 
@@ -269,4 +276,32 @@ double Get_Variance(int arr[], int size)
 double Get_StandardDeviation(int arr[],int size)
 {
 	return sqrt(Get_Variance(arr, size));
+}
+
+std::string BinaryString(int number) {
+	if (number == 0) {
+		return "0";
+	}
+	else if (number == 1) {
+		return "1";
+	}
+	else {
+		return BinaryString(number / 2) + BinaryString(number % 2);
+	}
+}
+
+int Get_Bit(std::string strBinary, int n_th) {
+	int length_str = strBinary.length();
+	n_th = (length_str - 1) - n_th;
+	if (n_th < 0) {
+		return 0;
+	}
+	else {
+		String^ binary_String = gcnew String(strBinary.c_str());
+		String^ binary_char_String = binary_String[n_th].ToString();
+		std::string binary_string = convertTostring(binary_char_String);
+		int bit = convertToInteger(binary_string);
+
+		return bit;
+	}
 }

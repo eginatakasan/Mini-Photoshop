@@ -110,6 +110,7 @@ namespace MiniPhotoshop {
 	private: System::Windows::Forms::Label^ lbl_standard_deviation;
 
 	private: System::Windows::Forms::Label^ lbl_spec_histogram;
+	private: System::Windows::Forms::ToolStripMenuItem^ show_histogram_2;
 
 	private:
 		/// <summary>
@@ -124,14 +125,14 @@ namespace MiniPhotoshop {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			System::Windows::Forms::DataVisualization::Charting::ChartArea^ chartArea2 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
-			System::Windows::Forms::DataVisualization::Charting::Legend^ legend2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
-			System::Windows::Forms::DataVisualization::Charting::Series^ series5 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
-			System::Windows::Forms::DataVisualization::Charting::Series^ series6 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
-			System::Windows::Forms::DataVisualization::Charting::Series^ series7 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
-			System::Windows::Forms::DataVisualization::Charting::Series^ series8 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
-			System::Windows::Forms::DataVisualization::Charting::Title^ title3 = (gcnew System::Windows::Forms::DataVisualization::Charting::Title());
-			System::Windows::Forms::DataVisualization::Charting::Title^ title4 = (gcnew System::Windows::Forms::DataVisualization::Charting::Title());
+			System::Windows::Forms::DataVisualization::Charting::ChartArea^ chartArea1 = (gcnew System::Windows::Forms::DataVisualization::Charting::ChartArea());
+			System::Windows::Forms::DataVisualization::Charting::Legend^ legend1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Legend());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series3 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Series^ series4 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
+			System::Windows::Forms::DataVisualization::Charting::Title^ title1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Title());
+			System::Windows::Forms::DataVisualization::Charting::Title^ title2 = (gcnew System::Windows::Forms::DataVisualization::Charting::Title());
 			this->lbl_original_img = (gcnew System::Windows::Forms::Label());
 			this->lbl_edited_image = (gcnew System::Windows::Forms::Label());
 			this->pic_box_main_img = (gcnew System::Windows::Forms::PictureBox());
@@ -186,6 +187,7 @@ namespace MiniPhotoshop {
 			this->lbl_variance = (gcnew System::Windows::Forms::Label());
 			this->lbl_standard_deviation = (gcnew System::Windows::Forms::Label());
 			this->lbl_spec_histogram = (gcnew System::Windows::Forms::Label());
+			this->show_histogram_2 = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pic_box_main_img))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pic_box_second_img))->BeginInit();
 			this->menu_strip->SuspendLayout();
@@ -537,7 +539,10 @@ namespace MiniPhotoshop {
 			// 
 			// historgramToolStripMenuItem
 			// 
-			this->historgramToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->show_histogram });
+			this->historgramToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->show_histogram,
+					this->show_histogram_2
+			});
 			this->historgramToolStripMenuItem->Name = L"historgramToolStripMenuItem";
 			this->historgramToolStripMenuItem->Size = System::Drawing::Size(79, 20);
 			this->historgramToolStripMenuItem->Text = L"Historgram";
@@ -545,7 +550,7 @@ namespace MiniPhotoshop {
 			// show_histogram
 			// 
 			this->show_histogram->Name = L"show_histogram";
-			this->show_histogram->Size = System::Drawing::Size(162, 22);
+			this->show_histogram->Size = System::Drawing::Size(180, 22);
 			this->show_histogram->Text = L"Show Histogram";
 			this->show_histogram->Click += gcnew System::EventHandler(this, &MyForm::show_histogram_Click);
 			// 
@@ -575,39 +580,39 @@ namespace MiniPhotoshop {
 			// 
 			// bar_chart
 			// 
-			chartArea2->Name = L"ChartArea1";
-			this->bar_chart->ChartAreas->Add(chartArea2);
-			legend2->Name = L"Legend1";
-			this->bar_chart->Legends->Add(legend2);
+			chartArea1->Name = L"ChartArea1";
+			this->bar_chart->ChartAreas->Add(chartArea1);
+			legend1->Name = L"Legend1";
+			this->bar_chart->Legends->Add(legend1);
 			this->bar_chart->Location = System::Drawing::Point(26, 310);
 			this->bar_chart->Name = L"bar_chart";
-			series5->ChartArea = L"ChartArea1";
-			series5->Color = System::Drawing::Color::Red;
-			series5->Legend = L"Legend1";
-			series5->Name = L"Red";
-			series6->ChartArea = L"ChartArea1";
-			series6->Color = System::Drawing::Color::Lime;
-			series6->Legend = L"Legend1";
-			series6->Name = L"Green";
-			series7->ChartArea = L"ChartArea1";
-			series7->Color = System::Drawing::Color::Blue;
-			series7->Legend = L"Legend1";
-			series7->Name = L"Blue";
-			series8->ChartArea = L"ChartArea1";
-			series8->Color = System::Drawing::Color::Black;
-			series8->Legend = L"Legend1";
-			series8->Name = L"Value";
-			this->bar_chart->Series->Add(series5);
-			this->bar_chart->Series->Add(series6);
-			this->bar_chart->Series->Add(series7);
-			this->bar_chart->Series->Add(series8);
+			series1->ChartArea = L"ChartArea1";
+			series1->Color = System::Drawing::Color::Red;
+			series1->Legend = L"Legend1";
+			series1->Name = L"Red";
+			series2->ChartArea = L"ChartArea1";
+			series2->Color = System::Drawing::Color::Lime;
+			series2->Legend = L"Legend1";
+			series2->Name = L"Green";
+			series3->ChartArea = L"ChartArea1";
+			series3->Color = System::Drawing::Color::Blue;
+			series3->Legend = L"Legend1";
+			series3->Name = L"Blue";
+			series4->ChartArea = L"ChartArea1";
+			series4->Color = System::Drawing::Color::Black;
+			series4->Legend = L"Legend1";
+			series4->Name = L"Value";
+			this->bar_chart->Series->Add(series1);
+			this->bar_chart->Series->Add(series2);
+			this->bar_chart->Series->Add(series3);
+			this->bar_chart->Series->Add(series4);
 			this->bar_chart->Size = System::Drawing::Size(731, 231);
 			this->bar_chart->TabIndex = 12;
 			this->bar_chart->Text = L"chart1";
-			title3->Name = L"Red";
-			title4->Name = L"Green";
-			this->bar_chart->Titles->Add(title3);
-			this->bar_chart->Titles->Add(title4);
+			title1->Name = L"Red";
+			title2->Name = L"Green";
+			this->bar_chart->Titles->Add(title1);
+			this->bar_chart->Titles->Add(title2);
 			// 
 			// lbl_means
 			// 
@@ -647,6 +652,13 @@ namespace MiniPhotoshop {
 			this->lbl_spec_histogram->TabIndex = 16;
 			this->lbl_spec_histogram->Text = L"Histogram";
 			// 
+			// show_histogram_2
+			// 
+			this->show_histogram_2->Name = L"show_histogram_2";
+			this->show_histogram_2->Size = System::Drawing::Size(180, 22);
+			this->show_histogram_2->Text = L"Show Histogram 2";
+			this->show_histogram_2->Click += gcnew System::EventHandler(this, &MyForm::show_histogram_2_Click);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -684,6 +696,10 @@ namespace MiniPhotoshop {
 
 	private: System::Void show_histogram_Click(System::Object^ sender, System::EventArgs^ e) {
 		ShowHistogram();
+	}
+
+	private: System::Void show_histogram_2_Click(System::Object^ sender, System::EventArgs^ e) {
+		ShowHistogram_2();
 	}
 
 	private: System::Void reset_image_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -1224,7 +1240,46 @@ namespace MiniPhotoshop {
 
 	void ImageEnhancement_PowerTransformation() {
 		if (bitmapMainImage != nullptr) {
+			String^ input_C = Interaction::InputBox("C-Input", "Insert Value of C", "1", -1, -1);
+			std::string str_C = convertTostring(input_C);
+			try {
+				double value_C = convertToDouble(str_C);
+				if (value_C < 0) {
+					ShowPlainMessageBox("Input must be > 0");
+				}
+				else {
+					String^ input_Y = Interaction::InputBox("Y-Input", "Insert Value of Y", "1", -1, -1);
+					std::string str_Y = convertTostring(input_Y);
 
+					try {
+						double value_Y = convertToDouble(str_Y);
+						if (value_Y < 0) {
+							ShowPlainMessageBox("Input must be > 0");
+						}
+						else {
+							bitmapMainImage = Image_ImageEnhancement_PowerTransformation(
+								bitmapMainImage, value_C, value_Y);
+							pic_box_main_img->Image = bitmapMainImage;
+						}						
+					}
+					catch (std::invalid_argument const& e)
+					{
+						ShowPlainMessageBox("Input must be numbers");
+					}
+					catch (std::out_of_range const& e)
+					{
+						ShowPlainMessageBox("Input must be numbers");
+					}
+				}
+			}
+			catch (std::invalid_argument const& e)
+			{
+				ShowPlainMessageBox("Input must be numbers");
+			}
+			catch (std::out_of_range const& e)
+			{
+				ShowPlainMessageBox("Input must be numbers");
+			}
 		}
 		else {
 			ShowPlainMessageBox("Insert Image First");
@@ -1233,7 +1288,49 @@ namespace MiniPhotoshop {
 
 	void ImageEnhancement_GrayLevelSlicing() {
 		if (bitmapMainImage != nullptr) {
+			String^ input_1 = Interaction::InputBox("Input-1", "Insert Input-1", "1", -1, -1);
+			std::string str_1 = convertTostring(input_1);
+			try {
+				int value_1 = convertToInteger(str_1);
+				if (value_1 < 0 || value_1 > 255) {
+					ShowPlainMessageBox("Invalid Input");
+				}
+				else {
+					String^ input_2 = Interaction::InputBox("Input-2", "Insert Input-2", "1", -1, -1);
+					std::string str_2 = convertTostring(input_2);
 
+					try {
+						int value_2 = convertToInteger(str_2);
+						if (value_2 < 0 || value_2 > 255) {
+							ShowPlainMessageBox("Invalid Input");
+						}
+						else if (value_1 >= value_2) {
+							ShowPlainMessageBox("Value_1 must < Value_2");
+						}
+						else {
+							bitmapMainImage = Image_ImageEnhancement_GrayLevelSlicing(
+								bitmapMainImage, value_1, value_2);
+							pic_box_main_img->Image = bitmapMainImage;
+						}
+					}
+					catch (std::invalid_argument const& e)
+					{
+						ShowPlainMessageBox("Input must be numbers");
+					}
+					catch (std::out_of_range const& e)
+					{
+						ShowPlainMessageBox("Input must be numbers");
+					}
+				}
+			}
+			catch (std::invalid_argument const& e)
+			{
+				ShowPlainMessageBox("Input must be numbers");
+			}
+			catch (std::out_of_range const& e)
+			{
+				ShowPlainMessageBox("Input must be numbers");
+			}
 		}
 		else {
 			ShowPlainMessageBox("Insert Image First");
@@ -1242,7 +1339,63 @@ namespace MiniPhotoshop {
 
 	void ImageEnhancement_BitPlaneSlicing() {
 		if (bitmapMainImage != nullptr) {
+			String^ input_Y = Interaction::InputBox("Level", "Insert Level 0-7", "1", -1, -1);
+			std::string str_Y = convertTostring(input_Y);
 
+			try {
+				int level_plane = convertToInteger(str_Y);
+				if (level_plane == 0) {
+					bitmapMainImage = Image_ImageEnhancement_BitPlaneSlicing(
+						bitmapMainImage, level_plane);
+					pic_box_main_img->Image = bitmapMainImage;
+				}
+				else if (level_plane == 1) {
+					bitmapMainImage = Image_ImageEnhancement_BitPlaneSlicing(
+						bitmapMainImage, level_plane);
+					pic_box_main_img->Image = bitmapMainImage;
+				}
+				else if (level_plane == 2) {
+					bitmapMainImage = Image_ImageEnhancement_BitPlaneSlicing(
+						bitmapMainImage, level_plane);
+					pic_box_main_img->Image = bitmapMainImage;
+				}
+				else if (level_plane == 3) {
+					bitmapMainImage = Image_ImageEnhancement_BitPlaneSlicing(
+						bitmapMainImage, level_plane);
+					pic_box_main_img->Image = bitmapMainImage;
+				}
+				else if (level_plane == 4) {
+					bitmapMainImage = Image_ImageEnhancement_BitPlaneSlicing(
+						bitmapMainImage, level_plane);
+					pic_box_main_img->Image = bitmapMainImage;
+				}
+				else if (level_plane == 5) {
+					bitmapMainImage = Image_ImageEnhancement_BitPlaneSlicing(
+						bitmapMainImage, level_plane);
+					pic_box_main_img->Image = bitmapMainImage;
+				}
+				else if (level_plane == 6) {
+					bitmapMainImage = Image_ImageEnhancement_BitPlaneSlicing(
+						bitmapMainImage, level_plane);
+					pic_box_main_img->Image = bitmapMainImage;
+				}
+				else if (level_plane == 7) {
+					bitmapMainImage = Image_ImageEnhancement_BitPlaneSlicing(
+						bitmapMainImage, level_plane);
+					pic_box_main_img->Image = bitmapMainImage;
+				}
+				else {
+					ShowPlainMessageBox("Invalid Input");
+				}
+			}
+			catch (std::invalid_argument const& e)
+			{
+				ShowPlainMessageBox("Input must be numbers");
+			}
+			catch (std::out_of_range const& e)
+			{
+				ShowPlainMessageBox("Input must be numbers");
+			}
 		}
 		else {
 			ShowPlainMessageBox("Insert Image First");
@@ -1260,7 +1413,13 @@ namespace MiniPhotoshop {
 
 	void ImageEnhancement_HistogramSpecification() {
 		if (bitmapMainImage != nullptr) {
-
+			if (bitmapSecondImage != nullptr) {
+				bitmapMainImage = Image_ImageEnhancement_HistogramSpecification(bitmapMainImage, bitmapSecondImage);
+				pic_box_main_img->Image = bitmapMainImage;
+			}
+			else {
+				ShowPlainMessageBox("Insert The Second Image");
+			}
 		}
 		else {
 			ShowPlainMessageBox("Insert Image First");
@@ -1366,6 +1525,106 @@ namespace MiniPhotoshop {
 		}
 	}
 
+	void ShowHistogram_2() {
+		if (bitmapSecondImage != nullptr) {
+			String^ type_image = TypeImage(bitmapSecondImage);
+			std::string standardString = convertTostring(type_image);
+			const char* type_img = standardString.c_str();
+
+			bar_chart->Legends->Clear();
+			bar_chart->Series["Red"]->Points->Clear();
+			bar_chart->Series["Green"]->Points->Clear();
+			bar_chart->Series["Blue"]->Points->Clear();
+			bar_chart->Series["Value"]->Points->Clear();
+
+			if (strcmp(type_img, "Biner") == 0) {
+				// Biner
+				int* arr_biner = Array_Biner(bitmapSecondImage);
+				double means = Get_Means(arr_biner, 256);
+				double variance = Get_Variance(arr_biner, 256);
+				double standard_deviation = Get_StandardDeviation(arr_biner, 256);
+
+				lbl_means->Text = "Means: " + means;
+				lbl_variance->Text = "Variance: " + variance;
+				lbl_standard_deviation->Text = "Standard Deviation: " + standard_deviation;
+
+				for (int i = 0; i < 2; i += 1) {
+					bar_chart->Series["Value"]->Points->AddXY(i, arr_biner[i]);
+				}
+			}
+			else if (strcmp(type_img, "GrayScale") == 0) {
+				// GrayScale
+				int* arr_grayscale = Array_GrayScale(bitmapSecondImage);
+				double means = Get_Means(arr_grayscale, 256);
+				double variance = Get_Variance(arr_grayscale, 256);
+				double standard_deviation = Get_StandardDeviation(arr_grayscale, 256);
+
+				lbl_means->Text = "Means: " + means;
+				lbl_variance->Text = "Variance: " + variance;
+				lbl_standard_deviation->Text = "Standard Deviation: " + standard_deviation;
+
+				for (int i = 0; i <= 255; i += 1) {
+					bar_chart->Series["Value"]->Points->AddXY(i + 1, arr_grayscale[i]);
+				}
+			}
+			else if (strcmp(type_img, "RGB") == 0) {
+				// RGB
+				// Check R,G,B
+				String^ input = Interaction::InputBox("Choose RGB", "R or G or B", "R", -1, -1);
+				std::string input_RGB = convertTostring(input);
+				const char* char_RGB = input_RGB.c_str();
+				if (strcmp(char_RGB, "R") == 0) {
+					int* arr_red = Array_Red(bitmapSecondImage);
+					double means = Get_Means(arr_red, 256);
+					double variance = Get_Variance(arr_red, 256);
+					double standard_deviation = Get_StandardDeviation(arr_red, 256);
+
+					lbl_means->Text = "Means: " + means;
+					lbl_variance->Text = "Variance: " + variance;
+					lbl_standard_deviation->Text = "Standard Deviation: " + standard_deviation;
+
+					for (int i = 0; i <= 255; i += 1) {
+						bar_chart->Series["Red"]->Points->AddXY(i + 1, arr_red[i]);
+					}
+				}
+				else if (strcmp(char_RGB, "G") == 0) {
+					int* arr_green = Array_Green(bitmapSecondImage);
+					double means = Get_Means(arr_green, 256);
+					double variance = Get_Variance(arr_green, 256);
+					double standard_deviation = Get_StandardDeviation(arr_green, 256);
+
+					lbl_means->Text = "Means: " + means;
+					lbl_variance->Text = "Variance: " + variance;
+					lbl_standard_deviation->Text = "Standard Deviation: " + standard_deviation;
+
+					for (int i = 0; i <= 255; i += 1) {
+						bar_chart->Series["Green"]->Points->AddXY(i + 1, arr_green[i]);
+					}
+				}
+				else if (strcmp(char_RGB, "B") == 0) {
+					int* arr_blue = Array_Blue(bitmapSecondImage);
+					double means = Get_Means(arr_blue, 256);
+					double variance = Get_Variance(arr_blue, 256);
+					double standard_deviation = Get_StandardDeviation(arr_blue, 256);
+
+					lbl_means->Text = "Means: " + means;
+					lbl_variance->Text = "Variance: " + variance;
+					lbl_standard_deviation->Text = "Standard Deviation: " + standard_deviation;
+
+					for (int i = 0; i <= 255; i += 1) {
+						bar_chart->Series["Blue"]->Points->AddXY(i + 1, arr_blue[i]);
+					}
+				}
+				else {
+					ShowPlainMessageBox("Invalid Input");
+				}
+			}
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
+	}
+
 	//[MESSAGE BOX]
 	void ShowInputMessageBox() {
 		String^ input = Interaction::InputBox("Brightness", "Title", "0", -1, -1);
@@ -1395,6 +1654,7 @@ namespace MiniPhotoshop {
 	}
 
 	
+
 };
 
 }

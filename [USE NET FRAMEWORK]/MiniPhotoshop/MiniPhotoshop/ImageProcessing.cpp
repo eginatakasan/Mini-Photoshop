@@ -1,4 +1,6 @@
 #include "ImageProcessing.h"
+#include <cmath>
+#include "PrimitiveFunction.h"
 
 using namespace std;
 using namespace System::Drawing;
@@ -659,6 +661,202 @@ Bitmap^ Image_Boolean_XOR(Bitmap^ bmp_input, Bitmap^ bmp_second_input) {
 			int pxl_Red = arrayRed[x][y] ^ arrayRedSecond[x][y];
 			int pxl_Green = arrayGreen[x][y] ^ arrayGreenSecond[x][y];
 			int pxl_Blue = arrayBlue[x][y] ^ arrayBlueSecond[x][y];
+
+			if (pxl_Red > 255) { pxl_Red = 255; }
+			if (pxl_Green > 255) { pxl_Green = 255; }
+			if (pxl_Blue > 255) { pxl_Blue = 255; }
+
+			if (pxl_Red < 0) { pxl_Red = 0; }
+			if (pxl_Green < 0) { pxl_Green = 0; }
+			if (pxl_Blue < 0) { pxl_Blue = 0; }
+
+			Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
+			bitmap->SetPixel(x, y, pxl);
+		}
+	}
+
+	return bitmap;
+}
+
+Bitmap^ Image_ImageEnhancement_PowerTransformation(Bitmap^ bmp_input, double c_input, double pow_input) {
+	// SetUp
+	double fileWidth = bmp_input->Width;
+	double fileHeight = bmp_input->Height;
+	int** arrayRed = new int* [fileWidth];
+	int** arrayGreen = new int* [fileWidth];
+	int** arrayBlue = new int* [fileWidth];
+	for (int i = 0; i < fileWidth; i++) {
+		arrayRed[i] = new int[fileHeight];
+		arrayGreen[i] = new int[fileHeight];
+		arrayBlue[i] = new int[fileHeight];
+	}
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			Color pxl = bmp_input->GetPixel(x, y);
+			arrayRed[x][y] = pxl.R;
+			arrayGreen[x][y] = pxl.G;
+			arrayBlue[x][y] = pxl.B;
+		}
+	}
+
+	//Update
+	Bitmap^ bitmap = gcnew Bitmap(fileWidth, fileHeight);
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			int pxl_Red = int(c_input * pow(arrayRed[x][y],pow_input)) ;
+			int pxl_Green = int(c_input * pow(arrayGreen[x][y], pow_input));
+			int pxl_Blue = int(c_input * pow(arrayBlue[x][y], pow_input));
+
+			if (pxl_Red > 255) { pxl_Red = 255; }
+			if (pxl_Green > 255) { pxl_Green = 255; }
+			if (pxl_Blue > 255) { pxl_Blue = 255; }
+
+			if (pxl_Red < 0) { pxl_Red = 0; }
+			if (pxl_Green < 0) { pxl_Green = 0; }
+			if (pxl_Blue < 0) { pxl_Blue = 0; }
+
+			Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
+			bitmap->SetPixel(x, y, pxl);
+		}
+	}
+
+	return bitmap;
+}
+
+Bitmap^ Image_ImageEnhancement_BitPlaneSlicing(Bitmap^ bmp_input, int level) {
+	// SetUp
+	double fileWidth = bmp_input->Width;
+	double fileHeight = bmp_input->Height;
+	int** arrayRed = new int* [fileWidth];
+	int** arrayGreen = new int* [fileWidth];
+	int** arrayBlue = new int* [fileWidth];
+	for (int i = 0; i < fileWidth; i++) {
+		arrayRed[i] = new int[fileHeight];
+		arrayGreen[i] = new int[fileHeight];
+		arrayBlue[i] = new int[fileHeight];
+	}
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			Color pxl = bmp_input->GetPixel(x, y);
+			arrayRed[x][y] = pxl.R;
+			arrayGreen[x][y] = pxl.G;
+			arrayBlue[x][y] = pxl.B;
+		}
+	}
+
+	//Update
+	Bitmap^ bitmap = gcnew Bitmap(fileWidth, fileHeight);
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			int pow_level = pow(2, level);
+
+			int bit_Red = (arrayRed[x][y] & pow_level) / pow_level;
+			int bit_Green = (arrayGreen[x][y] & pow_level) / pow_level;
+			int bit_Blue = (arrayBlue[x][y] & pow_level) / pow_level;
+
+			int pxl_Red ;
+			int pxl_Green ;
+			int pxl_Blue ;
+
+			if (bit_Red == 1) { pxl_Red = 255; } else { pxl_Red = 0; }
+			if (bit_Green == 1) { pxl_Green = 255; } else { pxl_Green = 0; }
+			if (bit_Blue == 1) { pxl_Blue = 255; } else { pxl_Blue = 0; }
+
+			Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
+			bitmap->SetPixel(x, y, pxl);
+		}
+	}
+
+	return bitmap;
+}
+
+Bitmap^ Image_ImageEnhancement_GrayLevelSlicing(Bitmap^ bmp_input, int input_1, int input_2) {
+	// SetUp
+	double fileWidth = bmp_input->Width;
+	double fileHeight = bmp_input->Height;
+	int** arrayRed = new int* [fileWidth];
+	int** arrayGreen = new int* [fileWidth];
+	int** arrayBlue = new int* [fileWidth];
+	for (int i = 0; i < fileWidth; i++) {
+		arrayRed[i] = new int[fileHeight];
+		arrayGreen[i] = new int[fileHeight];
+		arrayBlue[i] = new int[fileHeight];
+	}
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			Color pxl = bmp_input->GetPixel(x, y);
+			arrayRed[x][y] = pxl.R;
+			arrayGreen[x][y] = pxl.G;
+			arrayBlue[x][y] = pxl.B;
+		}
+	}
+
+	//Update
+	Bitmap^ bitmap = gcnew Bitmap(fileWidth, fileHeight);
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			int pxl_Red = arrayRed[x][y];
+			int pxl_Green = arrayGreen[x][y];
+			int pxl_Blue = arrayBlue[x][y];
+
+			if (pxl_Red > input_1 && pxl_Red < input_2) { pxl_Red = 255; }
+			if (pxl_Green > input_1 && pxl_Green < input_2) { pxl_Green = 255; }
+			if (pxl_Blue > input_1 && pxl_Blue < input_2) { pxl_Blue = 255; }
+
+			Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
+			bitmap->SetPixel(x, y, pxl);
+		}
+	}
+
+	return bitmap;
+}
+
+Bitmap^ Image_ImageEnhancement_HistogramSpecification(Bitmap^ bmp_input, Bitmap^ bmp_second_input) {
+	// SetUp Arr Input
+	double fileWidth = bmp_input->Width;
+	double fileHeight = bmp_input->Height;
+	int** arrayRed = new int* [fileWidth];
+	int** arrayGreen = new int* [fileWidth];
+	int** arrayBlue = new int* [fileWidth];
+	for (int i = 0; i < fileWidth; i++) {
+		arrayRed[i] = new int[fileHeight];
+		arrayGreen[i] = new int[fileHeight];
+		arrayBlue[i] = new int[fileHeight];
+	}
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			Color pxl = bmp_input->GetPixel(x, y);
+			arrayRed[x][y] = pxl.R;
+			arrayGreen[x][y] = pxl.G;
+			arrayBlue[x][y] = pxl.B;
+		}
+	}
+
+	// SetUp Arr Second Input
+	int** arrayRedSecond = new int* [fileWidth];
+	int** arrayGreenSecond = new int* [fileWidth];
+	int** arrayBlueSecond = new int* [fileWidth];
+	for (int i = 0; i < fileWidth; i++) {
+		arrayRedSecond[i] = new int[fileHeight];
+		arrayGreenSecond[i] = new int[fileHeight];
+		arrayBlueSecond[i] = new int[fileHeight];
+	}
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			Color pxl = bmp_second_input->GetPixel(x, y);
+			arrayRedSecond[x][y] = pxl.R;
+			arrayGreenSecond[x][y] = pxl.G;
+			arrayBlueSecond[x][y] = pxl.B;
+		}
+	}
+
+	//Update
+	Bitmap^ bitmap = gcnew Bitmap(fileWidth, fileHeight);
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			int pxl_Red = arrayRed[x][y] | arrayRedSecond[x][y];
+			int pxl_Green = arrayGreen[x][y] | arrayGreenSecond[x][y];
+			int pxl_Blue = arrayBlue[x][y] | arrayBlueSecond[x][y];
 
 			if (pxl_Red > 255) { pxl_Red = 255; }
 			if (pxl_Green > 255) { pxl_Green = 255; }

@@ -13,6 +13,9 @@ std::string convertTostring(String^ input);
 //// std::string to int
 int convertToInteger(std::string input);
 
+//// std::string to double
+double convertToDouble(std::string input);
+
 //// String to int
 int convertToInteger(String^ input);
 
@@ -44,3 +47,8 @@ double Get_Variance(int arr[], int size);
 
 // Standard Deviation
 double Get_StandardDeviation(int arr[], int size);
+
+// BinaryString
+std::string BinaryString(int number);
+
+int Get_Bit(std::string strBinary, int n_th);
