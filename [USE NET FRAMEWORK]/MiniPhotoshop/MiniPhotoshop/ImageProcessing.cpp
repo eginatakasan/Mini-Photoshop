@@ -171,6 +171,51 @@ Bitmap^ Image_ImageBrightening_ScalarMultiplication(Bitmap^ bmp_input, int value
 	return bitmap;
 }
 
+Bitmap^ Image_ImageBrightening_LinearFormula(Bitmap^ bmp_input, int multiplier, int constant) {
+	// SetUp
+	double fileWidth = bmp_input->Width;
+	double fileHeight = bmp_input->Height;
+	int** arrayRed = new int* [fileWidth];
+	int** arrayGreen = new int* [fileWidth];
+	int** arrayBlue = new int* [fileWidth];
+	for (int i = 0; i < fileWidth; i++) {
+		arrayRed[i] = new int[fileHeight];
+		arrayGreen[i] = new int[fileHeight];
+		arrayBlue[i] = new int[fileHeight];
+	}
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			Color pxl = bmp_input->GetPixel(x, y);
+			arrayRed[x][y] = pxl.R;
+			arrayGreen[x][y] = pxl.G;
+			arrayBlue[x][y] = pxl.B;
+		}
+	}
+
+	//Update
+	Bitmap^ bitmap = gcnew Bitmap(fileWidth, fileHeight);
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			int pxl_Red = arrayRed[x][y] * multiplier + constant;
+			int pxl_Green = arrayGreen[x][y]  *multiplier + constant;
+			int pxl_Blue = arrayBlue[x][y] * multiplier + constant;
+
+			if (pxl_Red > 255) { pxl_Red = 255; }
+			if (pxl_Green > 255) { pxl_Green = 255; }
+			if (pxl_Blue > 255) { pxl_Blue = 255; }
+
+			if (pxl_Red < 0) { pxl_Red = 0; }
+			if (pxl_Green < 0) { pxl_Green = 0; }
+			if (pxl_Blue < 0) { pxl_Blue = 0; }
+
+			Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
+			bitmap->SetPixel(x, y, pxl);
+		}
+	}
+
+	return bitmap;
+}
+
 Bitmap^ Image_Arithmethic_Addition(Bitmap^ bmp_input, Bitmap^ bmp_second_input) {
 	// SetUp Arr Input
 	double fileWidth = bmp_input->Width;
@@ -669,6 +714,170 @@ Bitmap^ Image_Boolean_XOR(Bitmap^ bmp_input, Bitmap^ bmp_second_input) {
 			if (pxl_Red < 0) { pxl_Red = 0; }
 			if (pxl_Green < 0) { pxl_Green = 0; }
 			if (pxl_Blue < 0) { pxl_Blue = 0; }
+
+			Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
+			bitmap->SetPixel(x, y, pxl);
+		}
+	}
+
+	return bitmap;
+}
+
+Bitmap^ Image_ImageEnhancement_ContrastStretching(Bitmap^ bmp_input, int min, int max) {
+	// SetUp
+	double fileWidth = bmp_input->Width;
+	double fileHeight = bmp_input->Height;
+	int** arrayRed = new int* [fileWidth];
+	int** arrayGreen = new int* [fileWidth];
+	int** arrayBlue = new int* [fileWidth];
+	int maxRed = 0, maxGreen = 0, maxBlue = 0;
+	int minRed = 255, minGreen = 255, minBlue = 255;
+
+	for (int i = 0; i < fileWidth; i++) {
+		arrayRed[i] = new int[fileHeight];
+		arrayGreen[i] = new int[fileHeight];
+		arrayBlue[i] = new int[fileHeight];
+	}
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			Color pxl = bmp_input->GetPixel(x, y);
+			arrayRed[x][y] = pxl.R;
+			if (pxl.R < minRed) {
+				minRed = pxl.R;
+			}
+			if (pxl.R > maxRed) {
+				maxRed = pxl.R;
+			}
+			arrayGreen[x][y] = pxl.G;
+			if (pxl.R < minRed) {
+				minRed = pxl.G;
+			}
+			if (pxl.G > maxGreen) {
+				maxGreen = pxl.G;
+			}
+			arrayBlue[x][y] = pxl.B;
+			if (pxl.B < minBlue) {
+				minBlue = pxl.B;
+			}
+			if (pxl.B > maxBlue) {
+				maxBlue = pxl.B;
+			}
+		}
+	}
+
+
+	//Update
+	Bitmap^ bitmap = gcnew Bitmap(fileWidth, fileHeight);
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			int pxl_Red = arrayRed[x][y];
+			if (pxl_Red <= min) {
+				pxl_Red = 0;
+			}
+			else if (pxl_Red > max) {
+				pxl_Red = 255;
+			}
+			else {
+				pxl_Red = 255 * (pxl_Red - minRed) / (maxRed - minRed);
+			}
+			int pxl_Green = arrayGreen[x][y];
+			if (pxl_Green <= min) {
+				pxl_Green = 0;
+			}
+			else if (pxl_Green > max) {
+				pxl_Green = 255;
+			}
+			else {
+				pxl_Green = 255 * (pxl_Green - minRed) / (maxRed - minRed);
+			}
+			int pxl_Blue = arrayBlue[x][y];
+			if (pxl_Blue <= min) {
+				pxl_Blue = 0;
+			}
+			else if (pxl_Blue > max) {
+				pxl_Blue = 255;
+			}
+			else {
+				pxl_Blue = 255 * (pxl_Blue - minRed) / (maxRed - minRed);
+			}
+
+			Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
+			bitmap->SetPixel(x, y, pxl);
+		}
+	}
+
+	return bitmap;
+}
+
+Bitmap^ Image_ImageEnhancement_LogTransformation(Bitmap^ bmp_input) {
+	// SetUp
+	double fileWidth = bmp_input->Width;
+	double fileHeight = bmp_input->Height;
+	int** arrayRed = new int* [fileWidth];
+	int** arrayGreen = new int* [fileWidth];
+	int** arrayBlue = new int* [fileWidth];
+	int L = 256;
+	for (int i = 0; i < fileWidth; i++) {
+		arrayRed[i] = new int[fileHeight];
+		arrayGreen[i] = new int[fileHeight];
+		arrayBlue[i] = new int[fileHeight];
+	}
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			Color pxl = bmp_input->GetPixel(x, y);
+			arrayRed[x][y] = pxl.R;
+			arrayGreen[x][y] = pxl.G;
+			arrayBlue[x][y] = pxl.B;
+		}
+	}
+
+
+	//Update
+	Bitmap^ bitmap = gcnew Bitmap(fileWidth, fileHeight);
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			int pxl_Red = (L-1)/log(L) * log(arrayRed[x][y] + 1);
+			int pxl_Green = (L - 1) / log(L) * log(arrayGreen[x][y] + 1);
+			int pxl_Blue = (L - 1) / log(L) * log(arrayBlue[x][y] + 1);
+
+			Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
+			bitmap->SetPixel(x, y, pxl);
+		}
+	}
+
+	return bitmap;
+}
+
+Bitmap^ Image_ImageEnhancement_InverseLogTransformation(Bitmap^ bmp_input) {
+	// SetUp
+	double fileWidth = bmp_input->Width;
+	double fileHeight = bmp_input->Height;
+	int** arrayRed = new int* [fileWidth];
+	int** arrayGreen = new int* [fileWidth];
+	int** arrayBlue = new int* [fileWidth];
+	int L = 256;
+	for (int i = 0; i < fileWidth; i++) {
+		arrayRed[i] = new int[fileHeight];
+		arrayGreen[i] = new int[fileHeight];
+		arrayBlue[i] = new int[fileHeight];
+	}
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			Color pxl = bmp_input->GetPixel(x, y);
+			arrayRed[x][y] = pxl.R;
+			arrayGreen[x][y] = pxl.G;
+			arrayBlue[x][y] = pxl.B;
+		}
+	}
+
+
+	//Update
+	Bitmap^ bitmap = gcnew Bitmap(fileWidth, fileHeight);
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			int pxl_Red = pow(exp(arrayRed[x][y]), log(L)/(L-1)) - 1;
+			int pxl_Green = pow(exp(arrayGreen[x][y]), log(L) / (L - 1)) - 1;
+			int pxl_Blue = pow(exp(arrayBlue[x][y]), log(L) / (L - 1)) - 1;
 
 			Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
 			bitmap->SetPixel(x, y, pxl);

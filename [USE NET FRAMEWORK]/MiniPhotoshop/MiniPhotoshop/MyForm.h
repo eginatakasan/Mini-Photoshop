@@ -66,6 +66,7 @@ namespace MiniPhotoshop {
 	private: System::Windows::Forms::ToolStripMenuItem^ imageBrighteningToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ image_brightening_scalar_addition;
 	private: System::Windows::Forms::ToolStripMenuItem^ image_brightening_scalar_multiplication;
+	private: System::Windows::Forms::ToolStripMenuItem^ image_brightening_linear_formula;
 
 	private: System::Windows::Forms::ToolStripMenuItem^ aritmethicToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ aritmethic_addition;
@@ -86,7 +87,10 @@ namespace MiniPhotoshop {
 	private: System::Windows::Forms::ToolStripMenuItem^ geometry_zooming;
 
 	private: System::Windows::Forms::ToolStripMenuItem^ imageEnhancementToolStripMenuItem;
-	private: System::Windows::Forms::ToolStripMenuItem^ image_enhancement_image_brightening;
+	private: System::Windows::Forms::ToolStripMenuItem^ imageEnhancementImageBrighteningToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ image_enhancement_image_brightening_scalar_addition;
+	private: System::Windows::Forms::ToolStripMenuItem^ image_enhancement_image_brightening_scalar_multiplication;
+	private: System::Windows::Forms::ToolStripMenuItem^ image_enhancement_image_brightening_linear_formula;
 	private: System::Windows::Forms::ToolStripMenuItem^ image_enhancement_constrast_stretching;
 	private: System::Windows::Forms::ToolStripMenuItem^ image_enhancement_log_transformation;
 	private: System::Windows::Forms::ToolStripMenuItem^ image_enhancement_inverse_log_transformation;
@@ -153,6 +157,7 @@ namespace MiniPhotoshop {
 			this->imageBrighteningToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->image_brightening_scalar_addition = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->image_brightening_scalar_multiplication = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->image_brightening_linear_formula = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->boolean_menu = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->boolean_and_ = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->boolean_not = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -169,7 +174,10 @@ namespace MiniPhotoshop {
 			this->geometry_flipping = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->geometry_zooming = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->imageEnhancementToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->image_enhancement_image_brightening = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->imageEnhancementImageBrighteningToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->image_enhancement_image_brightening_scalar_addition = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->image_enhancement_image_brightening_scalar_multiplication = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->image_enhancement_image_brightening_linear_formula = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->image_enhancement_constrast_stretching = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->image_enhancement_log_transformation = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->image_enhancement_inverse_log_transformation = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -322,9 +330,10 @@ namespace MiniPhotoshop {
 			// 
 			// imageBrighteningToolStripMenuItem
 			// 
-			this->imageBrighteningToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+			this->imageBrighteningToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
 				this->image_brightening_scalar_addition,
-					this->image_brightening_scalar_multiplication
+					this->image_brightening_scalar_multiplication,
+					this->image_brightening_linear_formula,
 			});
 			this->imageBrighteningToolStripMenuItem->Name = L"imageBrighteningToolStripMenuItem";
 			this->imageBrighteningToolStripMenuItem->Size = System::Drawing::Size(183, 22);
@@ -343,6 +352,13 @@ namespace MiniPhotoshop {
 			this->image_brightening_scalar_multiplication->Size = System::Drawing::Size(182, 22);
 			this->image_brightening_scalar_multiplication->Text = L"Scalar Multiplication";
 			this->image_brightening_scalar_multiplication->Click += gcnew System::EventHandler(this, &MyForm::image_brightening_scalar_multiplication_Click);
+			//
+			// image_brightening_linear_formula
+			//
+			this->image_brightening_linear_formula->Name = L"image_brightening_linear_formula";
+			this->image_brightening_linear_formula->Size = System::Drawing::Size(182, 22);
+			this->image_brightening_linear_formula->Text = L"Linear Formula";
+			this->image_brightening_linear_formula->Click += gcnew System::EventHandler(this, &MyForm::image_brightening_linear_formula_Click);
 			// 
 			// boolean_menu
 			// 
@@ -461,7 +477,7 @@ namespace MiniPhotoshop {
 			// imageEnhancementToolStripMenuItem
 			// 
 			this->imageEnhancementToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(9) {
-				this->image_enhancement_image_brightening,
+				this->imageEnhancementImageBrighteningToolStripMenuItem,
 					this->image_enhancement_constrast_stretching, this->image_enhancement_log_transformation, this->image_enhancement_inverse_log_transformation,
 					this->image_enhancement_power_transformation, this->image_enhancement_gray_level_slicing, this->image_enhancement_bit_plane_slicing,
 					this->image_enhancement_histogram_equalization, this->image_enhancement_histogram_specification
@@ -472,10 +488,35 @@ namespace MiniPhotoshop {
 			// 
 			// image_enhancement_image_brightening
 			// 
-			this->image_enhancement_image_brightening->Name = L"image_enhancement_image_brightening";
-			this->image_enhancement_image_brightening->Size = System::Drawing::Size(217, 22);
-			this->image_enhancement_image_brightening->Text = L"Image Brightening";
-			this->image_enhancement_image_brightening->Click += gcnew System::EventHandler(this, &MyForm::image_enhancement_image_brightening_Click);
+			this->imageEnhancementImageBrighteningToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
+				this->image_enhancement_image_brightening_scalar_addition,
+					this->image_enhancement_image_brightening_scalar_multiplication,
+					this->image_enhancement_image_brightening_linear_formula,
+			});
+			this->imageEnhancementImageBrighteningToolStripMenuItem->Name = L"imageEnhancementImageBrighteningToolStripMenuItem";
+			this->imageEnhancementToolStripMenuItem->Size = System::Drawing::Size(183, 22);
+			this->imageEnhancementImageBrighteningToolStripMenuItem->Text = L"Image Brightening";
+			// 
+			// image_brightening_scalar_addition
+			// 
+			this->image_enhancement_image_brightening_scalar_addition->Name = L"image_enhancement_image_brightening_scalar_addition";
+			this->image_enhancement_image_brightening_scalar_addition->Size = System::Drawing::Size(182, 22);
+			this->image_enhancement_image_brightening_scalar_addition->Text = L"Scalar Addition";
+			this->image_enhancement_image_brightening_scalar_addition->Click += gcnew System::EventHandler(this, &MyForm::image_brightening_scalar_addition_Click);
+			// 
+			// image_brightening_scalar_multiplication
+			// 
+			this->image_enhancement_image_brightening_scalar_multiplication->Name = L"image_enhancement_image_brightening_scalar_multiplication";
+			this->image_enhancement_image_brightening_scalar_multiplication->Size = System::Drawing::Size(182, 22);
+			this->image_enhancement_image_brightening_scalar_multiplication->Text = L"Scalar Multiplication";
+			this->image_enhancement_image_brightening_scalar_multiplication->Click += gcnew System::EventHandler(this, &MyForm::image_brightening_scalar_multiplication_Click);
+			//
+			// image_brightening_linear_formula
+			//
+			this->image_enhancement_image_brightening_linear_formula->Name = L"image_enhancement_image_brightening_linear_formula";
+			this->image_enhancement_image_brightening_linear_formula->Size = System::Drawing::Size(182, 22);
+			this->image_enhancement_image_brightening_linear_formula->Text = L"Linear Formula";
+			this->image_enhancement_image_brightening_linear_formula->Click += gcnew System::EventHandler(this, &MyForm::image_brightening_linear_formula_Click);
 			// 
 			// image_enhancement_constrast_stretching
 			// 
@@ -742,6 +783,10 @@ namespace MiniPhotoshop {
 		ImageBrightening_ScalarMultiplication();
 	}
 
+	private: System::Void image_brightening_linear_formula_Click(System::Object^ sender, System::EventArgs^ e) {
+		ImageBrightening_LinearFormula();
+	}
+
 	private: System::Void aritmethic_addition_Click(System::Object^ sender, System::EventArgs^ e) {
 		Arithmethic_Addition();
 	}
@@ -788,8 +833,16 @@ namespace MiniPhotoshop {
 		Geometry_Zooming();
 	}
 
-	private: System::Void image_enhancement_image_brightening_Click(System::Object^ sender, System::EventArgs^ e) {
-		ImageEnhancement_ImageBrightening();
+	private: System::Void image_enhancement_image_brightening_scalar_addition_Click(System::Object^ sender, System::EventArgs^ e) {
+		ImageBrightening_ScalarAddition();
+	}
+
+	private: System::Void image_enhancement_image_brightening_scalar_multiplication_Click(System::Object^ sender, System::EventArgs^ e) {
+		ImageBrightening_ScalarMultiplication();
+	}
+
+	private: System::Void image_enhancement_image_brightening_linear_formula_Click(System::Object^ sender, System::EventArgs^ e) {
+		ImageBrightening_LinearFormula();
 	}
 
 	private: System::Void image_enhancement_constrast_stretching_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -1062,6 +1115,32 @@ namespace MiniPhotoshop {
 		}
 	}
 
+	void ImageBrightening_LinearFormula() {
+		if (bitmapMainImage != nullptr) {
+			String^ input_a = Interaction::InputBox("Multiplier", "Insert Multiplier Value (a)", "0", -1, -1);
+			String^ input_b = Interaction::InputBox("Constant", "Insert Constant Value (b)", "0", -1, -1);
+			std::string string_a = convertTostring(input_a);
+			std::string string_b = convertTostring(input_b);
+			try {
+				int a = convertToInteger(string_a);
+				int b = convertToInteger(string_b);
+				bitmapMainImage = Image_ImageBrightening_LinearFormula(bitmapMainImage, a, b);
+				pic_box_main_img->Image = bitmapMainImage;
+			}
+			catch (std::invalid_argument const& e)
+			{
+				ShowPlainMessageBox("Input must be numbers");
+			}
+			catch (std::out_of_range const& e)
+			{
+				ShowPlainMessageBox("Input must be numbers");
+			}
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
+	}
+
 	void Arithmethic_Addition() {
 		if (bitmapMainImage != nullptr) {
 			if (bitmapSecondImage != nullptr) {
@@ -1215,7 +1294,7 @@ namespace MiniPhotoshop {
 
 	void ImageEnhancement_ImageBrightening() {
 		if (bitmapMainImage != nullptr) {
-
+		
 		}
 		else {
 			ShowPlainMessageBox("Insert Image First");
@@ -1224,7 +1303,24 @@ namespace MiniPhotoshop {
 
 	void ImageEnhancement_ConstrastStretching() {
 		if (bitmapMainImage != nullptr) {
-
+			String^ input_a = Interaction::InputBox("Minimum Treshold", "Insert Minimum Treshold", "50", -1, -1);
+			String^ input_b = Interaction::InputBox("Maximum Treshold", "Insert Maximum Treshold", "150", -1, -1);
+			std::string string_a = convertTostring(input_a);
+			std::string string_b = convertTostring(input_b);
+			try {
+				int min = convertToInteger(string_a);
+				int max = convertToInteger(string_b);
+				bitmapMainImage = Image_ImageEnhancement_ContrastStretching(bitmapMainImage, min, max);
+				pic_box_main_img->Image = bitmapMainImage;
+			}
+			catch (std::invalid_argument const& e)
+			{
+				ShowPlainMessageBox("Input must be numbers");
+			}
+			catch (std::out_of_range const& e)
+			{
+				ShowPlainMessageBox("Input must be numbers");
+			}
 		}
 		else {
 			ShowPlainMessageBox("Insert Image First");
@@ -1233,7 +1329,26 @@ namespace MiniPhotoshop {
 
 	void ImageEnhancement_LogTransformation() {
 		if (bitmapMainImage != nullptr) {
-
+			if (bitmapMainImage != nullptr) {
+				// String^ input = Interaction::InputBox("Multiplier Constant", "Insert Multiplier Constant for Logarithm Function", "10", -1, -1);
+				// std::string string = convertTostring(input);
+				try {
+					// int value = convertToInteger(string);
+					bitmapMainImage = Image_ImageEnhancement_LogTransformation(bitmapMainImage);
+					pic_box_main_img->Image = bitmapMainImage;
+				}
+				catch (std::invalid_argument const& e)
+				{
+					ShowPlainMessageBox("Input must be numbers");
+				}
+				catch (std::out_of_range const& e)
+				{
+					ShowPlainMessageBox("Input must be numbers");
+				}
+			}
+			else {
+				ShowPlainMessageBox("Insert Image First");
+			}
 		}
 		else {
 			ShowPlainMessageBox("Insert Image First");
@@ -1242,7 +1357,26 @@ namespace MiniPhotoshop {
 
 	void ImageEnhancement_InverseLogTransformation() {
 		if (bitmapMainImage != nullptr) {
-
+			if (bitmapMainImage != nullptr) {
+				// String^ input = Interaction::InputBox("Inverse Logarithm Constant", "Insert Constant for Inverse Logarithm Function", "10", -1, -1);
+				// std::string string = convertTostring(input);
+				try {
+					// int value = convertToInteger(string);
+					bitmapMainImage = Image_ImageEnhancement_InverseLogTransformation(bitmapMainImage);
+					pic_box_main_img->Image = bitmapMainImage;
+				}
+				catch (std::invalid_argument const& e)
+				{
+					ShowPlainMessageBox("Input must be numbers");
+				}
+				catch (std::out_of_range const& e)
+				{
+					ShowPlainMessageBox("Input must be numbers");
+				}
+			}
+			else {
+				ShowPlainMessageBox("Insert Image First");
+			}
 		}
 		else {
 			ShowPlainMessageBox("Insert Image First");
