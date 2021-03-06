@@ -24,4 +24,5 @@ Bitmap^ Image_ImageEnhancement_InverseLogTransformation(Bitmap^ bmp_input);
 Bitmap^ Image_ImageEnhancement_PowerTransformation(Bitmap^ bmp_input,double c_input,double pow_input);
 Bitmap^ Image_ImageEnhancement_BitPlaneSlicing(Bitmap^ bmp_input, int level);
 Bitmap^ Image_ImageEnhancement_GrayLevelSlicing(Bitmap^ bmp_input, int input_1, int input_2);
+Bitmap^ Image_ImageEnhancement_HistogramEqualization(Bitmap^ bmp_input);
 Bitmap^ Image_ImageEnhancement_HistogramSpecification(Bitmap^ bmp_input, Bitmap^ bmp_second_input);

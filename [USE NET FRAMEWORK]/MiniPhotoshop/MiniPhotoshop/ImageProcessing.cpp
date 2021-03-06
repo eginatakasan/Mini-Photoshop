@@ -788,7 +788,7 @@ Bitmap^ Image_ImageEnhancement_ContrastStretching(Bitmap^ bmp_input, int min, in
 				pxl_Green = 255;
 			}
 			else {
-				pxl_Green = 255 * (pxl_Green - minRed) / (maxRed - minRed);
+				pxl_Green = 255 * (pxl_Green - minGreen) / (maxGreen - minGreen);
 			}
 			int pxl_Blue = arrayBlue[x][y];
 			if (pxl_Blue <= min) {
@@ -798,7 +798,7 @@ Bitmap^ Image_ImageEnhancement_ContrastStretching(Bitmap^ bmp_input, int min, in
 				pxl_Blue = 255;
 			}
 			else {
-				pxl_Blue = 255 * (pxl_Blue - minRed) / (maxRed - minRed);
+				pxl_Blue = 255 * (pxl_Blue - minBlue) / (maxBlue - minBlue);
 			}
 
 			Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
@@ -1011,6 +1011,49 @@ Bitmap^ Image_ImageEnhancement_GrayLevelSlicing(Bitmap^ bmp_input, int input_1, 
 			if (pxl_Red > input_1 && pxl_Red < input_2) { pxl_Red = 255; }
 			if (pxl_Green > input_1 && pxl_Green < input_2) { pxl_Green = 255; }
 			if (pxl_Blue > input_1 && pxl_Blue < input_2) { pxl_Blue = 255; }
+
+			Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
+			bitmap->SetPixel(x, y, pxl);
+		}
+	}
+
+	return bitmap;
+}
+
+Bitmap^ Image_ImageEnhancement_HistogramEqualization(Bitmap^ bmp_input) {
+	// SetUp Arr Input
+	const int L = 256;
+	double fileWidth = bmp_input->Width;
+	double fileHeight = bmp_input->Height;
+	int** arrayRed = new int* [fileWidth];
+	int** arrayGreen = new int* [fileWidth];
+	int** arrayBlue = new int* [fileWidth];
+	for (int i = 0; i < fileWidth; i++) {
+		arrayRed[i] = new int[fileHeight];
+		arrayGreen[i] = new int[fileHeight];
+		arrayBlue[i] = new int[fileHeight];
+	}
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			Color pxl = bmp_input->GetPixel(x, y);
+			arrayRed[x][y] = pxl.R;
+			arrayGreen[x][y] = pxl.G;
+			arrayBlue[x][y] = pxl.B;
+		}
+	}
+
+	// Array CDF Original
+	double* arr_red_cdf = Array_Red_CDF(bmp_input);
+	double* arr_green_cdf = Array_Green_CDF(bmp_input);
+	double* arr_blue_cdf = Array_Blue_CDF(bmp_input);
+
+	//Update
+	Bitmap^ bitmap = gcnew Bitmap(fileWidth, fileHeight);
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			int pxl_Red = arr_red_cdf[arrayRed[x][y]];
+			int pxl_Green = arr_green_cdf[arrayGreen[x][y]];
+			int pxl_Blue = arr_blue_cdf[arrayBlue[x][y]];
 
 			Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
 			bitmap->SetPixel(x, y, pxl);

@@ -1549,7 +1549,8 @@ namespace MiniPhotoshop {
 
 	void ImageEnhancement_HistogramEqualization() {
 		if (bitmapMainImage != nullptr) {
-
+			bitmapMainImage = Image_ImageEnhancement_HistogramEqualization(bitmapMainImage);
+			pic_box_main_img->Image = bitmapMainImage;
 		}
 		else {
 			ShowPlainMessageBox("Insert Image First");
