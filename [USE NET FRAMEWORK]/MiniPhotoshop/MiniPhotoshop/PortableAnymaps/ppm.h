@@ -21,6 +21,7 @@ private:
 public:
     /* Constructor */
     PPM(const char *path);
+    void Write(const char *path);
     int *ptr;
     _Color GetPixel(int x, int y);
     void ShowDetails(bool show_content);

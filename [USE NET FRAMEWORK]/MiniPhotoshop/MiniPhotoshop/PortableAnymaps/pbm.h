@@ -20,6 +20,7 @@ private:
 public:
     /* Constructor */
     PBM(const char *path);
+    void Write(const char *path);
     void ShowDetails(bool show_content);
     int GetPixel(int x, int y);
     int GetStride();

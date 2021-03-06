@@ -39,7 +39,6 @@ protected:
 
 public:
     /* Functions */
-    void Write(char *const path);
     void ShowDetails(bool show_content);
 
     /* Getter Functions */

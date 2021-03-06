@@ -21,6 +21,7 @@ public:
     /* Constructor */
     PGM(const char *path);
     void ShowDetails(bool show_content);
+    void Write(const char *path);
     int GetPixel(int x, int y);
     int GetStride();
 };

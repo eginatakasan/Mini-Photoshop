@@ -76,21 +76,42 @@ void PortableAnymaps::readHeader(istream &fp)
         stringstream ss(line);
         ss >> this->width;
         ss >> this->height;
+        this->totalPixels = this->width * this->height;
     }
     else
     {
         cerr << "File is not readable" << endl;
         return;
     }
-    //Get max color value except for PBM
+    //Get bit per pixels and max color value
     if (this->magicNumber == 1 || this->magicNumber == 4)
     {
+        this->maxVal = 1;
+        this->bitPerPixel = 1;
         return;
     }
     if (getline(fp, line))
     {
         stringstream ss(line);
         ss >> this->maxVal;
+
+        //get bit per pixel
+        int size = 0;
+        int n = this->maxVal;
+        while (n > 0)
+        {
+            n = n >> 1;
+            size++;
+        }
+
+        if (this->magicNumber == 3 || this->magicNumber == 6)
+        {
+            this->bitPerPixel = size * 3;
+        }
+        else
+        {
+            this->bitPerPixel = size;
+        }
     }
     else
     {
@@ -98,20 +119,6 @@ void PortableAnymaps::readHeader(istream &fp)
         return;
     }
 }
-
-// void PortableAnymaps::Write(const char * path)
-// {
-//     FILE *fp;
-//     fp = fopen(path, "wb");
-//     if (fp == NULL)
-//     {
-//         cerr << "Error file cannot be saved at (" << path << ") \n";
-//         exit;
-//     }
-//     fprintf(fp, "%s\n%d %d\n%d\n", this->magicNumber, this->width, this->height, this->maxVal);
-//     fwrite(this->content, 1, this->totalPixels, fp);
-//     cout << "File saved successfully at " << path << "...\n";
-// }
 
 void PortableAnymaps::ShowDetails(bool show_content)
 {

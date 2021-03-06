@@ -101,6 +101,61 @@ void PPM::readP6Content(istream &fp)
     }
 }
 
+void PPM::Write(const char *path)
+{
+    ofstream fp(path);
+    if (!fp)
+    {
+        cerr << "Error file cannot be saved at (" << path << ") \n";
+        exit;
+    }
+    fp << "P" << this->magicNumber << endl;
+    fp << this->width << " " << this->height << endl;
+    fp << this->maxVal << endl;
+
+    if (magicNumber == 3)
+    {
+        for (int i = 0; i < this->height; i++)
+        {
+            for (int j = 0; j < this->width; j++)
+            {
+                _Color color = this->content[i][j];
+                fp << color.R << " ";
+                fp << color.G << " ";
+                fp << color.B;
+                if (j == this->width - 1)
+                {
+                    fp << " ";
+                }
+                else
+                {
+                    fp << endl;
+                }
+            };
+        };
+    }
+    else if (magicNumber == 6)
+    {
+        for (int i = 0; i < this->height; i++)
+        {
+            for (int j = 0; j < this->width; j++)
+            {
+                _Color color = this->content[i][j];
+                int int_r = color.R;
+                int int_g = color.G;
+                int int_b = color.B;
+
+                char r = static_cast<char>(int_r);
+                fp << r;
+                char g = static_cast<char>(int_g);
+                fp << g;
+                char b = static_cast<char>(int_b);
+                fp << b;
+            };
+        };
+    }
+}
+
 void PPM::ShowDetails(bool show_content)
 {
     cout << "magic number: " << this->magicNumber << "\n";
@@ -138,5 +193,5 @@ int PPM::GetStride()
         n >> 8;
         size++;
     }
-    return (n * 3 * this->width);
+    return (size * 3 * this->width);
 }

@@ -80,7 +80,6 @@ void PBM::readP4Content(istream &fp)
     for (auto i = bytes.begin(); i != bytes.end(); ++i)
     {
         string binary = bitset<8>(*i).to_string();
-        cout << "binary: " << binary << endl;
         for (int k = 0; k < 8; k++)
         {
             if (y > this->width)
@@ -103,6 +102,66 @@ int PBM::GetPixel(int x, int y)
 int PBM::GetStride()
 {
     return this->width;
+}
+
+void PBM::Write(const char *path)
+{
+    ofstream fp(path);
+    if (!fp)
+    {
+        cerr << "Error file cannot be saved at (" << path << ") \n";
+        exit;
+    }
+    fp << "P" << this->magicNumber << endl;
+    fp << this->width << " " << this->height << endl;
+
+    if (magicNumber == 1)
+    {
+        for (int i = 0; i < this->height; i++)
+        {
+            for (int j = 0; j < this->width; j++)
+            {
+                fp << this->content[i][j];
+                if (j != this->width - 1)
+                {
+                    fp << " ";
+                }
+            };
+            if (i != this->height)
+            {
+                fp << endl;
+            }
+        };
+    }
+    else if (magicNumber == 4)
+    {
+        // cout
+        int i = 0, j = 0, k = 0;
+        while (k < this->totalPixels)
+        {
+            stringstream ss;
+            for (int l = 0; l < 8; l++)
+            {
+                ss << this->content[i][j];
+                j++;
+                if (j >= this->width)
+                {
+                    j = 0;
+                    i++;
+                }
+            }
+
+            string s;
+            ss >> s;
+            char c1 = static_cast<char>(std::bitset<8>(s).to_ulong());
+
+            cout << i << "," << j << " :" << s << endl;
+            cout << c1 << endl;
+            fp << c1;
+
+            k += 8;
+        }
+    }
 }
 
 void PBM::ShowDetails(bool show_content)

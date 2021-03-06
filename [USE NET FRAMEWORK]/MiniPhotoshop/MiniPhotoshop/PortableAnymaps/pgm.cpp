@@ -97,6 +97,52 @@ int PGM::GetPixel(int x, int y)
     return this->content[x][y];
 }
 
+void PGM::Write(const char *path)
+{
+    ofstream fp(path);
+    if (!fp)
+    {
+        cerr << "Error file cannot be saved at (" << path << ") \n";
+        exit;
+    }
+    fp << "P" << this->magicNumber << endl;
+    fp << this->width << " " << this->height << endl;
+    fp << this->maxVal << endl;
+
+    if (magicNumber == 2)
+    {
+        for (int i = 0; i < this->height; i++)
+        {
+            for (int j = 0; j < this->width; j++)
+            {
+                int pixel = this->content[i][j];
+                fp << pixel;
+                if (j == this->width - 1)
+                {
+                    fp << endl;
+                }
+                else
+                {
+                    fp << " ";
+                }
+            };
+        };
+    }
+    else if (magicNumber == 5)
+    {
+        for (int i = 0; i < this->height; i++)
+        {
+            for (int j = 0; j < this->width; j++)
+            {
+                int pixel = this->content[i][j];
+
+                char c = static_cast<char>(pixel);
+                fp << c;
+            };
+        };
+    }
+}
+
 void PGM::ShowDetails(bool show_content)
 {
     cout << "magic number: " << this->magicNumber << "\n";
