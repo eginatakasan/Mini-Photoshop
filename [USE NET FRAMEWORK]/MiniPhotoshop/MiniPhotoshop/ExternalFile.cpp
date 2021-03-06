@@ -1,4 +1,5 @@
 #include "ExternalFile.h"
+#include "PrimitiveFunction.h"
 #include <msclr\marshal_cppstd.h>
 #include <string.h>
 #include <iostream>
@@ -15,6 +16,9 @@ using namespace Microsoft::VisualBasic;
 using namespace std;
 using namespace msclr::interop;
 
+int MagicNumber = 0;
+int MaxVal = 0;
+
 Bitmap^ Image_BitmapFile(String^ path) {
 	Image^ image = Image::FromFile(path);
 	
@@ -28,6 +32,9 @@ Bitmap^ Image_PGMFile(String^ path) {
 	PGM pgm = (s_path.c_str());
 	int height = pgm.GetHeight();
 	int width = pgm.GetWidth();
+	MagicNumber = pgm.GetMagicNumber();
+	MaxVal = pgm.GetMaxVal();
+
 	Bitmap^ bmp = gcnew Bitmap(width, height);
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
@@ -46,7 +53,11 @@ Bitmap^ Image_PBMFile(String^ path) {
 	PBM pbm = (s_path.c_str());
 	int height = pbm.GetHeight();
 	int width = pbm.GetWidth();
+	MagicNumber = pbm.GetMagicNumber();
+	MaxVal = 1;
+
 	Bitmap^ bmp = gcnew Bitmap(width, height);
+	
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
 			int _color = pbm.GetPixel(j,i) == 0 ? 255 : 0;
@@ -64,6 +75,8 @@ Bitmap^ Image_PPMFile(String^ path) {
 	PPM ppm = (s_path.c_str());
 	int height = ppm.GetHeight();
 	int width = ppm.GetWidth();
+	MagicNumber = ppm.GetMagicNumber();
+	MaxVal = ppm.GetMaxVal();
 
 	Bitmap^ bmp = gcnew Bitmap(width, height);
 	for (int i = 0; i < width; i++) {
@@ -77,6 +90,60 @@ Bitmap^ Image_PPMFile(String^ path) {
 		}
 	}
 	return bmp;
+}
+
+void Write_to_PGM(Bitmap^ bmp, string path) {
+	int width = bmp->Width;
+	int height = bmp->Height;
+	int magicNum = MagicNumber;
+	int maxVal = MaxVal;
+
+	PGM pgm = PGM(width, height, magicNum, maxVal);
+	for (int i = 0; i < width; i++) {
+		for (int j = 0; j < height; j++) {
+			int pixel = bmp->GetPixel(i, j).R * maxVal / 255;
+			pgm.SetPixel(j, i, pixel);
+		}
+	}
+	string out = "C:\\Users\\User\\Downloads\\" + path + ".pgm";
+	pgm.Write(out.c_str());
+}
+
+void Write_to_PBM(Bitmap^ bmp, string path) {
+	int width = bmp->Width;
+	int height = bmp->Height;
+	int magicNum = MagicNumber;
+	int maxVal = MaxVal;
+
+	PBM pbm = PBM(width, height, magicNum);
+	for (int i = 0; i < width; i++) {
+		for (int j = 0; j < height; j++) {
+			int pixel = bmp->GetPixel(i, j).R == 0 ? 1 : 0;
+			pbm.SetPixel(j, i, pixel);
+		}
+	}
+	string out = "C:\\Users\\User\\Downloads\\" + path + ".pbm";
+	pbm.Write(out.c_str());
+}
+
+void Write_to_PPM(Bitmap^ bmp, string path) {
+	int width = bmp->Width;
+	int height = bmp->Height;
+	int magicNum = MagicNumber;
+	int maxVal = MaxVal;
+	
+	PPM ppm = PPM(width, height, magicNum, maxVal);
+	for (int i = 0; i < width; i++) {
+		for (int j = 0; j < height; j++) {
+			int R = bmp->GetPixel(i, j).R * maxVal / 255;
+			int G = bmp->GetPixel(i, j).G * maxVal / 255;
+			int B = bmp->GetPixel(i, j).B * maxVal / 255;
+			_Color color = _Color(R, G, B);
+			ppm.SetPixel(j, i, color);
+		}
+	}
+	string out = "C:\\Users\\User\\Downloads\\" + path + ".ppm";
+	ppm.Write(out.c_str());
 }
 
 Bitmap^ Image_RawImageFile(String^ path) {

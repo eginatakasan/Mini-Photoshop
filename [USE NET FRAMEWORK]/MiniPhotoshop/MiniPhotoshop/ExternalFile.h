@@ -27,3 +27,9 @@ Bitmap^ Image_PBMFile(String^ path);
 Bitmap^ Image_PPMFile(String^ path);
 
 Bitmap^ Image_RawImageFile(String^ path);
+
+void Write_to_PGM(Bitmap^ bmp, string path);
+
+void Write_to_PPM(Bitmap^ bmp, string path);
+
+void Write_to_PBM(Bitmap^ bmp, string path);

@@ -13,8 +13,22 @@
 
 using namespace std;
 
+PGM::PGM(int width, int height, int magicNumber, int maxVal) : PortableAnymaps(width, height, magicNumber, maxVal)
+{
+    this->content = new int *[this->height];
+    for (int i = 0; i < this->height; i++)
+    {
+        content[i] = new int[this->width];
+    }
+}
+
 PGM::PGM(const char *path) : PortableAnymaps(path)
 {
+    this->content = new int *[this->height];
+    for (int i = 0; i < this->height; i++)
+    {
+        content[i] = new int[this->width];
+    }
     if (this->magicNumber == 2)
     {
         ifstream fp(path);
@@ -35,12 +49,6 @@ void PGM::readContent(istream &fp)
     // skip header
     for (int i = 1; i <= 3; i++)
         getline(fp, line);
-
-    this->content = new int *[this->height];
-    for (int i = 0; i < this->height; i++)
-    {
-        content[i] = new int[this->width];
-    }
 
     switch (this->magicNumber)
     {
@@ -95,6 +103,11 @@ void PGM::readP5Content(istream &fp)
 int PGM::GetPixel(int x, int y)
 {
     return this->content[x][y];
+}
+
+void PGM::SetPixel(int x, int y, int pixel)
+{
+    this->content[x][y] = pixel;
 }
 
 void PGM::Write(const char *path)
@@ -170,9 +183,9 @@ int PGM::GetStride()
 {
     int size = 0;
     int n = this->maxVal;
-    while (n != 0)
+    while (n > 0)
     {
-        n >> 8;
+        n = n >> 8;
         size++;
     }
     return (n * this->width);

@@ -749,8 +749,8 @@ Bitmap^ Image_ImageEnhancement_ContrastStretching(Bitmap^ bmp_input, int min, in
 				maxRed = pxl.R;
 			}
 			arrayGreen[x][y] = pxl.G;
-			if (pxl.R < minRed) {
-				minRed = pxl.G;
+			if (pxl.G < minGreen) {
+				minGreen = pxl.G;
 			}
 			if (pxl.G > maxGreen) {
 				maxGreen = pxl.G;
@@ -778,6 +778,7 @@ Bitmap^ Image_ImageEnhancement_ContrastStretching(Bitmap^ bmp_input, int min, in
 				pxl_Red = 255;
 			}
 			else {
+				int b = (maxRed - minRed) <= 0 ? 1 : (maxRed - minRed);
 				pxl_Red = 255 * (pxl_Red - minRed) / (maxRed - minRed);
 			}
 			int pxl_Green = arrayGreen[x][y];
@@ -788,7 +789,8 @@ Bitmap^ Image_ImageEnhancement_ContrastStretching(Bitmap^ bmp_input, int min, in
 				pxl_Green = 255;
 			}
 			else {
-				pxl_Green = 255 * (pxl_Green - minGreen) / (maxGreen - minGreen);
+				int b = (maxGreen - minGreen) <= 0 ? 1 : (maxGreen - minGreen);
+				pxl_Green = 255 * (pxl_Green - minGreen) / b;
 			}
 			int pxl_Blue = arrayBlue[x][y];
 			if (pxl_Blue <= min) {
@@ -798,6 +800,7 @@ Bitmap^ Image_ImageEnhancement_ContrastStretching(Bitmap^ bmp_input, int min, in
 				pxl_Blue = 255;
 			}
 			else {
+				int b = (maxBlue - minBlue) <= 0 ? 1 : (maxBlue - minBlue);
 				pxl_Blue = 255 * (pxl_Blue - minBlue) / (maxBlue - minBlue);
 			}
 

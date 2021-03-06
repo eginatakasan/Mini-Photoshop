@@ -15,6 +15,15 @@ PPM -> Magic Number 3 or 6, has R G B on one pixel (3 values per pixel)
 PGM -> Magic Number 2 or 5, greyscale values only (1 value per pixel)
 PBM -> Magic number 1 or 4, black and white only, 1 bit value every pixel (1 value per pixel)
 */
+PortableAnymaps::PortableAnymaps(int width, int height, int magicNumber, int maxVal)
+{
+    this->width = width;
+    this->height = height;
+    this->magicNumber = magicNumber;
+    this->maxVal = maxVal;
+    this->totalPixels = width * height;
+}
+
 PortableAnymaps::PortableAnymaps(const char *path)
 {
     ifstream fp(path);

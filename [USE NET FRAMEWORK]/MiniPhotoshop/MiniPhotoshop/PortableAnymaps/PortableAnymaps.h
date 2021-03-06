@@ -16,6 +16,7 @@ class PortableAnymaps
 {
 protected:
     /* Constructor */
+    PortableAnymaps(int width, int height, int magicNumber, int maxVal);
     PortableAnymaps(const char *path);
     PortableAnymaps(PortableAnymaps *image);
 
@@ -50,7 +51,6 @@ public:
     int GetMagicNumber();
     int GetMaxVal();
     /* Setter Functions */
-    void SetPixel(int x, int y, _Color pixel);
 };
 
 #endif

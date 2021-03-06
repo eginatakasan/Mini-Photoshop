@@ -14,6 +14,11 @@ using namespace std;
 
 PBM::PBM(const char *path) : PortableAnymaps(path)
 {
+    this->content = new int *[this->height];
+    for (int i = 0; i < this->height; i++)
+    {
+        content[i] = new int[this->width];
+    }
     if (this->magicNumber == 1)
     {
         ifstream fp(path);
@@ -28,18 +33,21 @@ PBM::PBM(const char *path) : PortableAnymaps(path)
     }
 }
 
+PBM::PBM(int width, int height, int magicNumber) : PortableAnymaps(width, height, magicNumber, 1)
+{
+    this->content = new int *[this->height];
+    for (int i = 0; i < this->height; i++)
+    {
+        content[i] = new int[this->width];
+    }
+}
+
 void PBM::readContent(istream &fp)
 {
     string line;
     // skip header
     for (int i = 1; i <= 2; i++)
         getline(fp, line);
-
-    this->content = new int *[this->height];
-    for (int i = 0; i < this->height; i++)
-    {
-        content[i] = new int[this->width];
-    }
 
     switch (this->magicNumber)
     {
@@ -99,6 +107,11 @@ int PBM::GetPixel(int x, int y)
     return this->content[x][y];
 }
 
+void PBM::SetPixel(int x, int y, int pixel)
+{
+    this->content[x][y] = pixel;
+}
+
 int PBM::GetStride()
 {
     return this->width;
@@ -154,9 +167,6 @@ void PBM::Write(const char *path)
             string s;
             ss >> s;
             char c1 = static_cast<char>(std::bitset<8>(s).to_ulong());
-
-            cout << i << "," << j << " :" << s << endl;
-            cout << c1 << endl;
             fp << c1;
 
             k += 8;

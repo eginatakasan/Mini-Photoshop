@@ -13,8 +13,22 @@
 
 using namespace std;
 
+PPM::PPM(int width, int height, int magicNumber, int maxVal) : PortableAnymaps(width, height, magicNumber, maxVal)
+{
+    this->content = new _Color *[this->height];
+    for (int i = 0; i < this->height; i++)
+    {
+        content[i] = new _Color[this->width];
+    }
+}
+
 PPM::PPM(const char *path) : PortableAnymaps(path)
 {
+    this->content = new _Color *[this->height];
+    for (int i = 0; i < this->height; i++)
+    {
+        content[i] = new _Color[this->width];
+    }
     if (this->magicNumber == 3)
     {
         ifstream fp(path);
@@ -35,12 +49,6 @@ void PPM::readContent(istream &fp)
     // skip header
     for (int i = 1; i <= 3; i++)
         getline(fp, line);
-
-    this->content = new _Color *[height];
-    for (int i = 0; i < this->height; i++)
-    {
-        content[i] = new _Color[width];
-    }
 
     switch (this->magicNumber)
     {
@@ -184,6 +192,10 @@ _Color PPM::GetPixel(int x, int y)
     return this->content[x][y];
 }
 
+void PPM::SetPixel(int x, int y, _Color color)
+{
+    this->content[x][y] = color;
+}
 int PPM::GetStride()
 {
     int size = 0;

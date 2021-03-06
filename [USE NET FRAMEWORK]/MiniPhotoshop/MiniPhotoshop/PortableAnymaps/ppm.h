@@ -20,10 +20,12 @@ private:
 
 public:
     /* Constructor */
+    PPM(int width, int height, int magicNumber, int maxVal);
     PPM(const char *path);
     void Write(const char *path);
     int *ptr;
     _Color GetPixel(int x, int y);
+    void SetPixel(int x, int y, _Color color);
     void ShowDetails(bool show_content);
     int GetStride();
 };

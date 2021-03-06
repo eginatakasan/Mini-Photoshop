@@ -20,10 +20,12 @@ private:
 public:
     /* Constructor */
     PBM(const char *path);
+    PBM(int width, int height, int magicNumber);
     void Write(const char *path);
     void ShowDetails(bool show_content);
     int GetPixel(int x, int y);
     int GetStride();
+    void SetPixel(int x, int y, int pixel);
 };
 
 #endif

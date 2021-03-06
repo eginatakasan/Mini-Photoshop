@@ -885,6 +885,7 @@ namespace MiniPhotoshop {
 	Bitmap^ bitmapMainImage;
 	Bitmap^ bitmapMainOriginalImage;
 	Bitmap^ bitmapSecondImage;
+	char* originalFormat;
 
 	//[Function Menu]
 	//// Image
@@ -895,7 +896,8 @@ namespace MiniPhotoshop {
 			String^ extension_file = System::IO::Path::GetExtension(ofd->FileName);
 			std::string standardString = convertTostring(extension_file);
 			const char* ext_file = standardString.c_str();
-		
+			originalFormat = new char[sizeof(ext_file)];
+			strcpy(originalFormat, ext_file);
 			if (strcmp(ext_file, ".bmp") == 0) {
 				// bmp
 				Bitmap^ imageMainImage = Image_BitmapFile(ofd->FileName);
@@ -1026,7 +1028,18 @@ namespace MiniPhotoshop {
 		if (bitmapMainImage != nullptr) {
 			String^ input = Interaction::InputBox("Image Name", "Insert Name", "Untitled", -1, -1);
 			std::string standardString = convertTostring(input);
-			bitmapMainImage->Save("C:\\Users\\User\\Downloads\\" + input + ".bmp");
+			if ((strcmp(originalFormat, ".ppm") == 0)) {
+				Write_to_PPM(bitmapMainImage, standardString);
+				
+			} else if ((strcmp(originalFormat, ".pgm") == 0)) {
+				Write_to_PGM(bitmapMainImage, standardString);
+			}
+			else if ((strcmp(originalFormat, ".pbm") == 0)) {
+				Write_to_PBM(bitmapMainImage, standardString);
+			}
+			else {
+				bitmapMainImage->Save("C:\\Users\\User\\Downloads\\" + input + ".bmp");
+			}
 		}
 		else {
 			ShowPlainMessageBox("Please Open Image First");
