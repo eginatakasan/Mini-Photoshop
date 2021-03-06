@@ -133,3 +133,4 @@ bool PortableAnymaps::isMagicNumberValid(int magicNumber)
 {
     return (magicNumber >= 1) && (magicNumber <= 6);
 }
+int PortableAnymaps::GetMaxVal() { return this->maxVal; }

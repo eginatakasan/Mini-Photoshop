@@ -6,22 +6,36 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <bitset>
+#include <climits>
+#include <vector>
+#include <iterator>
 
 using namespace std;
 
 PPM::PPM(const char *path) : PortableAnymaps(path)
 {
-    ifstream fp(path);
-    string line;
-    // skip header
-    for (int i = 1; i <= 3; i++)
-        getline(fp, line);
-    readContent(fp);
-    fp.close();
+    if (this->magicNumber == 3)
+    {
+        ifstream fp(path);
+        readContent(fp);
+        fp.close();
+    }
+    else if (this->magicNumber == 6)
+    {
+        ifstream fp(path, std::ios_base::binary);
+        readContent(fp);
+        fp.close();
+    }
 }
 
 void PPM::readContent(istream &fp)
 {
+    string line;
+    // skip header
+    for (int i = 1; i <= 3; i++)
+        getline(fp, line);
+
     this->content = new _Color *[height];
     for (int i = 0; i < this->height; i++)
     {
@@ -60,20 +74,29 @@ void PPM::readP3Content(istream &fp)
 
 void PPM::readP6Content(istream &fp)
 {
-    int r, g, b;
-    for (int i = 0; i < height; i++)
-    {
-        for (int j = 0; j < width; j++)
-        {
-            unsigned char* aux_r = new unsigned char[1];
 
-            fp.read(reinterpret_cast<char*>(aux_r), sizeof(unsigned char));
-            r = (int) *aux_r;
-            fp.read(reinterpret_cast<char*>(aux_r), sizeof(unsigned char));
-            g = (int) *aux_r;
-            fp.read(reinterpret_cast<char*>(aux_r), sizeof(unsigned char));
-            b = (int) *aux_r;
-            this->content[i][j] = _Color(r, g, b);
+    std::vector<char> bytes(
+        (std::istreambuf_iterator<char>(fp)),
+        (std::istreambuf_iterator<char>()));
+
+    int r, g, b;
+    int i = 0, j = 0;
+    for (auto k = bytes.begin(); k != bytes.end(); k++)
+    {
+        unsigned long long_r = bitset<8>(*k).to_ulong();
+        k++;
+        unsigned long long_g = bitset<8>(*k).to_ulong();
+        k++;
+        unsigned long long_b = bitset<8>(*k).to_ulong();
+        r = long_r & INT_MAX;
+        g = long_g & INT_MAX;
+        b = long_b & INT_MAX;
+        this->content[i][j] = _Color(r, g, b);
+        j++;
+        if (j >= this->width)
+        {
+            i++;
+            j = 0;
         }
     }
 }

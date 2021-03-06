@@ -31,7 +31,7 @@ Bitmap^ Image_PGMFile(String^ path) {
 	Bitmap^ bmp = gcnew Bitmap(width, height);
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
-			int _color = pgm.GetPixel(j, i);
+			int _color = pgm.GetPixel(j, i) * 255 / pgm.GetMaxVal();
 			Color color = Color::FromArgb(_color, _color, _color);
 			bmp->SetPixel(i, j, color);
 		}
@@ -49,7 +49,7 @@ Bitmap^ Image_PBMFile(String^ path) {
 	Bitmap^ bmp = gcnew Bitmap(width, height);
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
-			int _color = pbm.GetPixel(j,i) == 0 ? 0 : 255;
+			int _color = pbm.GetPixel(j,i) == 0 ? 255 : 0;
 			Color color = Color::FromArgb(_color, _color, _color);
 			bmp->SetPixel(i,j,color);
 		}
@@ -69,7 +69,10 @@ Bitmap^ Image_PPMFile(String^ path) {
 	for (int i = 0; i < width; i++) {
 		for (int j = 0; j < height; j++) {
 			_Color _color = ppm.GetPixel(j, i);
-			Color color = Color::FromArgb(_color.R, _color.G, _color.B);
+			int R = _color.R * 255 / ppm.GetMaxVal();
+			int G = _color.G * 255 / ppm.GetMaxVal();
+			int B = _color.B * 255 / ppm.GetMaxVal();
+			Color color = Color::FromArgb(R, G, B);
 			bmp->SetPixel(i, j, color);
 		}
 	}

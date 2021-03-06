@@ -7,22 +7,34 @@
 #include <iostream>
 #include <sstream>
 #include <bitset>
+#include <vector>
+#include <iterator>
 
 using namespace std;
 
 PBM::PBM(const char *path) : PortableAnymaps(path)
 {
-    ifstream fp(path);
-    string line;
-    // skip header
-    for (int i = 1; i <= 2; i++)
-        getline(fp, line);
-    readContent(fp);
-    fp.close();
+    if (this->magicNumber == 1)
+    {
+        ifstream fp(path);
+        readContent(fp);
+        fp.close();
+    }
+    else if (this->magicNumber == 4)
+    {
+        ifstream fp(path, std::ios_base::binary);
+        readContent(fp);
+        fp.close();
+    }
 }
 
 void PBM::readContent(istream &fp)
 {
+    string line;
+    // skip header
+    for (int i = 1; i <= 2; i++)
+        getline(fp, line);
+
     this->content = new int *[this->height];
     for (int i = 0; i < this->height; i++)
     {
@@ -59,29 +71,28 @@ void PBM::readP1Content(istream &fp)
 
 void PBM::readP4Content(istream &fp)
 {
-    string s;
-    int i = 0, j = 0;
-    int stringIdx = 0;
-    getline(fp, s);
-    int lineLength = s.length();
+    int x = 0, y = 0;
 
-    while (stringIdx < lineLength)
+    std::vector<char> bytes(
+        (std::istreambuf_iterator<char>(fp)),
+        (std::istreambuf_iterator<char>()));
+
+    for (auto i = bytes.begin(); i != bytes.end(); ++i)
     {
-        string binary = bitset<8>(s[stringIdx]).to_string();
+        string binary = bitset<8>(*i).to_string();
+        cout << "binary: " << binary << endl;
         for (int k = 0; k < 8; k++)
         {
-            if (j > this->width)
+            if (y > this->width)
             {
-                j = 0;
+                y = 0;
                 k = 0;
-                i++;
+                x++;
             }
-            const char *c = binary.c_str();
-            this->content[i][j] = c[k];
-            j++;
+            this->content[x][y] = binary.at(k) - '0';
+            y++;
         }
-        stringIdx++;
-    };
+    }
 }
 
 int PBM::GetPixel(int x, int y)

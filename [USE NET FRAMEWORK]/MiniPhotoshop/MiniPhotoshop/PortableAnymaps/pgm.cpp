@@ -6,22 +6,36 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <bitset>
+#include <climits>
+#include <vector>
+#include <iterator>
 
 using namespace std;
 
 PGM::PGM(const char *path) : PortableAnymaps(path)
 {
-    ifstream fp(path);
-    string line;
-    // skip header
-    for (int i = 1; i <= 3; i++)
-        getline(fp, line);
-    readContent(fp);
-    fp.close();
+    if (this->magicNumber == 2)
+    {
+        ifstream fp(path);
+        readContent(fp);
+        fp.close();
+    }
+    else if (this->magicNumber == 5)
+    {
+        ifstream fp(path, std::ios_base::binary);
+        readContent(fp);
+        fp.close();
+    }
 }
 
 void PGM::readContent(istream &fp)
 {
+    string line;
+    // skip header
+    for (int i = 1; i <= 3; i++)
+        getline(fp, line);
+
     this->content = new int *[this->height];
     for (int i = 0; i < this->height; i++)
     {
@@ -58,15 +72,22 @@ void PGM::readP2Content(istream &fp)
 
 void PGM::readP5Content(istream &fp)
 {
-    int value;
-    unsigned char *aux;
-    for (int i = 0; i < height; i++)
+    std::vector<char> bytes(
+        (std::istreambuf_iterator<char>(fp)),
+        (std::istreambuf_iterator<char>()));
+
+    int p;
+    int i = 0, j = 0;
+    for (auto k = bytes.begin(); k != bytes.end(); k++)
     {
-        for (int j = 0; j < width; j++)
+        unsigned long long_p = bitset<8>(*k).to_ulong();
+        p = long_p & INT_MAX;
+        this->content[i][j] = p;
+        j++;
+        if (j >= this->width)
         {
-            fp.read(reinterpret_cast<char *>(aux), 1);
-            value = *aux;
-            this->content[i][j] = value;
+            i++;
+            j = 0;
         }
     }
 }

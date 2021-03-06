@@ -49,6 +49,7 @@ public:
     int GetBitPerPixel();
     long GetFileSize();
     int GetMagicNumber();
+    int GetMaxVal();
     /* Setter Functions */
     void SetPixel(int x, int y, _Color pixel);
 };
