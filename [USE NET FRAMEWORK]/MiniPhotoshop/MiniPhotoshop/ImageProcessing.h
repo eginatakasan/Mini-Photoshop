@@ -18,6 +18,7 @@ Bitmap^ Image_Boolean_NOT(Bitmap^ bmp_input);
 Bitmap^ Image_Boolean_OR(Bitmap^ bmp_input, Bitmap^ bmp_second_input);
 Bitmap^ Image_Boolean_XOR(Bitmap^ bmp_input, Bitmap^ bmp_second_input);
 Bitmap^ Image_Translate(Bitmap^ bmp_input, int x_trans, int y_trans);
+Bitmap^ Image_Rotate90(Bitmap^ bmp_input);
 
 Bitmap^ Image_ImageEnhancement_ContrastStretching(Bitmap^ bmp_input, int min, int max);
 Bitmap^ Image_ImageEnhancement_LogTransformation(Bitmap^ bmp_input);

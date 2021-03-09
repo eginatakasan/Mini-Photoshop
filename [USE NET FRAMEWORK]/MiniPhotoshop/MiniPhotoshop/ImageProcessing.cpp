@@ -89,6 +89,49 @@ Bitmap^ Image_Translate(Bitmap^ bmp_input, int x_trans, int y_trans) {
 	return bitmap;
 }
 
+Bitmap^ Image_Rotate90(Bitmap^ bmp_input) {
+	// SetUp
+	double fileWidth = bmp_input->Width;
+	double fileHeight = bmp_input->Height;
+	int** arrayRed = new int* [fileWidth];
+	int** arrayGreen = new int* [fileWidth];
+	int** arrayBlue = new int* [fileWidth];
+	for (int i = 0; i < fileWidth; i++) {
+		arrayRed[i] = new int[fileHeight];
+		arrayGreen[i] = new int[fileHeight];
+		arrayBlue[i] = new int[fileHeight];
+	}
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			Color pxl = bmp_input->GetPixel(x, y);
+			arrayRed[x][y] = pxl.R;
+			arrayGreen[x][y] = pxl.G;
+			arrayBlue[x][y] = pxl.B;
+		}
+	}
+
+
+	//Update
+	Bitmap^ bitmap = gcnew Bitmap(fileHeight, fileWidth );
+	int k;
+	for (int x = 0; x < fileWidth; x++) {
+		k = fileHeight - 1;
+		for (int y = 0; y < fileHeight; y++) {
+			
+			int pxl_Red = arrayRed[x][y];
+			int pxl_Green = arrayGreen[x][y];
+			int pxl_Blue = arrayBlue[x][y];
+
+			Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
+			bitmap->SetPixel(k, x, pxl);
+			k = k - 1;
+
+		}
+	}
+
+	return bitmap;
+}
+
 Bitmap^ Image_NegativeTransformation(Bitmap^ bmp_input) {
 	// SetUp
 	double fileWidth = bmp_input->Width;

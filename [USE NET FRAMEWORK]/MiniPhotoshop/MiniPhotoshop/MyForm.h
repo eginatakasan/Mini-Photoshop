@@ -1297,7 +1297,8 @@ namespace MiniPhotoshop {
 
 	void Geometry_Rotation() {
 		if (bitmapMainImage != nullptr) {
-
+			bitmapMainImage = Image_Rotate90(bitmapMainImage);
+			pic_box_main_img->Image = bitmapMainImage;
 		}
 		else {
 			ShowPlainMessageBox("Insert Image First");
