@@ -1271,7 +1271,24 @@ namespace MiniPhotoshop {
 
 	void Geometry_Translation() {
 		if (bitmapMainImage != nullptr) {
-
+			String^ input_a = Interaction::InputBox("X", "Insert X Value (a)", "0", -1, -1);
+			String^ input_b = Interaction::InputBox("Y", "Insert Y Value (b)", "0", -1, -1);
+			std::string string_a = convertTostring(input_a);
+			std::string string_b = convertTostring(input_b);
+			try {
+				int a = convertToInteger(string_a);
+				int b = convertToInteger(string_b);
+				bitmapMainImage = Image_Translate(bitmapMainImage, a, b);
+				pic_box_main_img->Image = bitmapMainImage;
+			}
+			catch (std::invalid_argument const& e)
+			{
+				ShowPlainMessageBox("Input must be numbers");
+			}
+			catch (std::out_of_range const& e)
+			{
+				ShowPlainMessageBox("Input must be numbers");
+			}
 		}
 		else {
 			ShowPlainMessageBox("Insert Image First");

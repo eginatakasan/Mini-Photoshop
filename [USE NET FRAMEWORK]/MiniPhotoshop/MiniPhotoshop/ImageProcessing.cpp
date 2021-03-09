@@ -44,6 +44,51 @@ Bitmap^ Image_GrayScale(Bitmap^ bmp_input) {
 	return bitmap;
 }
 
+Bitmap^ Image_Translate(Bitmap^ bmp_input, int x_trans, int y_trans) {
+	// SetUp
+	double fileWidth = bmp_input->Width;
+	double fileHeight = bmp_input->Height;
+	int** arrayRed = new int* [fileWidth];
+	int** arrayGreen = new int* [fileWidth];
+	int** arrayBlue = new int* [fileWidth];
+	for (int i = 0; i < fileWidth; i++) {
+		arrayRed[i] = new int[fileHeight];
+		arrayGreen[i] = new int[fileHeight];
+		arrayBlue[i] = new int[fileHeight];
+	}
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			Color pxl = bmp_input->GetPixel(x, y);
+			arrayRed[x][y] = pxl.R;
+			arrayGreen[x][y] = pxl.G;
+			arrayBlue[x][y] = pxl.B;
+		}
+	}
+
+
+	//Update
+	Bitmap^ bitmap = gcnew Bitmap(fileWidth, fileHeight);
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			if ((x - x_trans) >= 0 && (y - y_trans) >= 0 && (x - x_trans) < fileWidth && (y - y_trans) < fileHeight) {
+				int pxl_Red = arrayRed[x - x_trans][y - y_trans];
+				int pxl_Green = arrayGreen[x - x_trans][y - y_trans];
+				int pxl_Blue = arrayBlue[x - x_trans][y - y_trans];
+
+				Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
+				bitmap->SetPixel(x, y, pxl);
+			}
+			else {
+				Color pxl = Color::FromArgb(255, 255, 255);
+				bitmap->SetPixel(x, y, pxl);
+			}
+
+		}
+	}
+
+	return bitmap;
+}
+
 Bitmap^ Image_NegativeTransformation(Bitmap^ bmp_input) {
 	// SetUp
 	double fileWidth = bmp_input->Width;
