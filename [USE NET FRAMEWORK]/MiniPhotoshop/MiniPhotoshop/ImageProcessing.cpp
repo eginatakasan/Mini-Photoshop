@@ -132,6 +132,129 @@ Bitmap^ Image_Rotate90(Bitmap^ bmp_input) {
 	return bitmap;
 }
 
+Bitmap^ Image_FlipHorizontal(Bitmap^ bmp_input) {
+	// SetUp
+	double fileWidth = bmp_input->Width;
+	double fileHeight = bmp_input->Height;
+	int** arrayRed = new int* [fileWidth];
+	int** arrayGreen = new int* [fileWidth];
+	int** arrayBlue = new int* [fileWidth];
+	for (int i = 0; i < fileWidth; i++) {
+		arrayRed[i] = new int[fileHeight];
+		arrayGreen[i] = new int[fileHeight];
+		arrayBlue[i] = new int[fileHeight];
+	}
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			Color pxl = bmp_input->GetPixel(x, y);
+			arrayRed[x][y] = pxl.R;
+			arrayGreen[x][y] = pxl.G;
+			arrayBlue[x][y] = pxl.B;
+		}
+	}
+
+
+	//Update
+	Bitmap^ bitmap = gcnew Bitmap(fileWidth, fileHeight);
+	int k;
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+
+			int pxl_Red = arrayRed[x][y];
+			int pxl_Green = arrayGreen[x][y];
+			int pxl_Blue = arrayBlue[x][y];
+
+			Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
+			bitmap->SetPixel(fileWidth - x - 1, y, pxl);
+		}
+	}
+
+	return bitmap;
+}
+
+Bitmap^ Image_Zooming_In(Bitmap^ bmp_input) {
+	// SetUp
+	double fileWidth = bmp_input->Width;
+	double fileHeight = bmp_input->Height;
+	int** arrayRed = new int* [fileWidth];
+	int** arrayGreen = new int* [fileWidth];
+	int** arrayBlue = new int* [fileWidth];
+	for (int i = 0; i < fileWidth; i++) {
+		arrayRed[i] = new int[fileHeight];
+		arrayGreen[i] = new int[fileHeight];
+		arrayBlue[i] = new int[fileHeight];
+	}
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			Color pxl = bmp_input->GetPixel(x, y);
+			arrayRed[x][y] = pxl.R;
+			arrayGreen[x][y] = pxl.G;
+			arrayBlue[x][y] = pxl.B;
+		}
+	}
+
+	//Update
+	Bitmap^ bitmap = gcnew Bitmap(fileWidth/2 + 1, fileHeight/2 + 1);
+	for (int x = 0; x < fileWidth/2; x++) {
+		for (int y = 0; y < fileHeight/2; y++) {
+			int pxl_Red = (arrayRed[x][y] + arrayRed[x + 1][y] + arrayRed[x][y + 1] + arrayRed[x + 1][y + 1])/4;
+			int pxl_Green = (arrayGreen[x][y] + arrayGreen[x + 1][y] + arrayGreen[x][y + 1] + arrayGreen[x + 1][y + 1]) / 4;
+			int pxl_Blue = (arrayBlue[x][y] + arrayBlue[x + 1][y] + arrayBlue[x][y + 1] + arrayBlue[x + 1][y + 1]) / 4;
+
+			Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
+			bitmap->SetPixel(x, y, pxl);
+		}
+	}
+
+	return bitmap;
+}
+
+Bitmap^ Image_Zooming_Out(Bitmap^ bmp_input) {
+	// SetUp
+	double fileWidth = bmp_input->Width;
+	double fileHeight = bmp_input->Height;
+	int** arrayRed = new int* [fileWidth];
+	int** arrayGreen = new int* [fileWidth];
+	int** arrayBlue = new int* [fileWidth];
+	for (int i = 0; i < fileWidth; i++) {
+		arrayRed[i] = new int[fileHeight];
+		arrayGreen[i] = new int[fileHeight];
+		arrayBlue[i] = new int[fileHeight];
+	}
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			Color pxl = bmp_input->GetPixel(x, y);
+			arrayRed[x][y] = pxl.R;
+			arrayGreen[x][y] = pxl.G;
+			arrayBlue[x][y] = pxl.B; 
+		}
+	}
+
+
+	//Update
+	Bitmap^ bitmap = gcnew Bitmap(fileWidth * 2 + 1, fileHeight * 2 + 1);
+	for (int x = 0; x < fileWidth ; x++) {
+		for (int y = 0; y < fileHeight ; y++) {
+
+
+
+			int pxl_Red = arrayRed[x][y];
+			int pxl_Green = arrayGreen[x][y];
+			int pxl_Blue = arrayBlue[x][y];
+
+			Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
+			bitmap->SetPixel(x*2, y*2, pxl);
+			bitmap->SetPixel(x*2+1, y*2+1, pxl);
+			bitmap->SetPixel(x * 2 , y * 2 + 1, pxl);
+			bitmap->SetPixel(x * 2 + 1, y * 2 , pxl);
+
+
+		}
+	}
+
+	return bitmap;
+}
+
 Bitmap^ Image_NegativeTransformation(Bitmap^ bmp_input) {
 	// SetUp
 	double fileWidth = bmp_input->Width;

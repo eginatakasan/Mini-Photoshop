@@ -85,6 +85,8 @@ namespace MiniPhotoshop {
 	private: System::Windows::Forms::ToolStripMenuItem^ geometry_rotation;
 	private: System::Windows::Forms::ToolStripMenuItem^ geometry_flipping;
 	private: System::Windows::Forms::ToolStripMenuItem^ geometry_zooming;
+	private: System::Windows::Forms::ToolStripMenuItem^ geometry_zooming_out;
+
 
 	private: System::Windows::Forms::ToolStripMenuItem^ imageEnhancementToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ imageEnhancementImageBrighteningToolStripMenuItem;
@@ -173,6 +175,7 @@ namespace MiniPhotoshop {
 			this->geometry_rotation = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->geometry_flipping = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->geometry_zooming = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->geometry_zooming_out = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->imageEnhancementToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->imageEnhancementImageBrighteningToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->image_enhancement_image_brightening_scalar_addition = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -438,9 +441,9 @@ namespace MiniPhotoshop {
 			// 
 			// geometry_menu
 			// 
-			this->geometry_menu->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(4) {
+			this->geometry_menu->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(5) {
 				this->geometry_translation_,
-					this->geometry_rotation, this->geometry_flipping, this->geometry_zooming
+					this->geometry_rotation, this->geometry_flipping, this->geometry_zooming, this->geometry_zooming_out
 			});
 			this->geometry_menu->Name = L"geometry_menu";
 			this->geometry_menu->Size = System::Drawing::Size(183, 22);
@@ -471,8 +474,15 @@ namespace MiniPhotoshop {
 			// 
 			this->geometry_zooming->Name = L"geometry_zooming";
 			this->geometry_zooming->Size = System::Drawing::Size(131, 22);
-			this->geometry_zooming->Text = L"Zooming";
+			this->geometry_zooming->Text = L"Zooming In";
 			this->geometry_zooming->Click += gcnew System::EventHandler(this, &MyForm::geometry_zooming_Click);
+			// 
+			// geometry_zooming_out
+			// 
+			this->geometry_zooming_out->Name = L"geometry_zooming_out";
+			this->geometry_zooming_out->Size = System::Drawing::Size(131, 22);
+			this->geometry_zooming_out->Text = L"Zooming Out";
+			this->geometry_zooming_out->Click += gcnew System::EventHandler(this, &MyForm::geometry_zooming_out_Click);
 			// 
 			// imageEnhancementToolStripMenuItem
 			// 
@@ -831,6 +841,10 @@ namespace MiniPhotoshop {
 
 	private: System::Void geometry_zooming_Click(System::Object^ sender, System::EventArgs^ e) {
 		Geometry_Zooming();
+	}
+
+	private: System::Void geometry_zooming_out_Click(System::Object^ sender, System::EventArgs^ e) {
+		Geometry_Zooming_Out();
 	}
 
 	private: System::Void image_enhancement_image_brightening_scalar_addition_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -1307,7 +1321,8 @@ namespace MiniPhotoshop {
 
 	void Geometry_Flipping() {
 		if (bitmapMainImage != nullptr) {
-
+			bitmapMainImage = Image_FlipHorizontal(bitmapMainImage);
+			pic_box_main_img->Image = bitmapMainImage;
 		}
 		else {
 			ShowPlainMessageBox("Insert Image First");
@@ -1316,7 +1331,18 @@ namespace MiniPhotoshop {
 
 	void Geometry_Zooming() {
 		if (bitmapMainImage != nullptr) {
+			bitmapMainImage = Image_Zooming_In(bitmapMainImage);
+			pic_box_main_img->Image = bitmapMainImage;
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
+	}
 
+	void Geometry_Zooming_Out() {
+		if (bitmapMainImage != nullptr) {
+			bitmapMainImage = Image_Zooming_Out(bitmapMainImage);
+			pic_box_main_img->Image = bitmapMainImage;
 		}
 		else {
 			ShowPlainMessageBox("Insert Image First");
