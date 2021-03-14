@@ -1,6 +1,7 @@
 #include "ImageProcessing.h"
 #include <cmath>
 #include "PrimitiveFunction.h"
+#include <windows.h>
 
 using namespace std;
 using namespace System::Drawing;
@@ -1341,6 +1342,90 @@ Bitmap^ Image_ImageEnhancement_HistogramSpecification(Bitmap^ bmp_input, Bitmap^
 
 			Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
 			bitmap->SetPixel(x, y, pxl);
+		}
+	}
+
+	return bitmap;
+}
+
+
+
+Bitmap^ Convolution(Bitmap^ bmp_input,double** kernel, int kernel_size) {
+	// SetUp
+	double fileWidth = bmp_input->Width;
+	double fileHeight = bmp_input->Height;
+	int** arrayRed = new int* [fileWidth];
+	int** arrayGreen = new int* [fileWidth];
+	int** arrayBlue = new int* [fileWidth];
+	for (int i = 0; i < fileWidth; i++) {
+		arrayRed[i] = new int[fileHeight];
+		arrayGreen[i] = new int[fileHeight];
+		arrayBlue[i] = new int[fileHeight];
+	}
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			Color pxl = bmp_input->GetPixel(x, y);
+			arrayRed[x][y] = pxl.R;
+			arrayGreen[x][y] = pxl.G;
+			arrayBlue[x][y] = pxl.B;
+		}
+	}
+
+	//Update
+	Bitmap^ bitmap = gcnew Bitmap(fileWidth, fileHeight);
+	int padding_limit = kernel_size /2;
+	int conv_idx_x, conv_idx_y;
+	double pxl_Red = 0;
+	double pxl_Green = 0;
+	double pxl_Blue = 0;
+	for (int x = 0; x < fileWidth; x++) {
+		for (int y = 0; y < fileHeight; y++) {
+			if (x <= padding_limit || y <= padding_limit || x >= fileWidth - padding_limit || y >= fileHeight - padding_limit) {
+				pxl_Red = arrayRed[x][y];
+				pxl_Green = arrayGreen[x][y];
+				pxl_Blue = arrayBlue[x][y];
+
+				Color pxl = Color::FromArgb(pxl_Red, pxl_Green, pxl_Blue);
+				bitmap->SetPixel(x, y, pxl);
+			}
+			else {
+				pxl_Red = 0;
+				pxl_Green = 0;
+				pxl_Blue = 0;
+				for (int x_conv = 0; x_conv < kernel_size; x_conv++) {
+					for (int y_conv = 0; y_conv < kernel_size; y_conv++) {
+						conv_idx_x = x - (x_conv - padding_limit);
+						conv_idx_y = y - (y_conv - padding_limit);
+
+						pxl_Red += arrayRed[conv_idx_x][conv_idx_y] * kernel[x_conv][y_conv];
+						pxl_Green += arrayGreen[conv_idx_x][conv_idx_y] * kernel[x_conv][y_conv];
+						pxl_Blue += arrayBlue[conv_idx_x][conv_idx_y] * kernel[x_conv][y_conv];
+					}
+				}
+
+				if (pxl_Red < 0) {
+					pxl_Red = 0;
+				}
+				else if (pxl_Red > 255) {
+					pxl_Red = 255;
+				}
+				if (pxl_Green < 0) {
+					pxl_Green = 0;
+				}
+				else if (pxl_Green > 255) {
+					pxl_Green = 255;
+				}
+				if (pxl_Blue < 0) {
+					pxl_Blue = 0;
+				}
+				else if (pxl_Blue > 255) {
+					pxl_Blue = 255;
+				}
+
+				Color pxl = Color::FromArgb((int) pxl_Red,(int) pxl_Green,(int) pxl_Blue);
+				bitmap->SetPixel(x, y, pxl);
+			}
+			
 		}
 	}
 

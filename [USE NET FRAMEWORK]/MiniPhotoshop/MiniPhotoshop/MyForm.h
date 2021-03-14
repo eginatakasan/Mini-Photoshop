@@ -87,6 +87,20 @@ namespace MiniPhotoshop {
 	private: System::Windows::Forms::ToolStripMenuItem^ geometry_zooming;
 	private: System::Windows::Forms::ToolStripMenuItem^ geometry_zooming_out;
 
+	private: System::Windows::Forms::ToolStripMenuItem^ filterToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ conv_custom;
+	private: System::Windows::Forms::ToolStripMenuItem^ filter_blur_3;
+	private: System::Windows::Forms::ToolStripMenuItem^ filter_blur_5;
+	private: System::Windows::Forms::ToolStripMenuItem^ filter_blur_7;
+	private: System::Windows::Forms::ToolStripMenuItem^ filter_blur_gauss;
+	private: System::Windows::Forms::ToolStripMenuItem^ filter_sharp_1;
+	private: System::Windows::Forms::ToolStripMenuItem^ filter_sharp_2;
+	private: System::Windows::Forms::ToolStripMenuItem^ filter_sharp_3;
+	private: System::Windows::Forms::ToolStripMenuItem^ filter_sharp_4;
+	private: System::Windows::Forms::ToolStripMenuItem^ filter_unsharp_mask;
+	private: System::Windows::Forms::ToolStripMenuItem^ filter_high_boost;
+	private: System::Windows::Forms::ToolStripMenuItem^ filter_median_filter;
+
 
 	private: System::Windows::Forms::ToolStripMenuItem^ imageEnhancementToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ imageEnhancementImageBrighteningToolStripMenuItem;
@@ -176,6 +190,20 @@ namespace MiniPhotoshop {
 			this->geometry_flipping = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->geometry_zooming = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->geometry_zooming_out = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->filterToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->conv_custom = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->filter_blur_3 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->filter_blur_5 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->filter_blur_7 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->filter_blur_gauss = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->filter_sharp_1 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->filter_sharp_2 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->filter_sharp_3 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->filter_sharp_4 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->filter_unsharp_mask = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->filter_high_boost = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->filter_median_filter = (gcnew System::Windows::Forms::ToolStripMenuItem());
+
 			this->imageEnhancementToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->imageEnhancementImageBrighteningToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->image_enhancement_image_brightening_scalar_addition = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -483,18 +511,112 @@ namespace MiniPhotoshop {
 			this->geometry_zooming_out->Size = System::Drawing::Size(131, 22);
 			this->geometry_zooming_out->Text = L"Zooming Out";
 			this->geometry_zooming_out->Click += gcnew System::EventHandler(this, &MyForm::geometry_zooming_out_Click);
+
+			
 			// 
 			// imageEnhancementToolStripMenuItem
 			// 
-			this->imageEnhancementToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(9) {
+			this->imageEnhancementToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(10) {
 				this->imageEnhancementImageBrighteningToolStripMenuItem,
 					this->image_enhancement_constrast_stretching, this->image_enhancement_log_transformation, this->image_enhancement_inverse_log_transformation,
 					this->image_enhancement_power_transformation, this->image_enhancement_gray_level_slicing, this->image_enhancement_bit_plane_slicing,
-					this->image_enhancement_histogram_equalization, this->image_enhancement_histogram_specification
+					this->image_enhancement_histogram_equalization, this->image_enhancement_histogram_specification, this->filterToolStripMenuItem
 			});
 			this->imageEnhancementToolStripMenuItem->Name = L"imageEnhancementToolStripMenuItem";
 			this->imageEnhancementToolStripMenuItem->Size = System::Drawing::Size(183, 22);
 			this->imageEnhancementToolStripMenuItem->Text = L"Image Enhancement";
+
+			// 
+			// FilterToolStripMenuItem
+			// 
+			this->filterToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(10) {
+				this->conv_custom, this->filter_blur_3, this->filter_blur_5, this->filter_blur_7, this->filter_sharp_1, this->filter_sharp_2, this->filter_sharp_3, this->filter_sharp_4, 
+					this->filter_unsharp_mask, this->filter_high_boost
+			});
+			this->filterToolStripMenuItem->Name = L"filterToolStripMenuItem";
+			this->filterToolStripMenuItem->Size = System::Drawing::Size(183, 22);
+			this->filterToolStripMenuItem->Text = L"Filter";
+
+			// 
+			// conv_custom
+			// 
+			this->conv_custom->Name = L"conv_custom";
+			this->conv_custom->Size = System::Drawing::Size(182, 22);
+			this->conv_custom->Text = L"Custom Convolution";
+			this->conv_custom->Click += gcnew System::EventHandler(this, &MyForm::conv_custom_Click);
+
+			// 
+			// filter_blur_3
+			// 
+			this->filter_blur_3->Name = L"filter_blur_3";
+			this->filter_blur_3->Size = System::Drawing::Size(182, 22);
+			this->filter_blur_3->Text = L"Blur 3x3";
+			this->filter_blur_3->Click += gcnew System::EventHandler(this, &MyForm::filter_blur_3_Click);
+
+			// 
+			// filter_blur_5
+			// 
+			this->filter_blur_5->Name = L"filter_blur_5";
+			this->filter_blur_5->Size = System::Drawing::Size(182, 22);
+			this->filter_blur_5->Text = L"Blur 5x5";
+			this->filter_blur_5->Click += gcnew System::EventHandler(this, &MyForm::filter_blur_5_Click);
+
+			// 
+			// filter_blur_7
+			// 
+			this->filter_blur_7->Name = L"filter_blur_7";
+			this->filter_blur_7->Size = System::Drawing::Size(182, 22);
+			this->filter_blur_7->Text = L"Blur 7x7";
+			this->filter_blur_7->Click += gcnew System::EventHandler(this, &MyForm::filter_blur_7_Click);
+
+			// 
+			// filter_sharp_1
+			// 
+			this->filter_sharp_1->Name = L"filter_sharp_1";
+			this->filter_sharp_1->Size = System::Drawing::Size(182, 22);
+			this->filter_sharp_1->Text = L"Sharp 1";
+			this->filter_sharp_1->Click += gcnew System::EventHandler(this, &MyForm::filter_sharp_1_Click);
+
+			// 
+			// filter_sharp_2
+			// 
+			this->filter_sharp_2->Name = L"filter_sharp_2";
+			this->filter_sharp_2->Size = System::Drawing::Size(182, 22);
+			this->filter_sharp_2->Text = L"Sharp 2";
+			this->filter_sharp_2->Click += gcnew System::EventHandler(this, &MyForm::filter_sharp_2_Click);
+
+			// 
+			// filter_sharp_3
+			// 
+			this->filter_sharp_3->Name = L"filter_sharp_3";
+			this->filter_sharp_3->Size = System::Drawing::Size(182, 22);
+			this->filter_sharp_3->Text = L"Sharp 3";
+			this->filter_sharp_3->Click += gcnew System::EventHandler(this, &MyForm::filter_sharp_3_Click);
+
+			// 
+			// filter_sharp_4
+			// 
+			this->filter_sharp_4->Name = L"filter_sharp_4";
+			this->filter_sharp_4->Size = System::Drawing::Size(182, 22);
+			this->filter_sharp_4->Text = L"Sharp 4";
+			this->filter_sharp_4->Click += gcnew System::EventHandler(this, &MyForm::filter_sharp_4_Click);
+
+			// 
+			// filter_unsharp_mask
+			// 
+			this->filter_unsharp_mask->Name = L"filter_unsharp_mask";
+			this->filter_unsharp_mask->Size = System::Drawing::Size(182, 22);
+			this->filter_unsharp_mask->Text = L"Unsharp Mask";
+			this->filter_unsharp_mask->Click += gcnew System::EventHandler(this, &MyForm::filter_unsharp_mask_Click);
+			
+			// 
+			// filter_high_boost
+			// 
+			this->filter_high_boost->Name = L"filter_high_boos";
+			this->filter_high_boost->Size = System::Drawing::Size(182, 22);
+			this->filter_high_boost->Text = L"High Boost";
+			this->filter_high_boost->Click += gcnew System::EventHandler(this, &MyForm::filter_high_boost_Click);
+
 			// 
 			// image_enhancement_image_brightening
 			// 
@@ -783,6 +905,46 @@ namespace MiniPhotoshop {
 	// Edit Image
 	private: System::Void gray_scale_Click(System::Object^ sender, System::EventArgs^ e) {
 		GrayScale();
+	}
+
+	private: System::Void conv_custom_Click(System::Object^ sender, System::EventArgs^ e) {
+		CustomConv();
+	}
+
+	private: System::Void filter_blur_3_Click(System::Object^ sender, System::EventArgs^ e) {
+		FilterBlur3();
+	}
+
+	private: System::Void filter_blur_5_Click(System::Object^ sender, System::EventArgs^ e) {
+		FilterBlur5();
+	}
+
+	private: System::Void filter_blur_7_Click(System::Object^ sender, System::EventArgs^ e) {
+		FilterBlur7();
+	}
+
+	private: System::Void filter_sharp_1_Click(System::Object^ sender, System::EventArgs^ e) {
+		FilterSharp1();
+	}
+
+	private: System::Void filter_sharp_2_Click(System::Object^ sender, System::EventArgs^ e) {
+		FilterSharp2();
+	}
+
+	private: System::Void filter_sharp_3_Click(System::Object^ sender, System::EventArgs^ e) {
+		FilterSharp3();
+	}
+
+	private: System::Void filter_sharp_4_Click(System::Object^ sender, System::EventArgs^ e) {
+		FilterSharp4();
+	}
+
+	private: System::Void filter_unsharp_mask_Click(System::Object^ sender, System::EventArgs^ e) {
+		FilterUnsharpMask();
+	}
+
+	private: System::Void filter_high_boost_Click(System::Object^ sender, System::EventArgs^ e) {
+		FilterHighBoost();
 	}
 
 	private: System::Void image_brightening_scalar_addition_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -1822,6 +1984,284 @@ namespace MiniPhotoshop {
 					ShowPlainMessageBox("Invalid Input");
 				}
 			}
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
+	}
+
+
+	void CustomConv() {
+		if (bitmapMainImage != nullptr) {
+
+			double** kernel_custom = new double* [5];
+			for (int i = 0; i < 5; i++) {
+				kernel_custom[i] = new double[5];
+			}
+			for (int x = 0; x < 5; x++) {
+				for (int y = 0; y < 5; y++) {
+					kernel_custom[x][y] = 1.0/25.0;
+
+				}
+			}
+
+			bitmapMainImage = Convolution(bitmapMainImage, kernel_custom,5);
+			pic_box_main_img->Image = bitmapMainImage;
+
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
+	}
+	
+	void FilterBlur3() {
+		if (bitmapMainImage != nullptr) {
+
+			double** kernel_custom = new double* [3];
+			for (int i = 0; i < 3; i++) {
+				kernel_custom[i] = new double[3];
+			}
+			for (int x = 0; x < 3; x++) {
+				for (int y = 0; y < 3; y++) {
+					kernel_custom[x][y] = 1.0/9.0;
+
+				}
+			}
+
+			bitmapMainImage = Convolution(bitmapMainImage, kernel_custom,3);
+			pic_box_main_img->Image = bitmapMainImage;
+
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
+	}
+
+	void FilterBlur5() {
+		if (bitmapMainImage != nullptr) {
+
+			double** kernel_custom = new double* [5];
+			for (int i = 0; i < 5; i++) {
+				kernel_custom[i] = new double[5];
+			}
+			for (int x = 0; x < 5; x++) {
+				for (int y = 0; y < 5; y++) {
+					kernel_custom[x][y] = 1.0 / 25.0;
+
+				}
+			}
+
+			bitmapMainImage = Convolution(bitmapMainImage, kernel_custom, 5);
+			pic_box_main_img->Image = bitmapMainImage;
+
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
+	}
+
+	void FilterUnsharpMask() {
+		if (bitmapMainImage != nullptr) {
+
+			double** kernel_custom = new double* [5];
+			for (int i = 0; i < 5; i++) {
+				kernel_custom[i] = new double[5];
+			}
+			for (int x = 0; x < 5; x++) {
+				for (int y = 0; y < 5; y++) {
+					kernel_custom[x][y] = 1.0 / 25.0;
+
+				}
+			}
+
+			bitmapMainImage = Convolution(bitmapMainImage, kernel_custom, 5);
+			bitmapMainImage = Image_Arithmethic_Subtraction(bitmapMainOriginalImage, bitmapMainImage);
+			bitmapMainImage = Image_Arithmethic_Addition(bitmapMainOriginalImage, bitmapMainImage);
+
+			pic_box_main_img->Image = bitmapMainImage;
+
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
+	}
+
+	void FilterHighBoost() {
+		if (bitmapMainImage != nullptr) {
+
+			double** kernel_custom = new double* [5];
+			for (int i = 0; i < 5; i++) {
+				kernel_custom[i] = new double[5];
+			}
+			for (int x = 0; x < 5; x++) {
+				for (int y = 0; y < 5; y++) {
+					kernel_custom[x][y] = 1.0 / 25.0;
+
+				}
+			}
+
+			String^ input = Interaction::InputBox("Insert Alpha ", "Insert Alpha Number", "1", -1, -1);
+			std::string string = convertTostring(input);
+			
+			double value = convertToDouble(string);
+
+			bitmapMainImage = Convolution(bitmapMainImage, kernel_custom, 5);
+			bitmapMainImage = Image_Arithmethic_Subtraction(bitmapMainOriginalImage, bitmapMainImage);
+			bitmapMainImage = Image_Arithmethic_Addition(Image_ImageEnhancement_PowerTransformation(bitmapMainOriginalImage, value - 1.0,1), bitmapMainImage);
+
+			pic_box_main_img->Image = bitmapMainImage;
+
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
+	}
+
+	void FilterBlur7() {
+		if (bitmapMainImage != nullptr) {
+
+			double** kernel_custom = new double* [7];
+			for (int i = 0; i < 7; i++) {
+				kernel_custom[i] = new double[7];
+			}
+			for (int x = 0; x < 7; x++) {
+				for (int y = 0; y < 7; y++) {
+					kernel_custom[x][y] = 1.0 / 49.0;
+
+				}
+			}
+
+			bitmapMainImage = Convolution(bitmapMainImage, kernel_custom, 7);
+			pic_box_main_img->Image = bitmapMainImage;
+
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
+	}
+
+	void FilterSharp1() {
+		if (bitmapMainImage != nullptr) {
+
+			double** kernel_custom = new double* [3];
+			for (int i = 0; i < 3; i++) {
+				kernel_custom[i] = new double[3];
+			}
+			
+			kernel_custom[0][0] = -1.0;
+			kernel_custom[0][1] = -1.0;
+			kernel_custom[0][2] = -1.0;
+
+			kernel_custom[1][0] = -1.0;
+			kernel_custom[1][1] = 9.0;
+			kernel_custom[1][2] = -1.0;
+
+			kernel_custom[2][0] = -1.0;
+			kernel_custom[2][1] = -1.0;
+			kernel_custom[2][2] = -1.0;
+
+
+
+
+			bitmapMainImage = Convolution(bitmapMainImage, kernel_custom, 3);
+			pic_box_main_img->Image = bitmapMainImage;
+
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
+	}
+
+	void FilterSharp2() {
+		if (bitmapMainImage != nullptr) {
+
+			double** kernel_custom = new double* [3];
+			for (int i = 0; i < 3; i++) {
+				kernel_custom[i] = new double[3];
+			}
+
+			kernel_custom[0][0] = 0.0;
+			kernel_custom[0][1] = -1.0;
+			kernel_custom[0][2] = 0.0;
+
+			kernel_custom[1][0] = -1.0;
+			kernel_custom[1][1] = 5.0;
+			kernel_custom[1][2] = -1.0;
+
+			kernel_custom[2][0] = 0.0;
+			kernel_custom[2][1] = -1.0;
+			kernel_custom[2][2] = 0.0;
+
+
+
+
+			bitmapMainImage = Convolution(bitmapMainImage, kernel_custom, 3);
+			pic_box_main_img->Image = bitmapMainImage;
+
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
+	}
+
+	void FilterSharp3() {
+		if (bitmapMainImage != nullptr) {
+
+			double** kernel_custom = new double* [3];
+			for (int i = 0; i < 3; i++) {
+				kernel_custom[i] = new double[3];
+			}
+
+			kernel_custom[0][0] = -1.0;
+			kernel_custom[0][1] = -1.0;
+			kernel_custom[0][2] = -1.0;
+
+			kernel_custom[1][0] = -1.0;
+			kernel_custom[1][1] = 8.0;
+			kernel_custom[1][2] = -1.0;
+
+			kernel_custom[2][0] = -1.0;
+			kernel_custom[2][1] = -1.0;
+			kernel_custom[2][2] = -1.0;
+
+
+
+
+			bitmapMainImage = Convolution(bitmapMainImage, kernel_custom, 3);
+			pic_box_main_img->Image = bitmapMainImage;
+
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
+	}
+
+	void FilterSharp4() {
+		if (bitmapMainImage != nullptr) {
+
+			double** kernel_custom = new double* [3];
+			for (int i = 0; i < 3; i++) {
+				kernel_custom[i] = new double[3];
+			}
+
+			kernel_custom[0][0] = 0.0;
+			kernel_custom[0][1] = 1.0;
+			kernel_custom[0][2] = 0.0;
+
+			kernel_custom[1][0] = 1.0;
+			kernel_custom[1][1] = -4.0;
+			kernel_custom[1][2] = 1.0;
+
+			kernel_custom[2][0] = 0.0;
+			kernel_custom[2][1] = 1.0;
+			kernel_custom[2][2] = 0.0;
+
+
+
+
+			bitmapMainImage = Convolution(bitmapMainImage, kernel_custom, 3);
+			pic_box_main_img->Image = bitmapMainImage;
+
 		}
 		else {
 			ShowPlainMessageBox("Insert Image First");

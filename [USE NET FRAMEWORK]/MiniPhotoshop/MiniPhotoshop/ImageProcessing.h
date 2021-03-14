@@ -22,6 +22,7 @@ Bitmap^ Image_Rotate90(Bitmap^ bmp_input);
 Bitmap^ Image_FlipHorizontal(Bitmap^ bmp_input);
 Bitmap^ Image_Zooming_In(Bitmap^ bmp_input);
 Bitmap^ Image_Zooming_Out(Bitmap^ bmp_input);
+Bitmap^ Convolution(Bitmap^ bmp_input, double** kernel, int kernel_size);
 
 
 Bitmap^ Image_ImageEnhancement_ContrastStretching(Bitmap^ bmp_input, int min, int max);
