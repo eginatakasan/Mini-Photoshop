@@ -6,6 +6,7 @@
 #include "PortableAnymaps/pbm.h"
 #include "PortableAnymaps/ppm.h"
 #include "PortableAnymaps/pgm.h"
+#include "PortableAnymaps/raw.h"
 
 using namespace std;
 using namespace System;
@@ -33,3 +34,5 @@ void Write_to_PGM(Bitmap^ bmp, string path);
 void Write_to_PPM(Bitmap^ bmp, string path);
 
 void Write_to_PBM(Bitmap^ bmp, string path);
+
+void Write_to_Raw(Bitmap^ bmp, string path);

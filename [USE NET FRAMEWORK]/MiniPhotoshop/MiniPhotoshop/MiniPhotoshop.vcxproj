@@ -130,6 +130,7 @@
     <ClCompile Include="PortableAnymaps\pgm.cpp" />
     <ClCompile Include="PortableAnymaps\PortableAnymaps.cpp" />
     <ClCompile Include="PortableAnymaps\ppm.cpp" />
+    <ClCompile Include="PortableAnymaps\raw.cpp" />
     <ClCompile Include="PrimitiveFunction.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -143,6 +144,7 @@
     <ClInclude Include="PortableAnymaps\pgm.h" />
     <ClInclude Include="PortableAnymaps\PortableAnymaps.h" />
     <ClInclude Include="PortableAnymaps\ppm.h" />
+    <ClInclude Include="PortableAnymaps\raw.h" />
     <ClInclude Include="PrimitiveFunction.h" />
   </ItemGroup>
   <ItemGroup>

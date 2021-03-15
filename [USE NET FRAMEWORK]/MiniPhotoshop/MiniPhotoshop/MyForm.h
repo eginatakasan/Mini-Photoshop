@@ -1067,7 +1067,7 @@ namespace MiniPhotoshop {
 	//// Image
 	void OpenImage() {
 		//ofd->Filter = "|*.jpg; *.jpeg; *.jpe; *.jfif; *.png";
-		ofd->Filter = "|*.bmp; *.pgm; *.pbm; *.ppm; *.jpg";
+		ofd->Filter = "|*.bmp; *.pgm; *.pbm; *.ppm; *.jpg; *.raw";
 		if (ofd->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
 			String^ extension_file = System::IO::Path::GetExtension(ofd->FileName);
 			std::string standardString = convertTostring(extension_file);
@@ -1125,7 +1125,7 @@ namespace MiniPhotoshop {
 
 	void ChangeSecondImage() {
 		if (bitmapMainImage != nullptr) {
-			ofd->Filter = "|*.bmp; *.pgm; *.pbm; *.ppm; *.jpg";
+			ofd->Filter = "|*.bmp; *.pgm; *.pbm; *.ppm; *.jpg; *.raw";
 			if (ofd->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
 				String^ extension_file = System::IO::Path::GetExtension(ofd->FileName);
 				std::string standardString = convertTostring(extension_file);
@@ -1213,8 +1213,11 @@ namespace MiniPhotoshop {
 			else if ((strcmp(originalFormat, ".pbm") == 0)) {
 				Write_to_PBM(bitmapMainImage, standardString);
 			}
+			else if ((strcmp(originalFormat, ".raw") == 0)) {
+				Write_to_Raw(bitmapMainImage, standardString);
+			}
 			else {
-				bitmapMainImage->Save("C:\\Users\\User\\Downloads\\" + input + ".bmp");
+				bitmapMainImage->Save("C:\\Users\\egina\\Downloads\\" + input + ".bmp");
 			}
 		}
 		else {

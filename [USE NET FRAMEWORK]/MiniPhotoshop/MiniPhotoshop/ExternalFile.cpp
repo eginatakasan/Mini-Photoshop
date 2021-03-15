@@ -92,6 +92,26 @@ Bitmap^ Image_PPMFile(String^ path) {
 	return bmp;
 }
 
+Bitmap^ Image_RawImageFile(String^ path) {
+	int const length = path->Length;
+	marshal_context context;
+	string s_path = context.marshal_as<std::string>(path);
+	Raw raw = Raw(s_path.c_str());
+	int height = raw.GetHeight();
+	int width = raw.GetWidth();
+	MaxVal = raw.GetMaxVal();
+
+	Bitmap^ bmp = gcnew Bitmap(width, height);
+	for (int i = 0; i < width; i++) {
+		for (int j = 0; j < height; j++) {
+			int pixel = raw.GetPixel(j,i) * 255 / raw.GetMaxVal();
+			Color color = Color::FromArgb(pixel, pixel, pixel);
+			bmp->SetPixel(i, j, color);
+		}
+	}
+	return bmp;
+}
+
 void Write_to_PGM(Bitmap^ bmp, string path) {
 	int width = bmp->Width;
 	int height = bmp->Height;
@@ -146,8 +166,17 @@ void Write_to_PPM(Bitmap^ bmp, string path) {
 	ppm.Write(out.c_str());
 }
 
-Bitmap^ Image_RawImageFile(String^ path) {
-	Image^ image = Image::FromFile(path);
+void Write_to_Raw(Bitmap^ bmp, string path) {
+	int width = bmp->Width;
+	int height = bmp->Height;
 
-	return gcnew Bitmap(image);
+	Raw raw = Raw(width, height);
+	for (int i = 0; i < width; i++) {
+		for (int j = 0; j < height; j++) {
+			int pixel = bmp->GetPixel(i, j).R * MaxVal / 255;
+			raw.SetPixel(j, i, pixel);
+		}
+	}
+	string out = "C:\\Users\\egina\\Downloads\\" + path + ".raw";
+	raw.Write(out.c_str());
 }
