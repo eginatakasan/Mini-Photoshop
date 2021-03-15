@@ -4,6 +4,7 @@
 #include <string.h>
 #include <iostream>
 #include <stdlib.h>
+#include <corecrt_math_defines.h>
 
 using namespace std;
 using namespace System;
@@ -63,6 +64,38 @@ boolean CheckSizeBitmap(Bitmap^ bmp_1, Bitmap^ bmp_2) {
 	else {
 		return false;
 	}
+}
+
+double** GaussianFilterCreate(double sigma, int k_size)
+{
+	// intialising standard deviation to 1.0 
+	double r, s = 2.0 * sigma * sigma;
+
+	double mean = k_size / 2;
+
+	// sum is for normalization 
+	double sum = 0.0;
+
+	double** GKernel = new double* [k_size];
+	for (int i = 0; i < k_size; i++) {
+		GKernel[i] = new double[k_size];
+	}
+
+	for (int x = 0; x < k_size; ++x)
+		for (int y = 0; y < k_size; ++y) {
+			GKernel[x][y] = exp(-0.5 * (pow((x - mean) / sigma, 2.0) + pow((y - mean) / sigma, 2.0)))
+				/ (2 * M_PI * sigma * sigma);
+
+			// Accumulate the kernel values
+			sum += GKernel[x][y];
+		}
+
+	// Normalize the kernel
+	for (int x = 0; x < k_size; ++x)
+		for (int y = 0; y < k_size; ++y)
+			GKernel[x][y] /= sum;
+
+	return GKernel;
 }
 
 // Return Biner, Grayscale, or RGB
