@@ -1,5 +1,6 @@
 #pragma once
 #include <msclr\marshal_cppstd.h>
+#include <cmath> 
 
 using namespace std;
 using namespace System;
@@ -58,3 +59,6 @@ double* Array_Green_CDF(Bitmap^ bmp_input);
 double* Array_Blue_CDF(Bitmap^ bmp_input);
 
 double* Array_Map(double arr_original[], double arr_target[],int size);
+
+// Create Gaussian Filter
+double** GaussianFilterCreate(double sigma, int k_size);

@@ -529,8 +529,9 @@ namespace MiniPhotoshop {
 			// 
 			// FilterToolStripMenuItem
 			// 
-			this->filterToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(10) {
-				this->conv_custom, this->filter_blur_3, this->filter_blur_5, this->filter_blur_7, this->filter_sharp_1, this->filter_sharp_2, this->filter_sharp_3, this->filter_sharp_4, 
+			this->filterToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(11) {
+				this->conv_custom, this->filter_blur_3, this->filter_blur_5, this->filter_blur_7, this->filter_blur_gauss,
+					this->filter_sharp_1, this->filter_sharp_2, this->filter_sharp_3, this->filter_sharp_4, 
 					this->filter_unsharp_mask, this->filter_high_boost
 			});
 			this->filterToolStripMenuItem->Name = L"filterToolStripMenuItem";
@@ -568,6 +569,14 @@ namespace MiniPhotoshop {
 			this->filter_blur_7->Size = System::Drawing::Size(182, 22);
 			this->filter_blur_7->Text = L"Blur 7x7";
 			this->filter_blur_7->Click += gcnew System::EventHandler(this, &MyForm::filter_blur_7_Click);
+
+			// 
+			// filter_blur_7
+			// 
+			this->filter_blur_gauss->Name = L"filter_blur_gauss";
+			this->filter_blur_gauss->Size = System::Drawing::Size(182, 22);
+			this->filter_blur_gauss->Text = L"Blur Gauss";
+			this->filter_blur_gauss->Click += gcnew System::EventHandler(this, &MyForm::filter_blur_gauss_Click);
 
 			// 
 			// filter_sharp_1
@@ -921,6 +930,10 @@ namespace MiniPhotoshop {
 
 	private: System::Void filter_blur_7_Click(System::Object^ sender, System::EventArgs^ e) {
 		FilterBlur7();
+
+
+	}private: System::Void filter_blur_gauss_Click(System::Object^ sender, System::EventArgs^ e) {
+		FilterBlurGauss();
 	}
 
 	private: System::Void filter_sharp_1_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -2136,6 +2149,41 @@ namespace MiniPhotoshop {
 
 			bitmapMainImage = Convolution(bitmapMainImage, kernel_custom, 7);
 			pic_box_main_img->Image = bitmapMainImage;
+
+		}
+		else {
+			ShowPlainMessageBox("Insert Image First");
+		}
+	}
+
+	void FilterBlurGauss() {
+		if (bitmapMainImage != nullptr) {
+
+			String^ input_sigma = Interaction::InputBox("Sigma", "Insert Sigma", "1", -1, -1);
+			String^ input_k_size = Interaction::InputBox("Filter Size", "Insert Filter Size", "1", -1, -1);
+
+			std::string str_sigma = convertTostring(input_sigma);
+			std::string str_k_size = convertTostring(input_k_size);
+
+			try {
+				double d_sigma = convertToDouble(str_sigma);
+				int d_k_kernel = convertToInteger(str_k_size);
+
+				double** kernel_custom = GaussianFilterCreate(d_sigma, d_k_kernel);
+
+				bitmapMainImage = Convolution(bitmapMainImage, kernel_custom, d_k_kernel);
+				pic_box_main_img->Image = bitmapMainImage;
+			}
+			catch (std::invalid_argument const& e)
+			{
+				ShowPlainMessageBox("Input must be numbers");
+			}
+			catch (std::out_of_range const& e)
+			{
+				ShowPlainMessageBox("Input must be numbers");
+			}
+
+			
 
 		}
 		else {
