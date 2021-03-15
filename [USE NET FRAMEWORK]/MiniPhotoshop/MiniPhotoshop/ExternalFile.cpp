@@ -12,6 +12,7 @@ using namespace System::ComponentModel;
 using namespace System::Collections;
 using namespace System::Windows::Forms;
 using namespace System::Data;
+using namespace System::Diagnostics;
 using namespace Microsoft::VisualBasic;
 using namespace std;
 using namespace msclr::interop;
@@ -21,7 +22,6 @@ int MaxVal = 0;
 
 Bitmap^ Image_BitmapFile(String^ path) {
 	Image^ image = Image::FromFile(path);
-	
 	return gcnew Bitmap(image);
 }
 
@@ -43,6 +43,14 @@ Bitmap^ Image_PGMFile(String^ path) {
 			bmp->SetPixel(i, j, color);
 		}
 	}
+
+	Debug::WriteLine("PGM Image");
+	Debug::WriteLine("Width: " + pgm.GetWidth());
+	Debug::WriteLine("Height: " + pgm.GetHeight());
+	Debug::WriteLine("Max Val: " + pgm.GetMaxVal());
+	Debug::WriteLine("Bit Per Pixel: " + pgm.GetBitPerPixel());
+	Debug::WriteLine("File size: " + pgm.GetFileSize() + " B");
+
 	return bmp;
 }
 
@@ -65,6 +73,14 @@ Bitmap^ Image_PBMFile(String^ path) {
 			bmp->SetPixel(i,j,color);
 		}
 	}
+	Debug::WriteLine("PBM Image");
+	Debug::WriteLine("Width: " + pbm.GetWidth() );
+	Debug::WriteLine("Height: " + pbm.GetHeight() );
+	Debug::WriteLine("Magic Number: " + pbm.GetMagicNumber() );
+	Debug::WriteLine("Max Val: " + pbm.GetMaxVal() );
+	Debug::WriteLine("Bit Per Pixel: " + pbm.GetBitPerPixel() );
+	Debug::WriteLine("File size: " + pbm.GetFileSize() + " B" );
+
 	return bmp;
 }
 
@@ -89,6 +105,14 @@ Bitmap^ Image_PPMFile(String^ path) {
 			bmp->SetPixel(i, j, color);
 		}
 	}
+	Debug::WriteLine("PPM Image");
+	Debug::WriteLine("Width: " + ppm.GetWidth() );
+	Debug::WriteLine("Height: " + ppm.GetHeight() );
+	Debug::WriteLine("Magic Number: " + ppm.GetMagicNumber() );
+	Debug::WriteLine("Max Val: " + ppm.GetMaxVal() );
+	Debug::WriteLine("Bit Per Pixel: " + ppm.GetBitPerPixel() );
+	Debug::WriteLine("File size: " + ppm.GetFileSize() + " B" );
+
 	return bmp;
 }
 
@@ -109,6 +133,13 @@ Bitmap^ Image_RawImageFile(String^ path) {
 			bmp->SetPixel(i, j, color);
 		}
 	}
+	Debug::WriteLine("Raw Image");
+	Debug::WriteLine("Width: " + raw.GetWidth() );
+	Debug::WriteLine("Height: " + raw.GetHeight() );
+	Debug::WriteLine("Max Val: " + raw.GetMaxVal() );
+	Debug::WriteLine("Bit Per Pixel: " + raw.GetBitPerPixel() );
+	Debug::WriteLine("File size: " + raw.GetFileSize() + " B" );
+
 	return bmp;
 }
 

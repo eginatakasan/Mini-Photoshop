@@ -1074,6 +1074,7 @@ namespace MiniPhotoshop {
 			const char* ext_file = standardString.c_str();
 			originalFormat = new char[sizeof(ext_file)];
 			strcpy(originalFormat, ext_file);
+
 			if (strcmp(ext_file, ".bmp") == 0) {
 				// bmp
 				Bitmap^ imageMainImage = Image_BitmapFile(ofd->FileName);
